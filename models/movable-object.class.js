@@ -7,6 +7,7 @@ class MovableObject {
     imageCache = [];    // array welches erst mal leer ist
     currentImage = 0;   // varibale mit dem Wert 0 
     speed = 0.1;        // variable mit dem Wert 0.1
+    otherDirection = false;
 
 
     // funktion die als Parameter ein source von einem Bild von den Unterklassen übernimmt
