@@ -5,16 +5,16 @@ class Chicken extends MovableObject {
     y = 360;      // lege die y-koordinate fest
 
     IMAGES_WALKING = [    // array mit allen Bildern von einem chicken
-        '../img/3_enemies_chicken/chicken_normal/1_walk/1_w.png',
-        '../img/3_enemies_chicken/chicken_normal/1_walk/2_w.png',
-        '../img/3_enemies_chicken/chicken_normal/1_walk/3_w.png',
+        'img/3_enemies_chicken/chicken_normal/1_walk/1_w.png',
+        'img/3_enemies_chicken/chicken_normal/1_walk/2_w.png',
+        'img/3_enemies_chicken/chicken_normal/1_walk/3_w.png',
     ];
 
     constructor() {     // das wird als nächstes ausgefürt
         
         // hol die superklasse mit "super()" und sage von da möchte ich die function loadImage() aufrufen, und gib als Parameter die src"" von dem Bild
         // die "super()" Methode braucht man nur beim ersten mal, dann wird immer nur "this" verwendet
-        super().loadImage('../img/3_enemies_chicken/chicken_normal/1_walk/1_w.png'); 
+        super().loadImage('img/3_enemies_chicken/chicken_normal/1_walk/1_w.png'); 
         
         //rufe die Funktion loadImages() von der SuperKlasse auf, als Parameter wird das IMAGES_WALKING array übergeben
         this.loadImages(this.IMAGES_WALKING); 

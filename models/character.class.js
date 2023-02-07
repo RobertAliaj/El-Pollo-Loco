@@ -5,14 +5,13 @@ class Character extends MovableObject {
     y = 130;      // lege die y-Achse fest
     speed = 5;
 
-
     IMAGES_WALKING = [ // array mit allen Bildern vom character
-        '../img/2_character_pepe/2_walk/W-21.png',
-        '../img/2_character_pepe/2_walk/W-22.png',
-        '../img/2_character_pepe/2_walk/W-23.png',
-        '../img/2_character_pepe/2_walk/W-24.png',
-        '../img/2_character_pepe/2_walk/W-25.png',
-        '../img/2_character_pepe/2_walk/W-26.png',
+        // '../img/2_character_pepe/2_walk/W-21.png',
+        'img/2_character_pepe/2_walk/W-22.png',
+        'img/2_character_pepe/2_walk/W-23.png',
+        'img/2_character_pepe/2_walk/W-24.png',
+        'img/2_character_pepe/2_walk/W-25.png',
+        'img/2_character_pepe/2_walk/W-26.png',
     ];
 
 
@@ -22,7 +21,7 @@ class Character extends MovableObject {
 
         // hol die superklasse mit "super()" und sage von da möchte ich die function loadImage() aufrufen, und gib als Parameter die src"" von dem Bild
         // die "super()" Methode braucht man nur beim ersten mal, dann wird immer nur "this" verwendet
-        super().loadImage('../img/2_character_pepe/2_walk/W-21.png');
+        super().loadImage('img/2_character_pepe/2_walk/W-21.png');
 
         //rufe die Funktion loadImages() von der SuperKlasse auf, als Parameter wird das IMAGES_WALKING array übergeben
         this.loadImages(this.IMAGES_WALKING);
@@ -39,21 +38,22 @@ class Character extends MovableObject {
         setInterval(() => {
             if (this.world.keyboard.RIGHT) {
                 this.x += this.speed;
-            } 
-            
+                this.otherDirection = false;
+            }
+
             if (this.world.keyboard.LEFT) {
                 this.x -= this.speed;
+                this.otherDirection = true;
             }
+            this.world.camera_x = -this.x;
         }, 1000 / 60);
 
 
         // interval um die Bilder zu ändern
         setInterval(() => {
 
-            // Nur wenn das Rechte Pfeil = true ist soll die Animation starten
+            // Nur wenn das Rechte ODER das linke Pfeil = true ist soll die Animation starten
             if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-
-                this.x += this.speed;
 
                 // modulu Methode, wenn die Bilder alle durchgespielt wurden, spielen die von Anfang an wieder los. Beispiel : 0, 1, 2 - 0, 1, 2 usw..
                 let i = this.currentImage % this.IMAGES_WALKING.length;
@@ -65,7 +65,7 @@ class Character extends MovableObject {
                 this.img = this.imageCache[path];
                 this.currentImage++;
             }
-        }, 80)
+        }, 120)
     }
 
     jump() {

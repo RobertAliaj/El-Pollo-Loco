@@ -5,33 +5,14 @@ class World {
     // das heißt man wird jetzt zu characterClass weitergeleitet und da wird erst alles ausgefürt bevor man wieder hier kommt 
     character = new Character();
 
-    // hier passiert das gleiche wie oben mit dem Character, nur heir passiert das 3 mal
-    // das heißt es werden 3 Chicken erstellt und für jedes chicken läuft "chicken.class.js" ein mal komplett durch
-    // für jedes Chicken werden 3 Bilder von dem Chicken zur Verfügung gestellt und animiert (laufen)
-    enemies = [
-        new Chicken(),
-        new Chicken(),
-        new Chicken()
-    ];
-
-    // hier auch das gleiche, das ist ein array mit nur einem Element drin, man könnte die Wolken 2 mal erstellen lassen
-    // und dann hätte man 2 mal die Wolken
-    clouds = [
-        new Cloud()
-    ];
-
-    // hier wird die Klasse "BackgroundObject" 4 mal erstellt
-    // jedes mal kriegt sie aber eine neue Source
-    backgroundObjects = [
-        new BackgroundObject('../img/5_background/layers/air.png', 0),
-        new BackgroundObject('../img/5_background/layers/3_third_layer/1.png', 0),
-        new BackgroundObject('../img/5_background/layers/2_second_layer/1.png', 0),
-        new BackgroundObject('../img/5_background/layers/1_first_layer/1.png', 0)
-    ];
+    enemies = level1.enemies;
+    clouds = level1.clouds;
+    backgroundObjects = level1.backgroundObjects;
 
     canvas; // die Variable hat erst mal nix mit dem Paramter von dem constructor zu tun 
     ctx;    // variable
     keyboard; // variable
+    camera_x = 0;
 
     // der constructor kriegt einen Parameter übergeben
     constructor(canvas, keyboard) {
@@ -48,14 +29,14 @@ class World {
 
         // die Funktion Draw wird aufgerufen
         this.draw();
-        
+
         //rufe die Funktion auf
         this.setWorld();
     }
 
 
-    
-    setWorld(){
+
+    setWorld() {
         // die Variable "world" in der "character-Class" kriegt den Wert "this" 
         // this ist die ganze Instanz von der World-class, in anderen Worten alle Daten von WorldClass
         this.character.world = this;
@@ -67,6 +48,8 @@ class World {
 
         // die zeile löscht alle Elemente aus dem Canvas
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+        this.ctx.translate(this.camera_x, 0);
 
         // hier wird die funktion addObjectsToMap aufgerufen und die Array-Variable von Oben "backgroundObjects" übergeben          
         this.addObjectsToMap(this.backgroundObjects);
@@ -81,9 +64,11 @@ class World {
         this.addObjectsToMap(this.enemies);
 
 
+        this.ctx.translate(-this.camera_x, 0);
+
         // das wird gemacht weil "this" innerhalb von der "requestAnimationFrame" nicht erkannt wird
-        let self = this; 
-        
+        let self = this;
+
         // das ruft die "draw" funktion einfach immer wieder auf
         requestAnimationFrame(function () {
             self.draw();
@@ -93,7 +78,7 @@ class World {
     //hier werden alle variablen die mehrere Objekte drin haben (arrays) in das Canvas Element gezeichnet
     // die Varible "Object" sind die Arrays von oben mit den Objekten, also die chicken, die Wolken, das Background etc.. 
     addObjectsToMap(objects) {
-        
+
         //gehe durch das array (for-Schleife), "o" is = ein Objekt
         objects.forEach(o => {
 
@@ -105,9 +90,38 @@ class World {
     // hier werden die Objekte EFFEKTIV in das Canvas Element gezeichnet,  "mo" ist ein einziges Objekt 
     addToMap(mo) {
 
+        if (mo.otherDirection) {
+            this.flipImage(mo);
+        }
+
         // das ruft die Varible "ctx" und gibt die ganzen Details wo und wie ein Bild im Canvas gezeichnet werden soll 
         // "drawImage" ist eine Methode des Canvas 2D Context in HTML5, die verwendet wird, um Bilder auf einem Canvas-Element zu zeichnen.
         this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
-    }
 
-}
+        if (mo.otherDirection) {
+            this.flipImageBack(mo);
+            }
+        }
+
+
+        flipImage(mo) {
+            //speicher alle eigenschaften vom Context
+            this.ctx.save();
+
+            // diese Zeile verschiebt das Objekt
+            this.ctx.translate(mo.width, 0);
+
+            // diese Zeile spiegelt das Bild
+            this.ctx.scale(-1, 1);
+            
+            // die x-Koordinate wird gespiegelt
+            mo.x = mo.x * -1;
+        }
+
+
+        flipImageBack(mo) {
+            mo.x = mo.x * -1;
+            this.ctx.restore();
+        }
+
+    }
