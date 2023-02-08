@@ -11,7 +11,7 @@ class BackgroundObject extends MovableObject {
         super().loadImage(imagePath);
 
         // x-Achse kriegt den Wert von dem X Parameter das in der WorldClass definiert wurde
-        this.x = x;
+        this.x = x ;
 
         // y-Achse wird festgelegt
         this.y = 480 - this.height;
