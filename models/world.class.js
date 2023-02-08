@@ -10,14 +10,13 @@ class World {
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
-        
+
         this.canvas = canvas;
         this.keyboard = keyboard;
 
         this.draw();
         this.setWorld();
     }
-
 
     setWorld() {
         // die Variable "world" in der "character-Class" kriegt den Wert "this" 
@@ -35,9 +34,11 @@ class World {
         this.ctx.translate(this.camera_x, 0);
 
         this.addObjectsToMap(this.level.backgroundObjects);
-        this.addToMap(this.character);
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.enemies);
+        this.addObjectsToMap(this.level.bottle);
+        this.addObjectsToMap(this.level.coins);
+        this.addToMap(this.character);
 
         this.ctx.translate(-this.camera_x, 0);
 
@@ -67,6 +68,12 @@ class World {
         // das ruft die Varible "ctx" und gibt die ganzen Details wo und wie ein Bild im Canvas gezeichnet werden soll 
         // "drawImage" ist eine Methode des Canvas 2D Context in HTML5, die verwendet wird, um Bilder auf einem Canvas-Element zu zeichnen.
         this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
+
+        this.ctx.beginPath();
+        this.ctx.lineWidth = '2';
+        this.ctx.strokeStyle = 'blue';
+        this.ctx.rect(mo.x, mo.y, mo.x + mo.width, mo.y + mo.height);
+        this.ctx.stroke();
 
         if (mo.otherDirection) {
             this.flipImageBack(mo);
