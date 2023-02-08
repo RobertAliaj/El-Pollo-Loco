@@ -1,39 +1,22 @@
-// hier werden alle Daten die bei den anderen Klassen geladen wurden, in das canvas-Element gezeichnet
 class World {
 
-    // Variable die den Character erstellt "new Charcter()"
-    // das heißt man wird jetzt zu characterClass weitergeleitet und da wird erst alles ausgefürt bevor man wieder hier kommt 
     character = new Character();
-
-    enemies = level1.enemies;
-    clouds = level1.clouds;
-    backgroundObjects = level1.backgroundObjects;
-
-    canvas; // die Variable hat erst mal nix mit dem Paramter von dem constructor zu tun 
-    ctx;    // variable
-    keyboard; // variable
+    level = level1;
+    canvas;
+    ctx;
+    keyboard;
     camera_x = 0;
 
-    // der constructor kriegt einen Parameter übergeben
+
     constructor(canvas, keyboard) {
-
-        // die Variable ctx kriegt einen neuen Wert
-        // "canvas.getContext('2d')" macht es möglich das man in das Canvas Element 2d Objekte zeichnen kann 
         this.ctx = canvas.getContext('2d');
-
-        // die Variable "canvas" von oben kriegt einen neuen Wert und zwar "das Parameter Canvas", was letztendlich der canvas ist 
+        
         this.canvas = canvas;
-
-        // variable Keyboard kriegt den Wert von der "Keyboard Klasse"
         this.keyboard = keyboard;
 
-        // die Funktion Draw wird aufgerufen
         this.draw();
-
-        //rufe die Funktion auf
         this.setWorld();
     }
-
 
 
     setWorld() {
@@ -51,22 +34,13 @@ class World {
 
         this.ctx.translate(this.camera_x, 0);
 
-        // hier wird die funktion addObjectsToMap aufgerufen und die Array-Variable von Oben "backgroundObjects" übergeben          
-        this.addObjectsToMap(this.backgroundObjects);
-
-        // hier wird die funktion addObjectsToMap aufgerufen und die Variable von Oben "character" übergeben          
+        this.addObjectsToMap(this.level.backgroundObjects);
         this.addToMap(this.character);
-
-        // hier wird die funktion addObjectsToMap aufgerufen und die Array-Variable von Oben "clouds" übergeben          
-        this.addObjectsToMap(this.clouds);
-
-        // hier wird die funktion addObjectsToMap aufgerufen und die Array-Variable von Oben "enemies" übergeben          
-        this.addObjectsToMap(this.enemies);
-
+        this.addObjectsToMap(this.level.clouds);
+        this.addObjectsToMap(this.level.enemies);
 
         this.ctx.translate(-this.camera_x, 0);
 
-        // das wird gemacht weil "this" innerhalb von der "requestAnimationFrame" nicht erkannt wird
         let self = this;
 
         // das ruft die "draw" funktion einfach immer wieder auf
@@ -78,11 +52,7 @@ class World {
     //hier werden alle variablen die mehrere Objekte drin haben (arrays) in das Canvas Element gezeichnet
     // die Varible "Object" sind die Arrays von oben mit den Objekten, also die chicken, die Wolken, das Background etc.. 
     addObjectsToMap(objects) {
-
-        //gehe durch das array (for-Schleife), "o" is = ein Objekt
         objects.forEach(o => {
-
-            //rufe die funktion auf und übergebe die "o" als parameter
             this.addToMap(o);
         });
     }
@@ -100,28 +70,28 @@ class World {
 
         if (mo.otherDirection) {
             this.flipImageBack(mo);
-            }
         }
-
-
-        flipImage(mo) {
-            //speicher alle eigenschaften vom Context
-            this.ctx.save();
-
-            // diese Zeile verschiebt das Objekt
-            this.ctx.translate(mo.width, 0);
-
-            // diese Zeile spiegelt das Bild
-            this.ctx.scale(-1, 1);
-            
-            // die x-Koordinate wird gespiegelt
-            mo.x = mo.x * -1;
-        }
-
-
-        flipImageBack(mo) {
-            mo.x = mo.x * -1;
-            this.ctx.restore();
-        }
-
     }
+
+
+    flipImage(mo) {
+        //speicher alle eigenschaften vom Context
+        this.ctx.save();
+
+        // diese Zeile verschiebt das Objekt
+        this.ctx.translate(mo.width, 0);
+
+        // diese Zeile spiegelt das Bild
+        this.ctx.scale(-1, 1);
+
+        // die x-Koordinate wird gespiegelt
+        mo.x = mo.x * -1;
+    }
+
+
+    flipImageBack(mo) {
+        mo.x = mo.x * -1;
+        this.ctx.restore();
+    }
+
+}
