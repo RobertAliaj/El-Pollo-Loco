@@ -5,7 +5,8 @@ const level1 = new Level(
         // für jedes Chicken werden 3 Bilder von dem Chicken zur Verfügung gestellt und animiert (laufen)
         new Chicken(),
         new Chicken(),
-        new Chicken()
+        new Chicken(),
+        new Endboss()
     ],
     [
         // hier auch das gleiche, das ist ein array mit nur einem Element drin, man könnte die Wolken 2 mal erstellen lassen
