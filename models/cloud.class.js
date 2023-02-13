@@ -19,8 +19,10 @@ class Cloud extends MovableObject {
     }
 
     animate() {
-        // rufe moveLeft auf, von der Superklasse
-        this.moveLeft();
+        setInterval( () => {
+            // rufe moveLeft auf, von der Superklasse
+            this.moveLeft();
+        }, 1000 / 60)
     }
 }
 
