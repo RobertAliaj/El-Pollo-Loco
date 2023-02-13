@@ -1,21 +1,23 @@
 class World {
 
-    character = new Character();
-    level = level1;
+
+    character = new Character(); // erstelle ein neues Objekt "character"
+    level = level1;              
     canvas;
     ctx;
     keyboard;
     camera_x = 0;
+    statusBar = new StatusBar();
+    throwableObjects = [];
 
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
-
         this.canvas = canvas;
         this.keyboard = keyboard;
-
         this.draw();
         this.setWorld();
+        this.run();
     }
 
     setWorld() {
@@ -25,25 +27,51 @@ class World {
     }
 
 
+    run() {
+        setInterval(() => {
+            this.checkCollision();
+            this.checkThrowObjects();
+        }, 200);
+    }
+
+    checkThrowObjects(){
+        if(this.keyboard.D){
+            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+            this.throwableObjects.push(bottle);
+        }
+    }
+
+
+    checkCollision() {
+        this.level.enemies.forEach((enemy) => {
+            if (this.character.isColliding(enemy)) {
+                this.character.hit();
+            }
+        });
+    };
+
     // hier werden die Elemente in das Canvas Element gezeichnet
     draw() {
 
         // die zeile löscht alle Elemente aus dem Canvas
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-        this.ctx.translate(this.camera_x, 0);
-
+        this.ctx.translate(this.camera_x, 0);                    //camera_x wird kriegt den Wert beim Character, die translate-Methode braucht 2 Argumente, x und y 
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.clouds);
+
+        this.ctx.translate(-this.camera_x, 0);
+        this.addToMap(this.statusBar);
+        this.ctx.translate(this.camera_x, 0);
+
+        this.addToMap(this.character);
+        this.addObjectsToMap(this.throwableObjects);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.bottle);
         this.addObjectsToMap(this.level.coins);
-        this.addToMap(this.character);
-
-        this.ctx.translate(-this.camera_x, 0);
+        this.ctx.translate(-this.camera_x, 0);                //d
 
         let self = this;
-
         // das ruft die "draw" funktion einfach immer wieder auf
         requestAnimationFrame(function () {
             self.draw();
@@ -58,40 +86,26 @@ class World {
         });
     }
 
-    // hier werden die Objekte EFFEKTIV in das Canvas Element gezeichnet,  "mo" ist ein einziges Objekt 
+    // hier werden die Objekte EFFEKTIV in das Canvas Element gezeichnet,  "mo" ist ein Objekt (character, chicken usw..) 
     addToMap(mo) {
 
         if (mo.otherDirection) {
-            this.flipImage(mo);
+            this.flipImage(mo); // diese Zeile flipt nicht nur den Character, sondern das ganze Bild
         }
 
-        // das ruft die Varible "ctx" und gibt die ganzen Details wo und wie ein Bild im Canvas gezeichnet werden soll 
-        // "drawImage" ist eine Methode des Canvas 2D Context in HTML5, die verwendet wird, um Bilder auf einem Canvas-Element zu zeichnen.
-        this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
-
-        this.ctx.beginPath();
-        this.ctx.lineWidth = '2';
-        this.ctx.strokeStyle = 'blue';
-        this.ctx.rect(mo.x, mo.y, mo.x + mo.width, mo.y + mo.height);
-        this.ctx.stroke();
+        mo.draw(this.ctx)       // Zeichnet alles noch mal, unter anderem auch den Character
+        mo.drawFrame(this.ctx)  
 
         if (mo.otherDirection) {
-            this.flipImageBack(mo);
+            this.flipImageBack(mo);  // setzt noch mal alles auf die richtige Richtung, ausser dem Character
         }
     }
 
 
     flipImage(mo) {
-        //speicher alle eigenschaften vom Context
         this.ctx.save();
-
-        // diese Zeile verschiebt das Objekt
         this.ctx.translate(mo.width, 0);
-
-        // diese Zeile spiegelt das Bild
         this.ctx.scale(-1, 1);
-
-        // die x-Koordinate wird gespiegelt
         mo.x = mo.x * -1;
     }
 
