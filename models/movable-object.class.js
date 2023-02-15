@@ -2,16 +2,16 @@ class MovableObject extends DrawableObject {
 
     speed = 0.15;
     otherDirection = false;
-    speedY = 0;
-    acceleration = 2.5;
-    energy = 100;
+    speedY = 0;             //  ist die Geschwindigkeit nach unten
+    acceleration = 2.5;     //  ist die Beschleunigung
     lastHit = 0;
+    energy = 100;
 
     applyGravity() {
         setInterval(() => {
-            if (this.isAboveGround() || this.speedY > 0) {
-                this.y -= this.speedY;
-                this.speedY -= this.acceleration;
+            if (this.isAboveGround() || this.speedY > 0) {      // speedY wird in der JumpFunktion auf 30 gesetzt
+                this.y -= this.speedY;                          // y ist = 30 - -2.5 = 32,5
+                this.speedY -= this.acceleration;               // speedY ist = 0 - 2.5 = -2.5  (Beim Springen wird von speedY(30) immer 2.5px abgezogen)
             }
         }, 1000 / 25);
     }
@@ -21,7 +21,7 @@ class MovableObject extends DrawableObject {
         if (this instanceof ThrowableObject) {
             return true;
         } else {
-            return this.y < 130;
+            return this.y < 130; // y kleiner als 130 heißt das er den Boden nicht berührt hat 
         }
     };
 
@@ -55,6 +55,9 @@ class MovableObject extends DrawableObject {
     }
 
 
+    /**
+     * This function is used to return true
+     */
     isDead() {
         return this.energy == 0;
     }
@@ -79,8 +82,6 @@ class MovableObject extends DrawableObject {
 
 
     jump() {
-        this.speedY = 30;
+        this.speedY = 30; //
     }
-
-
 }

@@ -43,6 +43,7 @@ class Character extends MovableObject {
 
     world;
     walking_sound = new Audio('audio/walking.mp3');
+    jump_sound = new Audio('audio/jump.mp3');
 
 
     constructor() {
@@ -60,8 +61,8 @@ class Character extends MovableObject {
 
         // dieses Interval ist um zu bewegen und um die Audios zu spielen
         setInterval(() => {
-            // this.walking_sound.pause();                                          // jedes mal wenn die funktion aufgerufen wird, soll die audio pausiert werden
-            if (this.world.keyboard.RIGHT && this.x < level1.level_end_x) {         // wenn das rechte Pfeiltaste gedrückt wurde UND die x-achse kleiner ist als die Canvas Länge
+            this.walking_sound.pause();                                          // jedes mal wenn die funktion aufgerufen wird, soll die audio pausiert werden
+            if (this.world.keyboard.RIGHT && this.x < level1.level_end_x) {         // wenn das rechte Pfeiltaste gedrückt wurde UND die x-achse kleiner ist als level_end_x (die Canvas Länge)
                 this.moveRight();                                                   // dann laufe rechts
                 this.otherDirection = false;
                 // this.walking_sound.play();                                     // spiele diese Audio
@@ -73,8 +74,9 @@ class Character extends MovableObject {
                 // this.walking_sound.play();                                      // spiele diese Audio
             }
 
-            if (this.world.keyboard.SPACE && !this.isAboveGround()) {           // wenn die Spacetaste gedrückt wurde UND isAboveGround = false ist 
+            if (this.world.keyboard.SPACE && !this.isAboveGround()) {           // wenn die Spacetaste gedrückt wurde UND isAboveGround = false ist(heißt der Character ist auf dem Boden) 
                 this.jump();                                                    // dann springe
+                // this.jump_sound.play();
             }
 
             this.world.camera_x = -this.x + 100;                                  // "bewege" die Kamera, camera_x ist = 0 - x Koordinate vom Character (120) + 100; An sich wird nicht die Kamera bewegt, sondern das Ganze Bild neu gezeichnet mit den neuen Koordinaten durch die "Camera_x" Variable und die translate Methode
