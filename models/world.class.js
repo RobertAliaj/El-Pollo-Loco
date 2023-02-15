@@ -2,13 +2,12 @@ class World {
 
 
     character = new Character(); // erstelle ein neues Objekt "character"
-    level = level1;              
+    level = level1;
     canvas;
     ctx;
     keyboard;
     camera_x = 0;
     statusBar = new StatusBar();
-    
     throwableObjects = [];
 
 
@@ -27,30 +26,41 @@ class World {
         this.character.world = this;
     }
 
-
     run() {
         setInterval(() => {
             this.checkCollision();
-            this.checkThrowObjects();
+            // this.checkThrowObjects();
+            // this.collectBottles();
         }, 200);
     }
 
-    checkThrowObjects(){
-        if(this.keyboard.D){
-            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
-            this.throwableObjects.push(bottle);
-        }
-    }
-
+    // checkThrowObjects() {
+    //     if (this.keyboard.D) {
+    //         this.bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+    //         this.throwableObjects.push(bottle);
+    //     }
+    // }
 
     checkCollision() {
-        this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy)) {
-                this.character.hit();
-                this.statusBar.setPercentage(this.character.energy);
+        this.level.bottle.forEach((bottle) => {
+            if (this.character.isColliding(bottle)) {
+                this.bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+                this.throwableObjects.push(bottle);
+                console.log(this.throwableObjects);
             }
         });
-    };
+    }
+
+    
+    // checkCollision() {
+    //     this.level.enemies.forEach((enemy) => {
+    //         if (this.character.isColliding(enemy)) {
+    //             this.character.hit();
+    //             this.statusBar.setPercentage(this.character.energy);
+    //         }
+    //     });
+    // };
+
 
     // hier werden die Elemente in das Canvas Element gezeichnet
     draw() {
@@ -65,7 +75,7 @@ class World {
         this.ctx.translate(-this.camera_x, 0);
         this.addToMap(this.statusBar);
         this.ctx.translate(this.camera_x, 0);
-        
+
         this.addToMap(this.character);
         this.addObjectsToMap(this.throwableObjects);
         this.addObjectsToMap(this.level.enemies);
@@ -96,7 +106,7 @@ class World {
         }
 
         mo.draw(this.ctx)       // Zeichnet alles noch mal, unter anderem auch den Character
-        mo.drawFrame(this.ctx)  
+        mo.drawFrame(this.ctx)
 
         if (mo.otherDirection) {
             this.flipImageBack(mo);  // setzt noch mal alles auf die richtige Richtung, ausser dem Character
