@@ -51,7 +51,7 @@ class World {
         });
     }
 
-    
+
     // checkCollision() {
     //     this.level.enemies.forEach((enemy) => {
     //         if (this.character.isColliding(enemy)) {
