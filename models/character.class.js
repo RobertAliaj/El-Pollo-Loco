@@ -3,7 +3,7 @@ class Character extends MovableObject {
     height = 300;
     width = 150;
     y = 30;
-    speed = 5;
+    speed = 15;
 
     IMAGES_WALKING = [
         'img/2_character_pepe/2_walk/W-22.png',
@@ -70,7 +70,7 @@ class Character extends MovableObject {
 
             if (this.world.keyboard.LEFT && this.x > 0) {                        // wenn die linke Pfeiltaste gedrückt wurde UND die x-achse größer ist als null
                 this.moveLeft();                                                 // dann laufe links
-                this.otherDirection = true;             
+                this.otherDirection = true;
                 // this.walking_sound.play();                                      // spiele diese Audio
             }
 
@@ -85,11 +85,12 @@ class Character extends MovableObject {
 
         // dieses Interval ist nur um die Verschiedenen Bilder anzuzeigen
         setInterval(() => {
-            if (this.isDead()) {                                                // wenn isDead ist = true;
-                this.playAnimations(this.IMAGES_DEAD);                          // dann spiele die DEAD bilder durch
-            } else if (this.isHurt()) {                                         // wenn isHurt = true  
-                this.playAnimations(this.IMAGES_HURT);                          // dann spiele die Hurt Bilder durch
-            } else if (this.isAboveGround()) {                                  // wenn isAboveGround = true
+            // if (this.isDead()) {                                                // wenn isDead ist = true;
+            //     this.playAnimations(this.IMAGES_DEAD);                          // dann spiele die DEAD bilder durch
+            // } else if (this.isHurt()) {                                         // wenn isHurt = true  
+            //     this.playAnimations(this.IMAGES_HURT);                          // dann spiele die Hurt Bilder durch
+            // } else 
+            if (this.isAboveGround()) {                                  // wenn isAboveGround = true
                 this.playAnimations(this.IMAGES_JUMPING);                       // dann spiele die Jumping Bilder durch
             } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) { // wenn rechts oder links gedrückt wurde    
                 this.playAnimations(this.IMAGES_WALKING);                       // dann speiele die Walk Bilder durch
@@ -131,7 +132,7 @@ class Character extends MovableObject {
 
 
 // jump() {
-//     this.speedY = 30; 
+//     this.speedY = 30;
 // }
 
 
@@ -145,10 +146,10 @@ class Character extends MovableObject {
 // }
 
 
-// isAboveGround() {                                
-//     if (this instanceof ThrowableObject) {              
-//         return true;                                    
-//     } else {                                             
+// isAboveGround() {
+//     if (this instanceof ThrowableObject) {
+//         return true;
+//     } else {
 //         return this.y < 130;                            // return true wenn die y-Achse kleiner ist als 130px
 //     }
 // };
@@ -157,6 +158,6 @@ class Character extends MovableObject {
 // playAnimations(images) {                                 // images sind die Bilder arrays
 //     let i = this.currentImage % images.length;           // iterire durch die arrays
 //     let path = images[i];                                // path ist = ein Bild im array
-//     this.img = this.imageCache[path];                    //  this.img ist = jedes mal wenn die Funktion ausgerufen wird das nächste Bild im Array    
-//     this.currentImage++;                                 // erhöhe um eins    
+//     this.img = this.imageCache[path];                    //  this.img ist = jedes mal wenn die Funktion ausgerufen wird das nächste Bild im Array
+//     this.currentImage++;                                 // erhöhe um eins
 // }
