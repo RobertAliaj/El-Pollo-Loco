@@ -6,6 +6,8 @@ class MovableObject extends DrawableObject {
     acceleration = 2.5;     //  ist die Beschleunigung
     lastHit = 0;
     energy = 100;
+    endBossEnergy = 100;
+    endBossLastHit = 0;
 
     applyGravity() {
         setInterval(() => {
@@ -34,6 +36,14 @@ class MovableObject extends DrawableObject {
     }
 
 
+    isThrownAt(bottle, enemy) {
+        return bottle.hitX + bottle.width > enemy.x &&
+            bottle.hitY + bottle.height > bottle.y &&
+            bottle.x < enemy.x &&
+            bottle.y < enemy.y + enemy.height;
+    }
+
+
     hit() {
         this.energy -= 5;
         if (this.energy < 0) {
@@ -41,6 +51,22 @@ class MovableObject extends DrawableObject {
         } else {
             this.lastHit = new Date().getTime();
         }
+    }
+
+
+    endBossHit() {
+        this.endBossEnergy -= 20;
+        if (this.endBossEnergy < 0) {
+            this.endBossEnergy = 0
+        }
+        this.endBossLastHit = new Date().getTime();
+    }
+
+
+    endBossisHurt() {
+        let timePassed = new Date().getTime() - this.endBossLastHit;
+        timePassed = timePassed / 1000;
+        return timePassed < 5;
     }
 
 
@@ -69,7 +95,6 @@ class MovableObject extends DrawableObject {
         this.img = this.imageCache[path];
         this.currentImage++;
     }
-
 
     moveRight() {
         this.x += this.speed;
