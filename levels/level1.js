@@ -70,21 +70,21 @@ const level1 = new Level(
         new Bottle('img/6_salsa_bottle/1_salsa_bottle_on_ground.png', 2000)
     ],
     [
-        new Coin('img/8_coin/coin_1.png', 600),
         new Coin('img/8_coin/coin_1.png', 200),
-        new Coin('img/8_coin/coin_2.png', 250),
         new Coin('img/8_coin/coin_1.png', 300),
         new Coin('img/8_coin/coin_2.png', 400),
-        new Coin('img/8_coin/coin_2.png', 550),
-        new Coin('img/8_coin/coin_1.png', 600),
-        new Coin('img/8_coin/coin_1.png', 2200),
-        new Coin('img/8_coin/coin_2.png', 800),
-        new Coin('img/8_coin/coin_2.png', 900),
+        new Coin('img/8_coin/coin_1.png', 500),
+        new Coin('img/8_coin/coin_2.png', 600),
+        new Coin('img/8_coin/coin_2.png', 700),
+        new Coin('img/8_coin/coin_1.png', 1500),
+        new Coin('img/8_coin/coin_1.png', 1600),
+        new Coin('img/8_coin/coin_2.png', 1700),
+        new Coin('img/8_coin/coin_2.png', 1800),
+        new Coin('img/8_coin/coin_2.png', 1900),
+        new Coin('img/8_coin/coin_1.png', 2000),
+        new Coin('img/8_coin/coin_1.png', 950),
         new Coin('img/8_coin/coin_2.png', 1000),
-        new Coin('img/8_coin/coin_1.png', 1120),
-        new Coin('img/8_coin/coin_1.png', 1440),
-        new Coin('img/8_coin/coin_2.png', 1580),
-        new Coin('img/8_coin/coin_1.png', 1960),
-        new Coin('img/8_coin/coin_2.png', 2100)
+        new Coin('img/8_coin/coin_1.png', 1000),
+        new Coin('img/8_coin/coin_2.png', 800)
     ]
 );

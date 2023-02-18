@@ -6,17 +6,22 @@ class World {
     ctx;
     keyboard;
     camera_x = 0;
+
+    statusBar = new StatusBar();
     coinBar = new CoinBar();
     coinBarIcon = new CoinBarIcon();
     bottleStatusBar = new Bottlebar();
     bottleBarIcon = new BottleBarIcon();
-    statusBar = new StatusBar();
     endBossStatusBar = new EndBossStatusBar();
     endBossIcon = new EndBossStatusBarIcon();
+
     throwableObjects = [];
     collectedBottles = 0;
-    thrownBottles = 0;
+    bottleAmount = 0;
     collectedCoins = 0;
+    endBossIsHit = false;
+    chickenIsHit = false;
+
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -35,7 +40,7 @@ class World {
             this.collectCoins();
             this.checkThrowObjects();
             this.checkBottleCollision();
-        }, 200);
+        }, 50);
     }
 
 
@@ -54,12 +59,13 @@ class World {
         this.throwableObjects.forEach((bottle, index) => {
             if (bottle.isThrownAt(bottle, this.level.enemies[11]) && index >= 0) {
                 endBoss.endBossHit();
+                this.endBossIsHit = true;
                 this.endBossStatusBar.setPercentage(endBoss.endBossEnergy);
             }
 
             this.level.enemies.slice(0, -1).forEach((enemy) => {                                     // iteriere durch die Enemies, AUSSER ENDBOSS
-                if (bottle.isThrownAt(bottle, enemy) && index >= 0) {                                    // wenn die Flaschen mit einem Chicken 
-                    
+                if (bottle.isThrownAt(bottle, enemy) && index >= 0) {                                    // wenn die Flasche mit einem Chicken kollidiert
+                    enemy.energy = 0;
                 }
             });
         });
@@ -67,15 +73,16 @@ class World {
 
 
     checkThrowObjects() {
+        this.endBossIsHit = false;
         if (this.keyboard.D) {
             if (this.throwableObjects.length < this.collectedBottles) {
                 let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
                 this.throwableObjects.push(bottle);
-                this.thrownBottles--;
-                if (this.thrownBottles < 0) {
-                    this.thrownBottles = 0;
+                this.bottleAmount--;
+                if (this.bottleAmount < 0) {
+                    this.bottleAmount = 0;
                 }
-                this.bottleStatusBar.setBottleNumber(this.thrownBottles);
+                this.bottleStatusBar.setBottleNumber(this.bottleAmount);
             }
         }
     }
@@ -106,15 +113,14 @@ class World {
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.bottle);
         this.addObjectsToMap(this.level.coins);
-        this.ctx.translate(-this.camera_x, 0);                //d
+        this.ctx.translate(-this.camera_x, 0);
 
-        let self = this;
+        // let self = this;
         // das ruft die "draw" funktion einfach immer wieder auf
-        requestAnimationFrame(function () {
-            self.draw();
+        requestAnimationFrame(() => {
+            this.draw();
         });
     }
-
 
 
     //hier werden alle variablen die mehrere Objekte drin haben (arrays) in das Canvas Element gezeichnet
@@ -141,12 +147,10 @@ class World {
     }
 
 
-
     setWorld() {
         // die Variable "world" in der "character-Class" kriegt den Wert "this" 
         // this ist die ganze Instanz von der World-class, in anderen Worten alle Daten von WorldClass
         this.character.world = this;
-
     }
 
 
@@ -166,8 +170,8 @@ class World {
             if (this.character.isColliding(bottle)) {
                 this.level.bottle.splice(index, 1);                 // lösche das collected Object aus dem Array und etferne es somit aus dem Canvas
                 this.collectedBottles++;
-                this.thrownBottles++;
-                this.bottleStatusBar.setBottleNumber(this.thrownBottles);
+                this.bottleAmount++;
+                this.bottleStatusBar.setBottleNumber(this.bottleAmount);
             }
         });
     }

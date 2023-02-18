@@ -1,6 +1,12 @@
 class ThrowableObject extends MovableObject {
     hitX;
     hitY;
+    offset = {
+        top: 15,
+        left: 20,
+        right: 15,
+        bottom: 10,
+    };
     IMAGES_ROTATING = [
         'img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
         'img/6_salsa_bottle/bottle_rotation/2_bottle_rotation.png',
@@ -30,7 +36,6 @@ class ThrowableObject extends MovableObject {
     }
 
 
-
     throw() {
         this.speedY = 30;
         this.applyGravity();
@@ -48,12 +53,15 @@ class ThrowableObject extends MovableObject {
 
 
     animation() {
+        let shouldPlayRotation = true;
+
         setInterval(() => {
-            if (this.endBossisHurt()) {
-                this.playAnimations(this.IMAGES_SPLASHING);
-            } else {
-                this.playAnimations(this.IMAGES_ROTATING);
+            if (world.endBossIsHit) {               // wenn der Endboss gehittet wurde UND die SplashAnimation nocht nicht abgespielt wurde
+                this.playAnimations(this.IMAGES_SPLASHING);             // spiele die SplashAnimation
+                shouldPlayRotation = false;                             // spiele die Rotation nicht mehr ab
+            } else if (shouldPlayRotation) {                            // wenn die Rotate animation abspielen soll (= true)  
+                this.playAnimations(this.IMAGES_ROTATING);              // spiele die Rotate Animation ab
             }
-        }, 100);
+        }, 80);
     }
 }
