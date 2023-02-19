@@ -64,6 +64,7 @@ class World {
         });
     }
 
+<<<<<<< HEAD
     chart() {
         this.chickens.forEach((enemy) => {
             if (this.character.isAboveGround() && this.character.characterIsFalling()) {
@@ -76,6 +77,8 @@ class World {
         });
     }
 
+=======
+>>>>>>> 5415c9711350262cd03015ca619fbfe281a62f68
  // neu email adress
     removeEnemy(enemy) {
         setTimeout(() => {
