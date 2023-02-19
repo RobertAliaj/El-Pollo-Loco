@@ -6,8 +6,8 @@ class Character extends MovableObject {
     speed = 15;
     offset = {
         top: 125,
-        left: 45,
-        right: 45,
+        left: 50,
+        right: 50,
         bottom: 15,
     };
 
@@ -47,7 +47,6 @@ class Character extends MovableObject {
         'img/2_character_pepe/4_hurt/H-43.png'
     ];
 
-    world;
     walking_sound = new Audio('audio/walking.mp3');
     jump_sound = new Audio('audio/jump.mp3');
 
@@ -68,24 +67,24 @@ class Character extends MovableObject {
         // dieses Interval ist um zu bewegen und um die Audios zu spielen
         setInterval(() => {
             this.walking_sound.pause();                                          // jedes mal wenn die funktion aufgerufen wird, soll die audio pausiert werden
-            if (this.world.keyboard.RIGHT && this.x < level1.level_end_x) {         // wenn das rechte Pfeiltaste gedrückt wurde UND die x-achse kleiner ist als level_end_x (die Canvas Länge)
+            if (world.keyboard.RIGHT && this.x < level1.level_end_x) {         // wenn das rechte Pfeiltaste gedrückt wurde UND die x-achse kleiner ist als level_end_x (die Canvas Länge)
                 this.moveRight();                                                   // dann laufe rechts
                 this.otherDirection = false;
-                // this.walking_sound.play();                                     // spiele diese Audio
+                this.walking_sound.play();                                     // spiele diese Audio
             }
 
-            if (this.world.keyboard.LEFT && this.x > 0) {                        // wenn die linke Pfeiltaste gedrückt wurde UND die x-achse größer ist als null
+            if (world.keyboard.LEFT && this.x > 0) {                        // wenn die linke Pfeiltaste gedrückt wurde UND die x-achse größer ist als null
                 this.moveLeft();                                                 // dann laufe links
                 this.otherDirection = true;
-                // this.walking_sound.play();                                      // spiele diese Audio
+                this.walking_sound.play();                                      // spiele diese Audio
             }
 
-            if (this.world.keyboard.SPACE && !this.isAboveGround()) {           // wenn die Spacetaste gedrückt wurde UND isAboveGround = false ist(heißt der Character ist auf dem Boden) 
+            if (world.keyboard.SPACE && !this.isAboveGround()) {           // wenn die Spacetaste gedrückt wurde UND isAboveGround = false ist(heißt der Character ist auf dem Boden) 
                 this.jump();                                                    // dann springe
-                // this.jump_sound.play();
+                this.jump_sound.play();
             }
 
-            this.world.camera_x = -this.x + 100;                                  // "bewege" die Kamera, camera_x ist = 0 - x Koordinate vom Character (120) + 100; An sich wird nicht die Kamera bewegt, sondern das Ganze Bild neu gezeichnet mit den neuen Koordinaten durch die "Camera_x" Variable und die translate Methode
+            world.camera_x = -this.x + 100;                                  // "bewege" die Kamera, camera_x ist = 0 - x Koordinate vom Character (120) + 100; An sich wird nicht die Kamera bewegt, sondern das Ganze Bild neu gezeichnet mit den neuen Koordinaten durch die "Camera_x" Variable und die translate Methode
         }, 1000 / 60);                                                          // das wird 60 mal pro sekunde ausgeführt
 
 
@@ -94,12 +93,12 @@ class Character extends MovableObject {
             // if (this.isDead()) {                                                // wenn isDead ist = true;
             //     this.playAnimations(this.IMAGES_DEAD);                          // dann spiele die DEAD bilder durch
             // } else 
-            // if (this.isHurt()) {                                         // wenn isHurt = true  
-            //     this.playAnimations(this.IMAGES_HURT);                          // dann spiele die Hurt Bilder durch
-            // } else 
+            if (this.isHurt()) {                                         // wenn isHurt = true  
+                this.playAnimations(this.IMAGES_HURT);                          // dann spiele die Hurt Bilder durch
+            } else 
             if (this.isAboveGround()) {                                         // wenn isAboveGround = true
                 this.playAnimations(this.IMAGES_JUMPING);                       // dann spiele die Jumping Bilder durch
-            } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) { // wenn rechts oder links gedrückt wurde    
+            } else if (world.keyboard.RIGHT || world.keyboard.LEFT) { // wenn rechts oder links gedrückt wurde    
                 this.playAnimations(this.IMAGES_WALKING);                       // dann speiele die Walk Bilder durch
             } else {
                 this.img = this.imageCache['img/2_character_pepe/3_jump/J-39.png']; // ansosnten zeig einfach das stehende bild an

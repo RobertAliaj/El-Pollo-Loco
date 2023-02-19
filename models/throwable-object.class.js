@@ -1,6 +1,4 @@
 class ThrowableObject extends MovableObject {
-    hitX;
-    hitY;
     offset = {
         top: 15,
         left: 20,
@@ -45,8 +43,6 @@ class ThrowableObject extends MovableObject {
             }
             else {
                 this.x += 10;
-                this.hitX = this.x;
-                this.hitY = this.y;
             }
         }, 25);
     };
@@ -56,12 +52,13 @@ class ThrowableObject extends MovableObject {
         let shouldPlayRotation = true;
 
         setInterval(() => {
-            if (world.endBossIsHit) {               // wenn der Endboss gehittet wurde UND die SplashAnimation nocht nicht abgespielt wurde
+            if (world.endBossIsHit) {                                   // wenn der Endboss gehittet wurde UND die SplashAnimation nocht nicht abgespielt wurde
                 this.playAnimations(this.IMAGES_SPLASHING);             // spiele die SplashAnimation
                 shouldPlayRotation = false;                             // spiele die Rotation nicht mehr ab
-            } else if (shouldPlayRotation) {                            // wenn die Rotate animation abspielen soll (= true)  
-                this.playAnimations(this.IMAGES_ROTATING);              // spiele die Rotate Animation ab
-            }
-        }, 80);
+            } else
+                if (shouldPlayRotation) {                            // wenn die Rotate animation abspielen soll (= true)  
+                    this.playAnimations(this.IMAGES_ROTATING);              // spiele die Rotate Animation ab
+                }
+        }, 50);
     }
 }
