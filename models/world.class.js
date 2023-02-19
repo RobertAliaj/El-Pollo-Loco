@@ -64,7 +64,7 @@ class World {
         });
     }
 
-
+ // neu email adress
     removeEnemy(enemy) {
         setTimeout(() => {
             this.chickens.splice(this.chickens.indexOf(enemy), 1);
