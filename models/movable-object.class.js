@@ -5,48 +5,20 @@ class MovableObject extends DrawableObject {
     speedY = 0;             //  ist die Geschwindigkeit nach unten
     acceleration = 2.5;     //  ist die Beschleunigung
     lastHit = 0;
-    energy = 100;
+    energy = 10000;
     endBossEnergy = 100;
 
-    applyGravity() {
-        setInterval(() => {
-            if (this.isAboveGround() || this.speedY > 0) {      // speedY wird in der JumpFunktion auf 30 gesetzt
-                this.y -= this.speedY;                          // y ist = 30 - -2.5 = 32,5
-                this.speedY -= this.acceleration;               // speedY ist = 0 - 2.5 = -2.5  (Beim Springen wird von speedY(30) immer 2.5px abgezogen)
-            }
-        }, 1000 / 25);
-    }
 
-
-    isAboveGround() {
-        if (this instanceof ThrowableObject) {
-            return true;
-        } else {
-            return this.y < 130; // y kleiner als 130 heißt das er den Boden nicht berührt hat 
-        }
+    characterIsFalling() {
+        return this.speedY < 0;
     };
 
-
     isColliding(obj) {
-        //Rechte Seite von Pepe trifft Linke Seite von ieinem Objekt
-        // Untere Seite von Pepe trifft Obere Seite von Objekten(Münzen und Endboss auch)
-        //Linke Seite von Pepe kleiner als die Rechte Seite von Objekten (Das prüft nur ob Pepe (noch) collidet oder schon an das Objekt vorbei gelaufen ist)
-        //Obere Seite von Pepe trifft untere Seite von Objekten
         return this.charRightCollideObjLeft(obj) &&
             this.charBottomCollideObjTop(obj) &&
             this.charLeftCollideObjRight(obj) &&
             this.charTopCollideObjBottom(obj);
     };
-
-
-    isThrownAt(bottle, enemy) {
-        return bottle.hitX + bottle.width > enemy.x &&
-            bottle.hitY + bottle.height > bottle.y &&
-            bottle.x < enemy.x &&
-            bottle.y < enemy.y + enemy.height;
-
-            // wenn 
-    }
 
 
     hit() {
@@ -59,7 +31,6 @@ class MovableObject extends DrawableObject {
     }
 
 
-
     endBossHit() {
         this.endBossEnergy -= 20;
         if (this.endBossEnergy < 0) {
@@ -68,10 +39,6 @@ class MovableObject extends DrawableObject {
     }
 
 
-    /**
-     * Wenn dieser Zeitunterschied kleiner als 0,75 Sekunden ist, gibt die Funktion "isHurt" true zurück und die Animation wird abgespielt. 
-     * Sobald die Funktion "isHurt" false zurückgibt(nach 0.75 Sekunden), wird die Animation gestoppt.
-     */
     isHurt() {
         let timePassed = new Date().getTime() - this.lastHit;
         timePassed = timePassed / 1000;
@@ -79,9 +46,6 @@ class MovableObject extends DrawableObject {
     }
 
 
-    /**
-     * This function is used to return true
-     */
     isDead() {
         return this.energy == 0;
     }
@@ -107,6 +71,30 @@ class MovableObject extends DrawableObject {
     jump() {
         this.speedY = 30; //
     }
+
+    smallJump() {
+        this.speedY = 20; //
+    }
+
+
+    applyGravity() {
+        setInterval(() => {
+            if (this.isAboveGround() || this.speedY > 0) {      // speedY wird in der JumpFunktion auf 30 gesetzt
+                this.y -= this.speedY;                          // y ist = 30 - -2.5 = 32,5
+                this.speedY -= this.acceleration;               // speedY ist = 0 - 2.5 = -2.5  (Beim Springen wird von speedY(30) immer 2.5px abgezogen)
+            }
+        }, 1000 / 25);
+    }
+
+
+    isAboveGround() {
+        if (this instanceof ThrowableObject) {
+            return true;
+        } else {
+            return this.y < 130; // y kleiner als 130 heißt das er den Boden nicht berührt hat 
+        }
+    };
+
 
 
     //Rechte Seite von Pepe trifft Linke Seite von ieinem Objekt
@@ -157,7 +145,6 @@ class MovableObject extends DrawableObject {
     };
 
 
-
     //Obere Seite von Pepe trifft untere Seite von Objekten
     charTopCollideObjBottom(obj) {
         return this.charTop() < this.objBottom(obj);
@@ -172,4 +159,9 @@ class MovableObject extends DrawableObject {
     objBottom(obj) {
         return (obj.y + obj.height) - obj.offset.bottom;  // Die Untere Seite von den Objekten (Offsetlinie) 
     };
+
+
+    charOverChicken() {
+        return ((this.y + this.height) - this.offset.bottom) > 370;
+    }
 }

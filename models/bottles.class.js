@@ -11,8 +11,7 @@ class Bottle extends MovableObject {
     constructor(imagePath, x) {
         super().loadImage(imagePath)
 
-        this.x = 350
-        // x + Math.random() * 300;
+        this.x = x + Math.random() * 300;
 
         this.y = 380;
     }
