@@ -64,6 +64,18 @@ class World {
         });
     }
 
+    chart() {
+        this.chickens.forEach((enemy) => {
+            if (this.character.isAboveGround() && this.character.characterIsFalling()) {
+                if (this.character.isColliding(enemy)) {
+                    this.character.smallJump();
+                    enemy.energy = 0;
+                    this.removeEnemy(enemy);
+                }
+            }
+        });
+    }
+
  // neu email adress
     removeEnemy(enemy) {
         setTimeout(() => {
