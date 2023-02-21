@@ -5,6 +5,9 @@ class ThrowableObject extends MovableObject {
         right: 15,
         bottom: 10,
     };
+    enemyIsHit = false;
+    acceleration = 1.5;
+
     IMAGES_ROTATING = [
         'img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
         'img/6_salsa_bottle/bottle_rotation/2_bottle_rotation.png',
@@ -21,44 +24,57 @@ class ThrowableObject extends MovableObject {
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png'
     ];
 
+
     constructor(x, y) {
         super().loadImage('img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png');
         this.loadImages(this.IMAGES_ROTATING);
         this.loadImages(this.IMAGES_SPLASHING);
         this.x = x;
         this.y = y;
-        this.height = 75;
-        this.width = 70;
+        this.height = 65;
+        this.width = 60;
         this.throw();
         this.animation();
     }
 
 
     throw() {
-        this.speedY = 30;
+        this.speedY = 20;
         this.applyGravity();
-        let intervalId = setInterval(() => {
-            if (this.y >= 480) {                            // wenn y-achse größer als 480
-                clearInterval(intervalId);                  // stoppe das Interval
+        setInterval(() => {
+
+
+            if (this.bottleIsInAir()) {
+                this.x += 4;
             }
-            else {
-                this.x += 10;
+
+            if (this.bottleIsOnGround()) {
+                this.speedY = -10;
             }
+
         }, 25);
     };
 
 
     animation() {
         let shouldPlayRotation = true;
-
         setInterval(() => {
-            if (world.endBossIsHit) {                                   // wenn der Endboss gehittet wurde UND die SplashAnimation nocht nicht abgespielt wurde
-                this.playAnimations(this.IMAGES_SPLASHING);             // spiele die SplashAnimation
-                shouldPlayRotation = false;                             // spiele die Rotation nicht mehr ab
-            } else
-                if (shouldPlayRotation) {                            // wenn die Rotate animation abspielen soll (= true)  
-                    this.playAnimations(this.IMAGES_ROTATING);              // spiele die Rotate Animation ab
-                }
+            if (this.enemyIsHit || this.bottleIsOnGround()) {
+                this.playAnimations(this.IMAGES_SPLASHING);
+                shouldPlayRotation = false;
+            } else if (shouldPlayRotation) {
+                this.playAnimations(this.IMAGES_ROTATING);
+            }
         }, 50);
     }
+
+
+    bottleIsInAir() {
+        return (this.y + this.height) - this.offset.bottom < 360;
+    }
+
+    bottleIsOnGround() {
+        return (this.y + this.height) - this.offset.bottom > 390;
+    }
+
 }

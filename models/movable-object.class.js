@@ -7,17 +7,12 @@ class MovableObject extends DrawableObject {
     lastHit = 0;
     energy = 10000;
     endBossEnergy = 100;
+    endBosslastHit = false;
+    lastY = 0;
 
 
     characterIsFalling() {
         return this.speedY < 0;
-    };
-
-    isColliding(obj) {
-        return this.charRightCollideObjLeft(obj) &&
-            this.charBottomCollideObjTop(obj) &&
-            this.charLeftCollideObjRight(obj) &&
-            this.charTopCollideObjBottom(obj);
     };
 
 
@@ -35,7 +30,16 @@ class MovableObject extends DrawableObject {
         this.endBossEnergy -= 20;
         if (this.endBossEnergy < 0) {
             this.endBossEnergy = 0
+        } else {
+            this.endBosslastHit = new Date().getTime();
         }
+    }
+
+
+    endBossHurt() {
+        let timePassed = new Date().getTime() - this.endBosslastHit;
+        timePassed = timePassed / 1000;
+        return timePassed < 0.75;
     }
 
 
@@ -58,6 +62,29 @@ class MovableObject extends DrawableObject {
         this.currentImage++;
     }
 
+
+    applyGravity() {
+        setInterval(() => {
+            if (this.isAboveGround() || this.speedY > 0) {      // speedY wird in der JumpFunktion auf 30 gesetzt
+                this.y -= this.speedY;                          // y ist = 30 - -2.5 = 32,5
+                this.speedY -= this.acceleration;               // speedY ist = 0 - 2.5 = -2.5  (Beim Springen wird von speedY(30) immer 2.5px abgezogen)
+            } else {
+                this.speedY = 0;
+            }
+
+        }, 1000 / 25);
+    }
+
+
+    isAboveGround() {
+        if (this instanceof ThrowableObject) {
+            return true;
+        } else {
+            return this.y < 220;
+        }
+    };
+
+
     moveRight() {
         this.x += this.speed;
     }
@@ -69,33 +96,22 @@ class MovableObject extends DrawableObject {
 
 
     jump() {
-        this.speedY = 30; //
+        this.speedY = 25; //
     }
 
     smallJump() {
-        this.speedY = 20; //
+        this.speedY = 15; //
+
     }
 
 
-    applyGravity() {
-        setInterval(() => {
-            if (this.isAboveGround() || this.speedY > 0) {      // speedY wird in der JumpFunktion auf 30 gesetzt
-                this.y -= this.speedY;                          // y ist = 30 - -2.5 = 32,5
-                this.speedY -= this.acceleration;               // speedY ist = 0 - 2.5 = -2.5  (Beim Springen wird von speedY(30) immer 2.5px abgezogen)
-            }
-        }, 1000 / 25);
-    }
 
-
-    isAboveGround() {
-        if (this instanceof ThrowableObject) {
-            return true;
-        } else {
-            return this.y < 130; // y kleiner als 130 heißt das er den Boden nicht berührt hat 
-        }
+    isColliding(obj) {
+        return this.charRightCollideObjLeft(obj) &&
+            this.charBottomCollideObjTop(obj) &&
+            this.charLeftCollideObjRight(obj) &&
+            this.charTopCollideObjBottom(obj);
     };
-
-
 
     //Rechte Seite von Pepe trifft Linke Seite von ieinem Objekt
     charRightCollideObjLeft(obj) {
@@ -159,9 +175,4 @@ class MovableObject extends DrawableObject {
     objBottom(obj) {
         return (obj.y + obj.height) - obj.offset.bottom;  // Die Untere Seite von den Objekten (Offsetlinie) 
     };
-
-
-    charOverChicken() {
-        return ((this.y + this.height) - this.offset.bottom) > 370;
-    }
 }

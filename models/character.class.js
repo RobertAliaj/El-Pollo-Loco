@@ -1,15 +1,15 @@
 class Character extends MovableObject {
 
-    height = 300;
-    width = 150;
-    y = 135;
-    speed = 15;
+    height = 200;
+    width = 100;
+    speed = 9;
     offset = {
-        top: 125,
-        left: 50,
-        right: 50,
+        top: 110,
+        left: 30,
+        right: 30,
         bottom: 15,
     };
+
 
     IMAGES_WALKING = [
         'img/2_character_pepe/2_walk/W-22.png',
@@ -52,57 +52,74 @@ class Character extends MovableObject {
 
 
     constructor() {
-        super().loadImage('img/2_character_pepe/2_walk/W-21.png');   // lade ein Bild hoch
-        this.loadImages(this.IMAGES_WALKING);                       //lade die arrays hoch
-        this.loadImages(this.IMAGES_JUMPING);                       //lade die arrays hoch
-        this.loadImages(this.IMAGES_DEAD);                          //lade die arrays hoch
-        this.loadImages(this.IMAGES_HURT);                          //lade die arrays hoch
-        this.applyGravity();                                        // gravitation anwenden
-        this.animate();                                             // animiere die Bewegungen
+        super().loadImage('img/2_character_pepe/2_walk/W-21.png');
+        this.loadImages(this.IMAGES_WALKING);
+        this.loadImages(this.IMAGES_JUMPING);
+        this.loadImages(this.IMAGES_DEAD);
+        this.loadImages(this.IMAGES_HURT);
+        this.applyGravity();
+        this.animate();
+        console.log(this.y);
     }
-
-
+    
+    
     animate() {
 
-        // dieses Interval ist um zu bewegen und um die Audios zu spielen
         setInterval(() => {
-            this.walking_sound.pause();                                          // jedes mal wenn die funktion aufgerufen wird, soll die audio pausiert werden
-            if (world.keyboard.RIGHT && this.x < level1.level_end_x) {         // wenn das rechte Pfeiltaste gedrückt wurde UND die x-achse kleiner ist als level_end_x (die Canvas Länge)
-                this.moveRight();                                                   // dann laufe rechts
+            if (world.keyboard.RIGHT && this.x < 719 * 3 + 120) {
+                this.moveRight();
                 this.otherDirection = false;
-                this.walking_sound.play();                                     // spiele diese Audio
+                world.camera_x = -this.x + 120;
             }
 
-            if (world.keyboard.LEFT && this.x > 0) {                        // wenn die linke Pfeiltaste gedrückt wurde UND die x-achse größer ist als null
-                this.moveLeft();                                                 // dann laufe links
+            if (world.keyboard.RIGHT && this.x < level1.level_end_x && this.x > 719 * 3 + 120) {
+                this.moveRight();
+                this.otherDirection = false;
+                world.camera_x = - 719 * 3;
+            }
+
+
+
+            if (world.keyboard.LEFT && this.x > 0 && this.x < 719 * 3 + 120) {
+                this.moveLeft();
                 this.otherDirection = true;
-                this.walking_sound.play();                                      // spiele diese Audio
+                world.camera_x = -this.x + 120;
             }
 
-            if (world.keyboard.SPACE && !this.isAboveGround()) {           // wenn die Spacetaste gedrückt wurde UND isAboveGround = false ist(heißt der Character ist auf dem Boden) 
-                this.jump();                                                    // dann springe
-                this.jump_sound.play();
+
+            if (world.keyboard.LEFT && this.x < level1.level_end_x + 10 && this.x > 719 * 3 + 120) {
+                this.moveLeft();
+                this.otherDirection = true;
+                world.camera_x = -719 * 3;
             }
 
-            world.camera_x = -this.x + 100;                                  // "bewege" die Kamera, camera_x ist = 0 - x Koordinate vom Character (120) + 100; An sich wird nicht die Kamera bewegt, sondern das Ganze Bild neu gezeichnet mit den neuen Koordinaten durch die "Camera_x" Variable und die translate Methode
-        }, 1000 / 60);                                                          // das wird 60 mal pro sekunde ausgeführt
 
 
-        // dieses Interval ist nur um die Verschiedenen Bilder anzuzeigen
+
+            if (world.keyboard.SPACE && !this.isAboveGround()) {
+                this.jump();
+                // this.jump_sound.play();
+            }
+        }, 1000 / 60);
+
+
+
+
+
         setInterval(() => {
-            // if (this.isDead()) {                                                // wenn isDead ist = true;
-            //     this.playAnimations(this.IMAGES_DEAD);                          // dann spiele die DEAD bilder durch
+            // if (this.isDead()) {                                              
+            //     this.playAnimations(this.IMAGES_DEAD);                       
             // } else 
-            if (this.isHurt()) {                                         // wenn isHurt = true  
-                this.playAnimations(this.IMAGES_HURT);                          // dann spiele die Hurt Bilder durch
-            } else 
-            if (this.isAboveGround()) {                                         // wenn isAboveGround = true
-                this.playAnimations(this.IMAGES_JUMPING);                       // dann spiele die Jumping Bilder durch
-            } else if (world.keyboard.RIGHT || world.keyboard.LEFT) { // wenn rechts oder links gedrückt wurde    
-                this.playAnimations(this.IMAGES_WALKING);                       // dann speiele die Walk Bilder durch
-            } else {
-                this.img = this.imageCache['img/2_character_pepe/3_jump/J-39.png']; // ansosnten zeig einfach das stehende bild an
-            }
-        }, 120);                                                                // jede 120 millisekunden
+            if (this.isHurt()) {
+                this.playAnimations(this.IMAGES_HURT);
+            } else
+                if (this.isAboveGround()) {
+                    this.playAnimations(this.IMAGES_JUMPING);
+                } else if (world.keyboard.RIGHT || world.keyboard.LEFT) {
+                    this.playAnimations(this.IMAGES_WALKING);
+                } else {
+                    this.img = this.imageCache['img/2_character_pepe/3_jump/J-39.png'];
+                }
+        }, 120);
     }
 }
