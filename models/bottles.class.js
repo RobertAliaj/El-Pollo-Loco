@@ -13,6 +13,6 @@ class Bottle extends MovableObject {
 
         this.x = x + Math.random() * 300;
 
-        this.y = 360;
+        this.y = 370;
     }
 }

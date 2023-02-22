@@ -7,7 +7,7 @@ class Character extends MovableObject {
         top: 110,
         left: 30,
         right: 30,
-        bottom: 15,
+        bottom: 5,
     };
 
 

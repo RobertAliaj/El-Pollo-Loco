@@ -49,9 +49,12 @@ class ThrowableObject extends MovableObject {
             }
 
             if (this.bottleIsOnGround()) {
-                this.speedY = -10;
+                this.speedY = 1;
             }
 
+            if (this.enemyIsHit) {
+                this.speedY = 1;
+            }
         }, 25);
     };
 
@@ -70,11 +73,10 @@ class ThrowableObject extends MovableObject {
 
 
     bottleIsInAir() {
-        return (this.y + this.height) - this.offset.bottom < 360;
+        return (this.y + this.height) - this.offset.bottom < 370;
     }
 
     bottleIsOnGround() {
-        return (this.y + this.height) - this.offset.bottom > 390;
+        return (this.y + this.height) - this.offset.bottom > 440;
     }
-
 }

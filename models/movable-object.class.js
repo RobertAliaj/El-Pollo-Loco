@@ -70,6 +70,7 @@ class MovableObject extends DrawableObject {
                 this.speedY -= this.acceleration;               // speedY ist = 0 - 2.5 = -2.5  (Beim Springen wird von speedY(30) immer 2.5px abgezogen)
             } else {
                 this.speedY = 0;
+                this.y = 220;
             }
 
         }, 1000 / 25);
@@ -91,19 +92,18 @@ class MovableObject extends DrawableObject {
 
 
     moveLeft() {
-        this.x -= this.speed; // speed ist = 0.1, ausser wenn es bei einer Anderen Class wo diese Funktion aufgereufen wird anders definiert ist 
+        this.x -= this.speed;
     }
 
 
     jump() {
-        this.speedY = 25; //
+        this.speedY = 20;
     }
 
     smallJump() {
-        this.speedY = 15; //
+        this.speedY = 10;
 
     }
-
 
 
     isColliding(obj) {

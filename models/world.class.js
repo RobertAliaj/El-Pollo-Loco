@@ -46,22 +46,12 @@ class World {
             this.bottleHitChicken();
             this.bottleHitEndBoss();
             this.startEndBossLeft();
+            this.bottleHitGround();
         }, 50);
 
         setInterval(() => {
             this.charhitChicken();
-        }, 1000 / 10);
-
-
-        setInterval(() => {
-            //     console.log(this.character.y);
-            //     console.log('Normal', this.character.speedY);
-
-            //     this.chickens.forEach(chicken => {
-            //         console.log('chicken Y', chicken.y + chicken.offset.top);
-            // });
-            // console.log('Pepe BottomLine', (this.character.y + this.character.height) - this.character.offset.bottom);
-        }, 1000 / 60);
+        }, 1);
 
     }
 
@@ -69,9 +59,6 @@ class World {
     charhitChicken() {
         this.chickens.forEach((enemy, chickenIndex) => {
             if (this.character.isColliding(enemy) && this.character.characterIsFalling()) {
-                console.log('Chicken TopLine', enemy.y + enemy.offset.top);
-                console.log('Pepe BottomLine', (this.character.y + this.character.height) - this.character.offset.bottom);
-                console.log('');
                 this.character.smallJump();
                 enemy.energy = 0;
                 this.chickens.splice(chickenIndex, 1);
@@ -79,15 +66,6 @@ class World {
             }
         });
     }
-
-
-    //remove chicken from the Main Array after 300 Milliseconds
-    removeChicken(chickenIndex) {
-        setTimeout(() => {
-            this.allEnemies.splice(chickenIndex, 1);
-        }, 300);
-    }
-
 
     enemyHitChar() {
         this.allEnemies.forEach((enemy) => {
@@ -102,14 +80,10 @@ class World {
     bottleHitEndBoss() {
         this.throwableObjects.forEach((bottle) => {
             if (bottle.isColliding(this.endBoss) && !bottle.enemyIsHit) {
+                bottle.enemyIsHit = true
                 this.endBoss.endBossHurt();
                 this.endBossStatusBar.setPercentage(this.endBoss.endBossEnergy);
-                bottle.enemyIsHit = true;
-                setTimeout(() => {
-                    console.log(this.throwableObjects.indexOf(bottle));
-                    this.throwableObjects.splice(this.throwableObjects.indexOf(bottle), 1);
-                }, 500);
-                // this.endBoss.energy = 0;
+                this.removeBottle(bottle);
             }
         });
     }
@@ -118,35 +92,54 @@ class World {
     bottleHitChicken() {
         this.throwableObjects.forEach((bottle) => {
             this.chickens.forEach((enemy, chickenIndex) => {
-                if (bottle.isColliding(enemy)) {
-                    this.enemyIsHit = true;
+                if (bottle.isColliding(enemy) && !bottle.enemyIsHit) {
+                    bottle.enemyIsHit = true;
                     enemy.energy = 0;
                     this.chickens.splice(chickenIndex, 1);
                     this.removeChicken(chickenIndex);
-                    this.bottleSlowFall(bottle);
-                    console.log(bottle.y);
+                    this.removeBottle(bottle);
                 }
             });
         });
     }
 
 
-    bottleSlowFall(bottle) {
-        bottle.speedY = 2;
-        bottle.acceleration = 2;
+    bottleHitGround() {
+        this.throwableObjects.forEach((bottle) => {
+            if (bottle.bottleIsOnGround() && !bottle.enemyIsHit) {
+                bottle.enemyIsHit = true;
+                this.removeBottle(bottle);
+            }
+        });
+    }
+
+
+    //remove chicken from the Main Array after 300 Milliseconds
+    removeChicken(chickenIndex) {
+        setTimeout(() => {
+            this.allEnemies.splice(chickenIndex, 1);
+        }, 300);
+    }
+
+
+    removeBottle(bottle) {
+        setTimeout(() => {
+            this.throwableObjects.splice(this.throwableObjects.indexOf(bottle), 1);
+        }, 300);
     }
 
 
     throwBottle() {
         this.enemyIsHit = false;
-        const currentTime = Date.now();                                                     // setze die Zeit fest wann die Funktion letzes mal ausgeführt wurde
-        if (this.keyboard.D && (currentTime - this.lastThrowTime >= 200)) {                 // wenn d gedrückt wurde und die letze flasche vor mindestens 200 millisekunden geworfen wurde 
-            if (this.throwableObjects.length < this.collectedBottles) {                     // wenn die länge von flaschen kleiner ist als gesammelte flaschen insgesamt
+        const currentTime = Date.now();                                                           // setze die Zeit fest wann die Funktion letzes mal ausgeführt wurde
+        if (this.keyboard.D && (currentTime - this.lastThrowTime >= 200)) {                       // wenn d gedrückt wurde und die letze flasche vor mindestens 200 millisekunden geworfen wurde 
+            if (this.throwableObjects.length < this.collectedBottles && this.bottleAmount > 0) { // wenn die länge von flaschen kleiner ist als gesammelte flaschen insgesamt und der Flaschenbestand > 0
                 this.createNewBottle();
                 this.bottleAmount--;
                 this.bottleStatusBar.setBottleNumber(this.bottleAmount);
                 this.lastThrowTime = currentTime;
-                console.log(this.throwableObjects);
+                console.log('Length',this.throwableObjects.length);
+                console.log('Collected Bottles',this.collectedBottles);
             }
         }
     }
@@ -237,6 +230,7 @@ class World {
                 this.level.bottle.splice(index, 1);                 // lösche das collected Object aus dem Array und etferne es somit aus dem Canvas
                 this.collectedBottles++;
                 this.bottleAmount++;
+                // console.log('Beim Aufheben', this.bottleAmount);
                 this.bottleStatusBar.setBottleNumber(this.bottleAmount);
             }
         });
