@@ -5,9 +5,7 @@ class MovableObject extends DrawableObject {
     speedY = 0;             //  ist die Geschwindigkeit nach unten
     acceleration = 2.5;     //  ist die Beschleunigung
     lastHit = 0;
-    energy = 10000;
-    endBossEnergy = 100;
-    endBosslastHit = false;
+    energy = 100;
     lastY = 0;
 
 
@@ -17,29 +15,12 @@ class MovableObject extends DrawableObject {
 
 
     hit() {
-        this.energy -= 5;
+        // this.energy -= 5;
         if (this.energy < 0) {
             this.energy = 0;
         } else {
             this.lastHit = new Date().getTime();
         }
-    }
-
-
-    endBossHit() {
-        this.endBossEnergy -= 20;
-        if (this.endBossEnergy < 0) {
-            this.endBossEnergy = 0
-        } else {
-            this.endBosslastHit = new Date().getTime();
-        }
-    }
-
-
-    endBossHurt() {
-        let timePassed = new Date().getTime() - this.endBosslastHit;
-        timePassed = timePassed / 1000;
-        return timePassed < 0.75;
     }
 
 

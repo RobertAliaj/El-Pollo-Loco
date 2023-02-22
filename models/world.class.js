@@ -51,7 +51,7 @@ class World {
 
         setInterval(() => {
             this.charhitChicken();
-        }, 1);
+        }, 50);
 
     }
 
@@ -71,6 +71,7 @@ class World {
         this.allEnemies.forEach((enemy) => {
             if (this.character.charRightCollideObjLeft(enemy) && this.character.charLeftCollideObjRight(enemy) && !this.character.isAboveGround()) {
                 this.character.hit();
+                this.character.energy -= 1;
                 this.statusBar.setPercentage(this.character.energy);
             }
         });
@@ -80,9 +81,10 @@ class World {
     bottleHitEndBoss() {
         this.throwableObjects.forEach((bottle) => {
             if (bottle.isColliding(this.endBoss) && !bottle.enemyIsHit) {
-                bottle.enemyIsHit = true
-                this.endBoss.endBossHurt();
-                this.endBossStatusBar.setPercentage(this.endBoss.endBossEnergy);
+                bottle.enemyIsHit = true;
+                this.endBoss.energy -= 12;
+                this.endBossStatusBar.setPercentage(this.endBoss.energy);
+                console.log(this.endBoss.energy);
                 this.removeBottle(bottle);
             }
         });
@@ -131,16 +133,12 @@ class World {
 
     throwBottle() {
         this.enemyIsHit = false;
-        const currentTime = Date.now();                                                           // setze die Zeit fest wann die Funktion letzes mal ausgeführt wurde
-        if (this.keyboard.D && (currentTime - this.lastThrowTime >= 200)) {                       // wenn d gedrückt wurde und die letze flasche vor mindestens 200 millisekunden geworfen wurde 
-            if (this.throwableObjects.length < this.collectedBottles && this.bottleAmount > 0) { // wenn die länge von flaschen kleiner ist als gesammelte flaschen insgesamt und der Flaschenbestand > 0
-                this.createNewBottle();
-                this.bottleAmount--;
-                this.bottleStatusBar.setBottleNumber(this.bottleAmount);
-                this.lastThrowTime = currentTime;
-                console.log('Length',this.throwableObjects.length);
-                console.log('Collected Bottles',this.collectedBottles);
-            }
+        const currentTime = Date.now();
+        if (this.keyboard.D && (currentTime - this.lastThrowTime >= 200) && this.throwableObjects.length < this.collectedBottles && this.bottleAmount > 0) {                       // wenn d gedrückt wurde und die letze flasche vor mindestens 200 millisekunden geworfen wurde 
+            this.createNewBottle();
+            this.bottleAmount--;
+            this.bottleStatusBar.setBottleNumber(this.bottleAmount);
+            this.lastThrowTime = currentTime;
         }
     }
 
@@ -254,7 +252,7 @@ class World {
 
 
     startEndBossLeft() {
-        if (this.character.x > 2400) {
+        if (this.character.x > 1500) {
             this.endBoss.startEndBoss = true;
         }
     }

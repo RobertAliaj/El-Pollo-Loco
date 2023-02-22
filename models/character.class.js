@@ -78,23 +78,17 @@ class Character extends MovableObject {
                 world.camera_x = - 719 * 3;
             }
 
-
-
             if (world.keyboard.LEFT && this.x > 0 && this.x < 719 * 3 + 120) {
                 this.moveLeft();
                 this.otherDirection = true;
                 world.camera_x = -this.x + 120;
             }
 
-
             if (world.keyboard.LEFT && this.x < level1.level_end_x + 10 && this.x > 719 * 3 + 120) {
                 this.moveLeft();
                 this.otherDirection = true;
                 world.camera_x = -719 * 3;
             }
-
-
-
 
             if (world.keyboard.SPACE && !this.isAboveGround()) {
                 this.jump();
