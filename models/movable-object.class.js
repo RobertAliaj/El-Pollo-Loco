@@ -6,7 +6,6 @@ class MovableObject extends DrawableObject {
     acceleration = 2.5;     //  ist die Beschleunigung
     lastHit = 0;
     energy = 100;
-    lastY = 0;
 
 
     characterIsFalling() {
@@ -15,7 +14,12 @@ class MovableObject extends DrawableObject {
 
 
     hit() {
-        // this.energy -= 5;
+        if (this instanceof Endboss) {
+            this.energy -= 12;
+        } else {
+            this.energy -= 5;
+        }
+
         if (this.energy < 0) {
             this.energy = 0;
         } else {
@@ -27,12 +31,17 @@ class MovableObject extends DrawableObject {
     isHurt() {
         let timePassed = new Date().getTime() - this.lastHit;
         timePassed = timePassed / 1000;
-        return timePassed < 0.75;
+        if (this instanceof Character) {
+            return timePassed < 0.75;
+        } else {
+            return timePassed < 1;
+        }
     }
 
 
     isDead() {
-        return this.energy == 0;
+        console.log();
+        return this.energy <= 0;
     }
 
 
@@ -83,7 +92,10 @@ class MovableObject extends DrawableObject {
 
     smallJump() {
         this.speedY = 10;
+    }
 
+    bigJump(){
+        this.speedY = 38;
     }
 
 

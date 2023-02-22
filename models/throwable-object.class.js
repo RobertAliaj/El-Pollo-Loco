@@ -43,7 +43,6 @@ class ThrowableObject extends MovableObject {
         this.applyGravity();
         setInterval(() => {
 
-
             if (this.bottleIsInAir()) {
                 this.x += 4;
             }

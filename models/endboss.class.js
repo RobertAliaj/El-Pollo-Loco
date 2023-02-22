@@ -4,7 +4,12 @@ class Endboss extends MovableObject {
     width = 250;
     y = 45;
     speed = 1;
+
     startEndBoss = false;
+    attack = false;
+    firstSight = true;
+    start = true;
+
     offset = {
         top: 135,
         left: 40,
@@ -58,50 +63,93 @@ class Endboss extends MovableObject {
     ];
 
 
-    hasTurnedRight = false;
-
-
-
     constructor() {
         super().loadImage('img/4_enemie_boss_chicken/2_alert/G5.png');
-        this.loadImages(this.IMAGES_ALERT);
         this.loadImages(this.IMAGES_WALK);
+        this.loadImages(this.IMAGES_ALERT);
+        this.loadImages(this.IMAGES_ATTACK);
+        this.loadImages(this.IMAGES_HURT);
+        this.loadImages(this.IMAGES_DEAD);
 
-        this.x = 2500;
+        this.x = 2400;
         this.animate();
         this.run();
     }
 
-
     run() {
-        setInterval(() => {
-            this.endBossTurnAround();
-        }, 200);
+        setTimeout(() => {
+            setInterval(() => {
+                this.endBossTurnAround();
+            }, 200);
+        }, 2000);
     }
 
     animate() {
+        this.moveLeftOrRightInterval();
+        this.imageAnimateInterval();
+    }
 
+
+    moveLeftOrRightInterval() {
         setInterval(() => {
-
             if (this.hasTurnedRight) {
                 this.moveRight();
                 this.otherDirection = true;
-            } else if (!this.hasTurnedRight && this.startEndBoss) {
+            }
+            else if (!this.hasTurnedRight && this.startEndBoss) {
                 this.moveLeft();
                 this.otherDirection = false;
-                console.log(this.x);
             }
         }, 1000 / 200);
+    }
 
-        setInterval(() => {
-            // if (this.isDead()) {
-            //     this.playAnimations(this.IMAGES_ALERT);
-            // }
-            if (this.startEndBoss) {
-                this.playAnimations(this.IMAGES_WALK);
-            }
-            // this.playAnimations(this.IMAGES_ALERT);
-        }, 200);
+
+    imageAnimateInterval() {
+        setTimeout(() => {
+            let intervalId = setInterval(() => {
+                if (this.isDead()) {
+                    this.playDeadAnimations(intervalId);
+                } else if (this.isHurt()) {
+                    this.playHurtAnimations();
+                } else if (this.isHurt && this.attack) {
+                    this.playAnimations(this.IMAGES_ATTACK);
+                } else if (this.charMeetEndBoss() && this.firstSight) {
+                    this.playAlertAnimations();
+                } else if (this.startEndBoss) {
+                    this.playWalkAnimations();
+                }
+            }, 200);
+        }, 5000);
+    }
+
+
+    playDeadAnimations(intervalId) {
+        this.playAnimations(this.IMAGES_DEAD);
+        this.speed = 0;
+        setTimeout(() => {
+            clearInterval(intervalId);
+        }, 1200);
+    }
+
+
+    playHurtAnimations() {
+        this.playAnimations(this.IMAGES_HURT);
+        this.attack = true;
+    }
+
+
+    playAlertAnimations() {
+        setTimeout(() => {
+            this.firstSight = false;
+        }, 1000);
+        this.speed = 0;
+        this.playAnimations(this.IMAGES_ALERT)
+    }
+
+
+    playWalkAnimations() {
+        this.speed = 1;
+        this.playAnimations(this.IMAGES_WALK);
     }
 
 
@@ -114,7 +162,6 @@ class Endboss extends MovableObject {
         }
     }
 
-
     shouldTurnRight() {
         return (this.x + this.width + 30) < world.character.x;  // Pepe ist weiter Rechts als endBoss
     }
@@ -123,4 +170,13 @@ class Endboss extends MovableObject {
     shouldTurnLeft() {
         return (this.x - 30) > world.character.x + world.character.width; // EndBoss ist weiter Rechts als Pepe
     }
+
+
+    charMeetEndBoss() {
+        return (this.x - 10) > world.character.x + world.character.width && (world.character.x + world.character.width) > this.x - 200;
+    }
+
+
+
+    // der SetTimeOut um den animationenInterval wurde gemacht weil er ansosnten die ersten 5 Sekunden ein Fehler gibt weil charakter nicht gefunden werden kann
 }

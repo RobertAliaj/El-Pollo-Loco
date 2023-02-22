@@ -71,7 +71,6 @@ class World {
         this.allEnemies.forEach((enemy) => {
             if (this.character.charRightCollideObjLeft(enemy) && this.character.charLeftCollideObjRight(enemy) && !this.character.isAboveGround()) {
                 this.character.hit();
-                this.character.energy -= 1;
                 this.statusBar.setPercentage(this.character.energy);
             }
         });
@@ -82,9 +81,8 @@ class World {
         this.throwableObjects.forEach((bottle) => {
             if (bottle.isColliding(this.endBoss) && !bottle.enemyIsHit) {
                 bottle.enemyIsHit = true;
-                this.endBoss.energy -= 12;
+                this.endBoss.hit();
                 this.endBossStatusBar.setPercentage(this.endBoss.energy);
-                console.log(this.endBoss.energy);
                 this.removeBottle(bottle);
             }
         });
@@ -228,7 +226,6 @@ class World {
                 this.level.bottle.splice(index, 1);                 // lösche das collected Object aus dem Array und etferne es somit aus dem Canvas
                 this.collectedBottles++;
                 this.bottleAmount++;
-                // console.log('Beim Aufheben', this.bottleAmount);
                 this.bottleStatusBar.setBottleNumber(this.bottleAmount);
             }
         });
@@ -252,7 +249,7 @@ class World {
 
 
     startEndBossLeft() {
-        if (this.character.x > 1500) {
+        if (this.character.x > 2000) {
             this.endBoss.startEndBoss = true;
         }
     }
