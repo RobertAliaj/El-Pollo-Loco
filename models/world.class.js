@@ -15,14 +15,12 @@ class World {
     endBossIcon = new EndBossStatusBarIcon();
     endBossStatusBar = new EndBossStatusBar();
 
-    throwableObjects = [];
-
     collectedBottles = 0;
     bottleAmount = 0;
     collectedCoins = 0;
     lastThrowTime = 0;
 
-
+    throwableObjects = [];
     allEnemies = this.level.enemies;
     chickens = this.level.enemies.slice(0, -1);
     endBoss = this.level.enemies[this.level.enemies.length - 1];
@@ -51,8 +49,7 @@ class World {
 
         setInterval(() => {
             this.charhitChicken();
-        }, 50);
-
+        }, 25);
     }
 
 
@@ -66,6 +63,7 @@ class World {
             }
         });
     }
+
 
     enemyHitChar() {
         this.allEnemies.forEach((enemy) => {
@@ -104,6 +102,13 @@ class World {
     }
 
 
+    removeChicken(chickenIndex) {
+        setTimeout(() => {
+            this.allEnemies.splice(chickenIndex, 1);
+        }, 300);
+    }
+
+
     bottleHitGround() {
         this.throwableObjects.forEach((bottle) => {
             if (bottle.bottleIsOnGround() && !bottle.enemyIsHit) {
@@ -111,14 +116,6 @@ class World {
                 this.removeBottle(bottle);
             }
         });
-    }
-
-
-    //remove chicken from the Main Array after 300 Milliseconds
-    removeChicken(chickenIndex) {
-        setTimeout(() => {
-            this.allEnemies.splice(chickenIndex, 1);
-        }, 300);
     }
 
 
@@ -132,7 +129,7 @@ class World {
     throwBottle() {
         this.enemyIsHit = false;
         const currentTime = Date.now();
-        if (this.keyboard.D && (currentTime - this.lastThrowTime >= 200) && this.throwableObjects.length < this.collectedBottles && this.bottleAmount > 0) {                       // wenn d gedrückt wurde und die letze flasche vor mindestens 200 millisekunden geworfen wurde 
+        if (this.canThrowBottle(currentTime)) {
             this.createNewBottle();
             this.bottleAmount--;
             this.bottleStatusBar.setBottleNumber(this.bottleAmount);
@@ -141,71 +138,14 @@ class World {
     }
 
 
+    canThrowBottle(currentTime) {
+        return this.keyboard.D && (currentTime - this.lastThrowTime >= 200) && this.throwableObjects.length < this.collectedBottles && this.bottleAmount > 0;
+    }
+
+    
     createNewBottle() {
-        let bottle = new ThrowableObject(this.character.x + 20, this.character.y + 20); // erstelle eine neue Flasche an den Koordinaten Pepex+100, pepey+100
-        this.throwableObjects.push(bottle);                                               // pushe es in das Array throableObjects
-    }
-
-
-    // hier werden die Elemente in das Canvas Element gezeichnet
-    draw() {
-
-        // die zeile löscht alle Elemente aus dem Canvas
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
-        this.ctx.translate(this.camera_x, 0);                    //camera_x wird kriegt den Wert beim Character, die translate-Methode braucht 2 Argumente, x und y 
-        this.addObjectsToMap(this.level.backgroundObjects);
-        this.addObjectsToMap(this.level.clouds);
-
-        this.ctx.translate(-this.camera_x, 0);
-        this.addToMap(this.endBossStatusBar);
-        this.addToMap(this.endBossIcon);
-        this.addToMap(this.statusBar);
-        this.addToMap(this.bottleStatusBar);
-        this.addToMap(this.bottleBarIcon);
-        this.addToMap(this.coinBar);
-        this.addToMap(this.coinBarIcon);
-        this.ctx.translate(this.camera_x, 0);
-
-        this.addToMap(this.character);
-        this.addObjectsToMap(this.level.enemies);
-        this.addObjectsToMap(this.throwableObjects);
-        this.addObjectsToMap(this.level.bottle);
-        this.addObjectsToMap(this.level.coins);
-        this.ctx.translate(-this.camera_x, 0);
-
-        requestAnimationFrame(() => {
-            this.draw();
-        });
-    }
-
-
-    setWorld() {
-        this.endBoss.world = this;
-    }
-
-
-    //hier werden alle variablen die mehrere Objekte drin haben (arrays) in das Canvas Element gezeichnet
-    // die Varible "Object" sind die Arrays von oben mit den Objekten, also die chicken, die Wolken, das Background etc.. 
-    addObjectsToMap(objects) {
-        objects.forEach(o => {
-            this.addToMap(o);
-        });
-    }
-
-    // hier werden die Objekte EFFEKTIV in das Canvas Element gezeichnet,  "mo" ist ein Objekt (character, chicken usw..) 
-    addToMap(mo) {
-
-        if (mo.otherDirection) {
-            this.flipImage(mo); // diese Zeile flipt nicht nur den Character, sondern das ganze Bild
-        }
-
-        mo.draw(this.ctx)       // hier werden alle daten definiert wo und wie das Objekt gezeichnet werden soll
-        mo.drawFrame(this.ctx)
-
-        if (mo.otherDirection) {
-            this.flipImageBack(mo);  // setzt noch mal alles auf die richtige Richtung, ausser dem Character
-        }
+        let bottle = new ThrowableObject(this.character.x + 50, this.character.y + 70, this.character.otherDirection);
+        this.throwableObjects.push(bottle);
     }
 
 
@@ -223,12 +163,90 @@ class World {
     collectBottles() {
         this.level.bottle.forEach((bottle, index) => {
             if (this.character.isColliding(bottle)) {
-                this.level.bottle.splice(index, 1);                 // lösche das collected Object aus dem Array und etferne es somit aus dem Canvas
+                this.level.bottle.splice(index, 1);
                 this.collectedBottles++;
                 this.bottleAmount++;
                 this.bottleStatusBar.setBottleNumber(this.bottleAmount);
             }
         });
+    }
+
+
+    startEndBossLeft() {
+        if (this.character.x > 2000) {
+            this.endBoss.startEndBoss = true;
+        }
+    }
+
+
+    draw() {
+        this.clearCanvas();
+        this.ctx.translate(this.camera_x, 0);
+        this.drawMap(this.level.backgroundObjects);
+        this.drawMap(this.level.clouds);
+
+        this.ctx.translate(-this.camera_x, 0);
+        this.drawStatusBar();
+        this.ctx.translate(this.camera_x, 0);
+
+        this.drawObjects(this.level.enemies);
+        this.drawObjects(this.throwableObjects);
+        this.drawObjects(this.level.bottle);
+        this.drawObjects(this.level.coins);
+        this.ctx.translate(-this.camera_x, 0);
+
+        requestAnimationFrame(() => {
+            this.draw();
+        });
+    }
+
+
+    clearCanvas() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+
+
+    drawMap(objects) {
+        this.addObjectsToMap(objects);
+    }
+
+
+    drawStatusBar() {
+        this.addToMap(this.endBossStatusBar);
+        this.addToMap(this.endBossIcon);
+        this.addToMap(this.statusBar);
+        this.addToMap(this.bottleStatusBar);
+        this.addToMap(this.bottleBarIcon);
+        this.addToMap(this.coinBar);
+        this.addToMap(this.coinBarIcon);
+    }
+
+
+    drawObjects(objects) {
+        this.addObjectsToMap(objects);
+        this.addToMap(this.character);
+    }
+
+
+    addObjectsToMap(objects) {
+        objects.forEach(o => {
+            this.addToMap(o);
+        });
+    }
+
+
+    addToMap(mo) {
+
+        if (mo.otherDirection) {
+            this.flipImage(mo);
+        }
+
+        mo.draw(this.ctx)
+        mo.drawFrame(this.ctx)
+
+        if (mo.otherDirection) {
+            this.flipImageBack(mo);
+        }
     }
 
 
@@ -244,14 +262,4 @@ class World {
         mo.x = mo.x * -1;
         this.ctx.restore();
     }
-
-
-
-
-    startEndBossLeft() {
-        if (this.character.x > 2000) {
-            this.endBoss.startEndBoss = true;
-        }
-    }
-
 }

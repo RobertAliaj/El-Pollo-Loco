@@ -25,7 +25,4 @@ class adshgj {
     //     // this ist die ganze Instanz von der World-class, in anderen Worten alle Daten von WorldClass
     //     this.character.world = this;
     // }
-
-
-
 }

@@ -4,11 +4,10 @@ class Endboss extends MovableObject {
     width = 250;
     y = 45;
     speed = 1;
-
     startEndBoss = false;
     attack = false;
     firstSight = true;
-    start = true;
+    turnRight = false;
 
     offset = {
         top: 135,
@@ -72,54 +71,78 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_DEAD);
 
         this.x = 2400;
+        this.checkTurnAround();
         this.animate();
-        this.run();
     }
 
-    run() {
-        setTimeout(() => {
-            setInterval(() => {
-                this.endBossTurnAround();
-            }, 200);
-        }, 2000);
+
+    checkTurnAround() {
+        setTimeout(() => this.canTurnAround(), 2000);
     }
+
+
+    canTurnAround() {
+        setInterval(() => this.endBossTurnAround(), 200)
+    }
+
 
     animate() {
-        this.moveLeftOrRightInterval();
-        this.imageAnimateInterval();
+        this.moveEndBoss();
+        this.animateImages();
     }
 
 
-    moveLeftOrRightInterval() {
+    moveEndBoss() {
         setInterval(() => {
-            if (this.hasTurnedRight) {
+            if (this.canMoveRight())
                 this.moveRight();
-                this.otherDirection = true;
-            }
-            else if (!this.hasTurnedRight && this.startEndBoss) {
+            if (this.canMoveLeft())
                 this.moveLeft();
-                this.otherDirection = false;
-            }
         }, 1000 / 200);
     }
 
 
-    imageAnimateInterval() {
-        setTimeout(() => {
-            let intervalId = setInterval(() => {
-                if (this.isDead()) {
-                    this.playDeadAnimations(intervalId);
-                } else if (this.isHurt()) {
-                    this.playHurtAnimations();
-                } else if (this.isHurt && this.attack) {
-                    this.playAnimations(this.IMAGES_ATTACK);
-                } else if (this.charMeetEndBoss() && this.firstSight) {
-                    this.playAlertAnimations();
-                } else if (this.startEndBoss) {
-                    this.playWalkAnimations();
-                }
-            }, 200);
-        }, 5000);
+    canMoveRight() {
+        return this.turnRight;
+    }
+
+
+    moveRight() {
+        super.moveRight();
+        this.otherDirection = true;
+    }
+
+
+    canMoveLeft() {
+        return !this.turnRight && this.startEndBoss;
+    }
+
+
+    moveLeft() {
+        super.moveLeft();
+        this.otherDirection = false;
+    }
+
+
+    animateImages() {
+        setTimeout(() => this.playImages(), 5000);
+    }
+
+
+    playImages() {
+        let intervalId = setInterval(() => {
+            if (this.isDead()) {
+                this.playDeadAnimations(intervalId);
+            } else if (this.isHurt()) {
+                this.playHurtAnimations();
+            } else if (this.canAttack()) {
+                this.playAnimations(this.IMAGES_ATTACK);
+            } else if (this.canAlert()) {
+                this.playAlertAnimations();
+            } else if (this.canWalk()) {
+                this.playWalkAnimations();
+            }
+        }, 200);
     }
 
 
@@ -138,32 +161,52 @@ class Endboss extends MovableObject {
     }
 
 
+    canAttack() {
+        return this.isHurt && this.attack;
+    }
+
+
+    canAlert() {
+        return this.charMeetEndBoss() && this.firstSight;
+    }
+
+
     playAlertAnimations() {
-        setTimeout(() => {
-            this.firstSight = false;
-        }, 1000);
-        this.speed = 0;
+        setTimeout(() => this.firstSight = false, 1000);
         this.playAnimations(this.IMAGES_ALERT)
     }
 
 
+    canWalk() {
+        return this.startEndBoss;
+    }
+
+
     playWalkAnimations() {
-        this.speed = 1;
         this.playAnimations(this.IMAGES_WALK);
     }
 
 
     endBossTurnAround() {
-        if (this.shouldTurnRight() && !this.hasTurnedRight) { // Pepe Weiter rechts is als endBoss
-            this.hasTurnedRight = true;     // turn true
-
-        } else if (this.hasTurnedRight && this.shouldTurnLeft()) {   // true und EndBoss weiter Rechts ist als Pepe
-            this.hasTurnedRight = false;                               // False
-        }
+        if (this.canTurnRight())        // Pepe Weiter rechts is als endBoss
+            this.turnRight = true;      // turn true
+        if (this.canTurnLeft())         // true und EndBoss weiter Rechts ist als Pepe
+            this.turnRight = false;     // False
     }
+
+
+    canTurnRight() {
+        return this.shouldTurnRight() && !this.turnRight;
+    }
+
 
     shouldTurnRight() {
         return (this.x + this.width + 30) < world.character.x;  // Pepe ist weiter Rechts als endBoss
+    }
+
+
+    canTurnLeft() {
+        return this.shouldTurnLeft() && this.turnRight;
     }
 
 
@@ -175,8 +218,6 @@ class Endboss extends MovableObject {
     charMeetEndBoss() {
         return (this.x - 10) > world.character.x + world.character.width && (world.character.x + world.character.width) > this.x - 200;
     }
-
-
 
     // der SetTimeOut um den animationenInterval wurde gemacht weil er ansosnten die ersten 5 Sekunden ein Fehler gibt weil charakter nicht gefunden werden kann
 }

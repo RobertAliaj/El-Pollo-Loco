@@ -32,8 +32,6 @@ class DrawableObject {
 
 
     draw(ctx) {
-        // das ruft die Varible "ctx" und gibt die ganzen Details wo und wie ein Bild im Canvas gezeichnet werden soll 
-        // "drawImage" ist eine Methode des Canvas 2D Context in HTML5, die verwendet wird, um Bilder auf einem Canvas-Element zu zeichnen.
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     }
 

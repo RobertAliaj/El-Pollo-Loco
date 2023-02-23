@@ -25,14 +25,15 @@ class ThrowableObject extends MovableObject {
     ];
 
 
-    constructor(x, y) {
+    constructor(x, y, otherDirection) {
         super().loadImage('img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png');
         this.loadImages(this.IMAGES_ROTATING);
         this.loadImages(this.IMAGES_SPLASHING);
-        this.x = x;
+        this.otherDirection = otherDirection
         this.y = y;
-        this.height = 65;
-        this.width = 60;
+        this.setXCordinate(x);
+        this.height = 50;
+        this.width = 50;
         this.throw();
         this.animation();
     }
@@ -41,27 +42,58 @@ class ThrowableObject extends MovableObject {
     throw() {
         this.speedY = 20;
         this.applyGravity();
+
         setInterval(() => {
-
-            if (this.bottleIsInAir()) {
-                this.x += 4;
-            }
-
-            if (this.bottleIsOnGround()) {
-                this.speedY = 1;
-            }
-
-            if (this.enemyIsHit) {
-                this.speedY = 1;
-            }
+            this.throwLeftOrRight();
+            this.bottleCollide();
         }, 25);
+
     };
+
+
+    bottleCollide() {
+        if (this.isSplashing())
+            this.speedY = 1;
+    }
+
+
+    isSplashing() {
+        return this.bottleIsOnGround() || this.enemyIsHit;
+    }
+
+
+    throwLeftOrRight() {
+        if (this.canThrowRight())
+            this.throwRight();
+        if (this.canThrowLeft())
+            this.throwLeft();
+    }
+
+
+    canThrowRight() {
+        return this.bottleIsInAir() && !this.otherDirection;
+    }
+
+
+    throwRight() {
+        this.x += 6;
+    }
+
+
+    canThrowLeft() {
+        return this.bottleIsInAir() && this.otherDirection;
+    }
+
+
+    throwLeft() {
+        this.x -= 6;
+    }
 
 
     animation() {
         let shouldPlayRotation = true;
         setInterval(() => {
-            if (this.enemyIsHit || this.bottleIsOnGround()) {
+            if (this.shouldSplash()) {
                 this.playAnimations(this.IMAGES_SPLASHING);
                 shouldPlayRotation = false;
             } else if (shouldPlayRotation) {
@@ -71,11 +103,22 @@ class ThrowableObject extends MovableObject {
     }
 
 
+    shouldSplash(){
+        return this.enemyIsHit || this.bottleIsOnGround();
+    }
+
+    
     bottleIsInAir() {
         return (this.y + this.height) - this.offset.bottom < 370;
     }
 
+
     bottleIsOnGround() {
         return (this.y + this.height) - this.offset.bottom > 440;
+    }
+
+
+    setXCordinate(x) {
+        this.x = !this.otherDirection ? x : x - 60;
     }
 }

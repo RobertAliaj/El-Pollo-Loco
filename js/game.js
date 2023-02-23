@@ -1,15 +1,12 @@
 let canvas;
 let world;
-let keyboard = new Keyboard(); // erstelle eine neue Instanz
+let keyboard = new Keyboard();
 let theme_song = new Audio('audio/themeSong.mp3');
 
-/**
- * this function is used to create the World
- */
+
 function init() {
     canvas = document.getElementById('canvas');
-    world = new World(canvas, keyboard); // erstelle eine neue Instanz und gebe beide Vrablen weiter
-    // theme_song.play();
+    world = new World(canvas, keyboard);
 }
 
 
@@ -82,13 +79,13 @@ function unmuteSound() {
 }
 
 
-function showConsole(){
+function showConsole() {
     document.getElementById('consoleScreen').classList.remove('d-none');
     document.getElementById('startScreen').classList.add('d-none');
 }
 
 
-function showStartScreen(){
+function showStartScreen() {
     document.getElementById('consoleScreen').classList.add('d-none');
     document.getElementById('startScreen').classList.remove('d-none');
 }

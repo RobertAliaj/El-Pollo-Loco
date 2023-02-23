@@ -2,8 +2,8 @@ class MovableObject extends DrawableObject {
 
     speed = 0.15;
     otherDirection = false;
-    speedY = 0;             //  ist die Geschwindigkeit nach unten
-    acceleration = 2.5;     //  ist die Beschleunigung
+    speedY = 0;
+    acceleration = 2.5;
     lastHit = 0;
     energy = 100;
 
@@ -14,33 +14,18 @@ class MovableObject extends DrawableObject {
 
 
     hit() {
-        if (this instanceof Endboss) {
-            this.energy -= 12;
-        } else {
-            this.energy -= 5;
-        }
-
-        if (this.energy < 0) {
-            this.energy = 0;
-        } else {
-            this.lastHit = new Date().getTime();
-        }
+        this.energy -= this instanceof Endboss ? 12 : 2;
+        this.energy < 0 ? this.energy = 0 : this.lastHit = new Date().getTime();
     }
-
 
     isHurt() {
         let timePassed = new Date().getTime() - this.lastHit;
         timePassed = timePassed / 1000;
-        if (this instanceof Character) {
-            return timePassed < 0.75;
-        } else {
-            return timePassed < 1;
-        }
+        return this instanceof Character ? timePassed < 0.75 : timePassed < 1;
     }
 
 
     isDead() {
-        console.log();
         return this.energy <= 0;
     }
 
@@ -54,25 +39,34 @@ class MovableObject extends DrawableObject {
 
 
     applyGravity() {
-        setInterval(() => {
-            if (this.isAboveGround() || this.speedY > 0) {      // speedY wird in der JumpFunktion auf 30 gesetzt
-                this.y -= this.speedY;                          // y ist = 30 - -2.5 = 32,5
-                this.speedY -= this.acceleration;               // speedY ist = 0 - 2.5 = -2.5  (Beim Springen wird von speedY(30) immer 2.5px abgezogen)
-            } else {
-                this.speedY = 0;
-                this.y = 220;
-            }
+        setInterval(() => this.gravity(), 1000 / 25);
+    }
 
-        }, 1000 / 25);
+
+    gravity() {
+        this.isInAir() ? this.updateVerticalPosition() : this.landOnGround();
+    }
+
+
+    isInAir() {
+        return this.isAboveGround() || this.speedY > 0;
+    }
+
+
+    updateVerticalPosition() {
+        this.y -= this.speedY;
+        this.speedY -= this.acceleration;
+    }
+
+
+    landOnGround() {
+        this.speedY = 0;
+        this.y = 220;
     }
 
 
     isAboveGround() {
-        if (this instanceof ThrowableObject) {
-            return true;
-        } else {
-            return this.y < 220;
-        }
+        return this instanceof ThrowableObject ? true : this.y < 220;
     };
 
 
@@ -87,15 +81,12 @@ class MovableObject extends DrawableObject {
 
 
     jump() {
-        this.speedY = 20;
+        this.speedY = 25;
     }
+
 
     smallJump() {
         this.speedY = 10;
-    }
-
-    bigJump(){
-        this.speedY = 38;
     }
 
 
@@ -106,66 +97,63 @@ class MovableObject extends DrawableObject {
             this.charTopCollideObjBottom(obj);
     };
 
-    //Rechte Seite von Pepe trifft Linke Seite von ieinem Objekt
+
     charRightCollideObjLeft(obj) {
         return this.charRightSide() > this.objLeftSide(obj);
     }
 
+
     charRightSide() {
-        return this.x + this.width - this.offset.right; // Die Rechte Seite vom Character(OffsetLinie)
+        return this.x + this.width - this.offset.right;
     };
 
 
     objLeftSide(obj) {
-        return obj.x + obj.offset.left; // Die Linke Seite von Objekten (Chicken, Bottle Coin, EndBoss) (OffsetLinie)
+        return obj.x + obj.offset.left;
     };
 
 
-
-    // Untere Seite von Pepe trifft Obere Seite von Objekten(Münzen und Endboss auch)
     charBottomCollideObjTop(obj) {
         return this.charBottom() > this.objTop(obj);
     };
 
 
     charBottom() {
-        return (this.y + this.height) - this.offset.bottom; // Die untere Seite vom Character(Offsetlinie)
+        return (this.y + this.height) - this.offset.bottom;
     };
 
 
     objTop(obj) {
-        return obj.y + obj.offset.top; // Die Obere Seite von Objekten(Offsetlinie)
+        return obj.y + obj.offset.top;
     };
 
 
-
-    //Linke Seite von Pepe kleiner als die Rechte Seite von Objekten
     charLeftCollideObjRight(obj) {
         return this.charLeftSide() < this.objRightSide(obj);
     };
 
+
     charLeftSide() {
-        return this.x + this.offset.left; //Die Linke Seite beim Character (Offsetlinie)
+        return this.x + this.offset.left;
     };
 
 
     objRightSide(obj) {
-        return (obj.x + obj.width) - obj.offset.right;      //Die Rechte Seite bei den Objekten (Offsetlinie)
+        return (obj.x + obj.width) - obj.offset.right;
     };
 
 
-    //Obere Seite von Pepe trifft untere Seite von Objekten
     charTopCollideObjBottom(obj) {
         return this.charTop() < this.objBottom(obj);
     };
 
 
     charTop() {
-        return this.y + this.offset.top; // Die Obere Seite von Character (Offsetlinie)
+        return this.y + this.offset.top;
     };
 
 
     objBottom(obj) {
-        return (obj.y + obj.height) - obj.offset.bottom;  // Die Untere Seite von den Objekten (Offsetlinie) 
+        return (obj.y + obj.height) - obj.offset.bottom;
     };
 }

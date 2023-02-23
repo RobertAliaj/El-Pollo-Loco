@@ -18,7 +18,6 @@ const level1 = new Level(
     ],
 
     [
-        // hier passiert das gleiche, nur heir passiert das mehrmals
         new Cloud('img/5_background/layers/4_clouds/1.png', 720 * 0),
         new Cloud('img/5_background/layers/4_clouds/2.png', 720 * 1),
         new Cloud('img/5_background/layers/4_clouds/1.png', 720 * 2),
@@ -28,8 +27,6 @@ const level1 = new Level(
     ],
 
     [
-        // hier wird die Klasse "BackgroundObject" x mal erstellt
-        // jedes sie kriegt immer wieder neue source mit neuer x-koordinate
         new BackgroundObject('img/5_background/layers/air.png', -719),
         new BackgroundObject('img/5_background/layers/3_third_layer/2.png', -719),
         new BackgroundObject('img/5_background/layers/2_second_layer/2.png', -719),
@@ -70,21 +67,23 @@ const level1 = new Level(
         new Bottle('img/6_salsa_bottle/1_salsa_bottle_on_ground.png', 2000)
     ],
     [
-        new Coin('img/8_coin/coin_1.png', 200),
-        new Coin('img/8_coin/coin_1.png', 300),
-        new Coin('img/8_coin/coin_2.png', 400),
-        new Coin('img/8_coin/coin_1.png', 500),
-        new Coin('img/8_coin/coin_2.png', 600),
-        new Coin('img/8_coin/coin_2.png', 700),
-        new Coin('img/8_coin/coin_1.png', 1500),
-        new Coin('img/8_coin/coin_1.png', 1600),
-        new Coin('img/8_coin/coin_2.png', 1700),
-        new Coin('img/8_coin/coin_2.png', 1800),
-        new Coin('img/8_coin/coin_2.png', 1900),
-        new Coin('img/8_coin/coin_1.png', 2000),
-        new Coin('img/8_coin/coin_1.png', 950),
-        new Coin('img/8_coin/coin_2.png', 1000),
-        new Coin('img/8_coin/coin_1.png', 1000),
-        new Coin('img/8_coin/coin_2.png', 800)
+        new Coin('img/8_coin/coin_2.png', 520, 160),
+        new Coin('img/8_coin/coin_2.png', 620, 160),
+        new Coin('img/8_coin/coin_2.png', 720, 160),
+        new Coin('img/8_coin/coin_2.png', 820, 160),
+        new Coin('img/8_coin/coin_2.png', 920, 160),
+
+        new Coin('img/8_coin/coin_1.png', 1200, 190),
+        new Coin('img/8_coin/coin_1.png', 1300, 160),
+        new Coin('img/8_coin/coin_2.png', 1400, 130),
+        new Coin('img/8_coin/coin_1.png', 1500, 160),
+        new Coin('img/8_coin/coin_1.png', 1600, 190),
+
+        new Coin('img/8_coin/coin_2.png', 1900, 200),
+        new Coin('img/8_coin/coin_2.png', 2000, 200),
+        new Coin('img/8_coin/coin_1.png', 2100, 200),
+        new Coin('img/8_coin/coin_1.png', 2200, 200),
+        new Coin('img/8_coin/coin_2.png', 2300, 200),
+        new Coin('img/8_coin/coin_2.png', 2400, 200),
     ]
 );
