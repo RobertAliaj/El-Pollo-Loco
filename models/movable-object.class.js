@@ -14,9 +14,10 @@ class MovableObject extends DrawableObject {
 
 
     hit() {
-        this.energy -= this instanceof Endboss ? 12 : 2;
+        this.energy -= this instanceof Endboss ? 15 : 2;
         this.energy < 0 ? this.energy = 0 : this.lastHit = new Date().getTime();
     }
+
 
     isHurt() {
         let timePassed = new Date().getTime() - this.lastHit;
@@ -60,13 +61,21 @@ class MovableObject extends DrawableObject {
 
 
     landOnGround() {
-        this.speedY = 0;
-        this.y = 220;
+        if (this instanceof Character) {
+            this.speedY = 0;
+            this.y = 220;
+        }
     }
 
 
     isAboveGround() {
-        return this instanceof ThrowableObject ? true : this.y < 220;
+        if (this instanceof ThrowableObject) {
+            return true;
+        } else if (this instanceof SmallChicken) {
+            return this.y < 370;
+        } else {
+            return this.y < 220;
+        }
     };
 
 

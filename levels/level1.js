@@ -1,20 +1,23 @@
 const level1 = new Level(
     [
-        // hier passiert das gleiche wie oben mit dem Character, nur heir passiert das 3 mal
-        // das heißt es werden 3 Chicken erstellt und für jedes chicken läuft "chicken.class.js" ein mal komplett durch
-        // für jedes Chicken werden 3 Bilder von dem Chicken zur Verfügung gestellt und animiert (laufen)
-        new Chicken(),
-        new Chicken(),
-        new Chicken(),
-        new Chicken(),
-        new Chicken(),
-        new Chicken(),
-        new Chicken(),
-        new Chicken(),
-        new Chicken(),
-        new Chicken(),
-        new Chicken(),
+        new Chicken(900),
+        new Chicken(1100),
+        new Chicken(1200),
+        new Chicken(1300),
+        new Chicken(1700),
+        new Chicken(1800),
+        new Chicken(2200),
+        new Chicken(2400),
         new Endboss()
+    ],
+
+    [
+        new SmallChicken(800),
+        new SmallChicken(850),
+        new SmallChicken(1500),
+        new SmallChicken(1550),
+        new SmallChicken(2050),
+        new SmallChicken(2100)
     ],
 
     [

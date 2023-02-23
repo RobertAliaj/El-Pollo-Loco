@@ -158,6 +158,7 @@ class Endboss extends MovableObject {
     playHurtAnimations() {
         this.playAnimations(this.IMAGES_HURT);
         this.attack = true;
+        this.speed = 2;
     }
 
 

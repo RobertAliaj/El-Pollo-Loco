@@ -103,11 +103,11 @@ class ThrowableObject extends MovableObject {
     }
 
 
-    shouldSplash(){
+    shouldSplash() {
         return this.enemyIsHit || this.bottleIsOnGround();
     }
 
-    
+
     bottleIsInAir() {
         return (this.y + this.height) - this.offset.bottom < 370;
     }

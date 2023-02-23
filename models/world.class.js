@@ -24,6 +24,7 @@ class World {
     allEnemies = this.level.enemies;
     chickens = this.level.enemies.slice(0, -1);
     endBoss = this.level.enemies[this.level.enemies.length - 1];
+    smallChicken = this.level.smallChicken;
 
 
     constructor(canvas, keyboard) {
@@ -45,10 +46,12 @@ class World {
             this.bottleHitEndBoss();
             this.startEndBossLeft();
             this.bottleHitGround();
+            this.bottleHitSmallChicken();
         }, 50);
 
         setInterval(() => {
             this.charhitChicken();
+            this.charhitSmallChicken();
         }, 25);
     }
 
@@ -59,14 +62,26 @@ class World {
                 this.character.smallJump();
                 enemy.energy = 0;
                 this.chickens.splice(chickenIndex, 1);
-                this.removeChicken(chickenIndex);
+                this.removeChicken(enemy, this.allEnemies, chickenIndex);
+            }
+        });
+    }
+
+
+    charhitSmallChicken() {
+        this.smallChicken.forEach((enemy, chickenIndex) => {
+            if (this.character.isColliding(enemy) && this.character.charBottomCollideObjTop(enemy) && this.character.characterIsFalling()) {
+                !enemy.isAboveGround() ? this.character.smallJump() : this.character.jump();
+                enemy.energy = 0;
+                this.removeChicken(enemy, this.level.smallChicken, chickenIndex);
             }
         });
     }
 
 
     enemyHitChar() {
-        this.allEnemies.forEach((enemy) => {
+        const myEnemies = this.chickens.concat(this.smallChicken, this.endBoss);
+        myEnemies.forEach((enemy) => {
             if (this.character.charRightCollideObjLeft(enemy) && this.character.charLeftCollideObjRight(enemy) && !this.character.isAboveGround()) {
                 this.character.hit();
                 this.statusBar.setPercentage(this.character.energy);
@@ -87,14 +102,13 @@ class World {
     }
 
 
-    bottleHitChicken() {
+    bottleHitSmallChicken() {
         this.throwableObjects.forEach((bottle) => {
-            this.chickens.forEach((enemy, chickenIndex) => {
+            this.smallChicken.forEach((enemy, chickenIndex) => {
                 if (bottle.isColliding(enemy) && !bottle.enemyIsHit) {
                     bottle.enemyIsHit = true;
                     enemy.energy = 0;
-                    this.chickens.splice(chickenIndex, 1);
-                    this.removeChicken(chickenIndex);
+                    this.removeChicken(enemy, this.level.smallChicken, chickenIndex);
                     this.removeBottle(bottle);
                 }
             });
@@ -102,10 +116,28 @@ class World {
     }
 
 
-    removeChicken(chickenIndex) {
+
+    bottleHitChicken() {
+        this.throwableObjects.forEach((bottle) => {
+            this.chickens.forEach((enemy, chickenIndex) => {
+                if (bottle.isColliding(enemy) && !bottle.enemyIsHit) {
+                    bottle.enemyIsHit = true;
+                    enemy.energy = 0;
+                    this.chickens.splice(chickenIndex, 1);
+                    this.removeChicken(enemy, this.allEnemies, chickenIndex);
+                    this.removeBottle(bottle);
+                }
+            });
+        });
+    }
+
+
+    removeChicken(enemy, myEnemies, chickenIndex) {
+        let time;
+        time = enemy.isAboveGround() ? 0 : 300;
         setTimeout(() => {
-            this.allEnemies.splice(chickenIndex, 1);
-        }, 300);
+            myEnemies.splice(chickenIndex, 1);
+        }, time);
     }
 
 
@@ -142,7 +174,7 @@ class World {
         return this.keyboard.D && (currentTime - this.lastThrowTime >= 200) && this.throwableObjects.length < this.collectedBottles && this.bottleAmount > 0;
     }
 
-    
+
     createNewBottle() {
         let bottle = new ThrowableObject(this.character.x + 50, this.character.y + 70, this.character.otherDirection);
         this.throwableObjects.push(bottle);
@@ -190,6 +222,7 @@ class World {
         this.ctx.translate(this.camera_x, 0);
 
         this.drawObjects(this.level.enemies);
+        this.drawObjects(this.level.smallChicken);
         this.drawObjects(this.throwableObjects);
         this.drawObjects(this.level.bottle);
         this.drawObjects(this.level.coins);
