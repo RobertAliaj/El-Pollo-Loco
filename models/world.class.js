@@ -52,7 +52,7 @@ class World {
         setInterval(() => {
             this.charhitChicken();
             this.charhitSmallChicken();
-        }, 25);
+        }, 1000 / 60);
     }
 
 

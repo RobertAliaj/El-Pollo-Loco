@@ -4,7 +4,7 @@ class Chicken extends MovableObject {
     width = 45;
     y = 365;
     offset = {
-        top: 10,
+        top: 2,
         left: 10,
         right: 10,
         bottom: 10,

@@ -14,7 +14,7 @@ class MovableObject extends DrawableObject {
 
 
     hit() {
-        this.energy -= this instanceof Endboss ? 15 : 2;
+        this.energy -= this instanceof Endboss ? 10 : 2;
         this.energy < 0 ? this.energy = 0 : this.lastHit = new Date().getTime();
     }
 

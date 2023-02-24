@@ -4,7 +4,7 @@ class SmallChicken extends MovableObject {
     y = 370;
 
     offset = {
-        top: 10,
+        top: 2,
         left: 10,
         right: 10,
         bottom: 10,
@@ -50,9 +50,9 @@ class SmallChicken extends MovableObject {
             if (this.isDead()) {
                 this.playAnimations(this.IMAGES_DEAD);
             }
-            // else {
-            // this.playAnimations(this.IMAGES_WALKING);
-            //     }
+            else {
+                this.playAnimations(this.IMAGES_WALKING);
+            }
         }, 100);
     }
 }

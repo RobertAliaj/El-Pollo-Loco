@@ -49,7 +49,6 @@ class Character extends MovableObject {
         'img/2_character_pepe/1_idle/idle/I-10.png',
     ];
 
-
     IMAGES_LONGIDLE = [
         'img/2_character_pepe/1_idle/long_idle/I-11.png',
         'img/2_character_pepe/1_idle/long_idle/I-12.png',
@@ -68,20 +67,25 @@ class Character extends MovableObject {
     speed = 9;
     offset = {
         top: 110,
-        left: 30,
-        right: 30,
+        left: 35,
+        right: 35,
         bottom: 5,
     };
 
-    canStartIdle = false;
-    canStartLongIdle = false;
+    longIdle = 8;
+    shortIdle = 4;
+    lastKeyPressed;
+
+
+    startGameShortIdle = false;
+    startGameLongIdle = false;
+
 
     walking_sound = new Audio('audio/walking.mp3');
     jump_sound = new Audio('audio/jump.mp3');
 
-
     constructor() {
-        super().loadImage('img/2_character_pepe/2_walk/W-21.png');
+        super().loadImage('img/2_character_pepe/1_idle/idle/I-1.png');
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_JUMPING);
         this.loadImages(this.IMAGES_DEAD);
@@ -89,6 +93,7 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_IDLE);
         this.loadImages(this.IMAGES_LONGIDLE);
         this.applyGravity();
+        this.startGameIdle();
         this.animate();
     }
 
@@ -99,43 +104,27 @@ class Character extends MovableObject {
             this.checkIfIsMovingRight();
             this.checkIfIsMovingLeft();
             this.checkIfJumping();
-            this.canIdle();
+            this.lastPressedKey();
         }, 1000 / 60);
 
 
         setInterval(() => {
-            // if (this.canStartIdle) {
-            //     this.playAnimations(this.IMAGES_IDLE);
-
-            // } else
-            //     if (this.canStartLongIdle) {
-            //         this.playAnimations(this.IMAGES_LONGIDLE)
-            //     } else
-                    if (this.isDead()) {
-                        this.playAnimations(this.IMAGES_DEAD);
-                    } else if (this.isHurt()) {
-                        this.playAnimations(this.IMAGES_HURT);
-                    } else if (this.isAboveGround()) {
-                        this.playAnimations(this.IMAGES_JUMPING);
-                    } else if (this.canWalk()) {
-                        this.playAnimations(this.IMAGES_WALKING);
-                    } else {
-                        this.img = this.imageCache['img/2_character_pepe/3_jump/J-39.png'];
-                    }
+            if (this.isDead()) {
+                this.playAnimations(this.IMAGES_DEAD);
+            } else if (this.isHurt()) {
+                this.playAnimations(this.IMAGES_HURT);
+            } else if (this.isAboveGround()) {
+                this.playAnimations(this.IMAGES_JUMPING);
+            } else if (this.canWalk()) {
+                this.playAnimations(this.IMAGES_WALKING);
+            } else if (this.canStartLongIdle() || this.startGameLongIdle) {
+                this.playAnimations(this.IMAGES_LONGIDLE);
+            } else if (this.canStartShortIdle() || this.startGameShortIdle) {
+                this.playAnimations(this.IMAGES_IDLE);
+            } else {
+                this.img = this.imageCache['img/2_character_pepe/1_idle/idle/I-1.png'];
+            }
         }, 120);
-    }
-
-
-    canIdle() {
-        if (keyboard.allKeysFalse()) {
-            setTimeout(() => this.canStartIdle = true, 2000);
-        } else {
-            this.canStartIdle = false;
-        }
-
-        if (keyboard.allKeysFalse() && !this.canStartIdle) {
-            setTimeout(() => this.canStartLongIdle = true, 5000);
-        }
     }
 
 
@@ -217,5 +206,44 @@ class Character extends MovableObject {
 
     canWalk() {
         return world.keyboard.RIGHT || world.keyboard.LEFT;
+    }
+
+
+    canStartLongIdle() {
+        return this.startIdle(this.longIdle);
+    }
+
+
+    canStartShortIdle() {
+        return this.startIdle(this.shortIdle);
+    }
+
+
+    startIdle(idleTime) {
+        let timepassed = new Date().getTime() - this.lastKeyPressed;
+        timepassed = timepassed / 1000;
+        return timepassed > idleTime;
+    }
+
+
+    lastPressedKey() {
+        if (this.keyIsPressed()) {
+            this.lastKeyPressed = new Date().getTime();
+            this.startGameShortIdle = false;
+            this.startGameLongIdle = false;
+        }
+    }
+
+
+    keyIsPressed() {
+        return keyboard.LEFT || keyboard.RIGHT || keyboard.UP || keyboard.DOWN || keyboard.SPACE || keyboard.D
+    }
+
+
+    startGameIdle() {
+        if (this.keyIsPressed) {
+            setTimeout(() => this.startGameShortIdle = true, 4000);
+            setTimeout(() => this.startGameLongIdle = true, 8000);
+        }
     }
 }
