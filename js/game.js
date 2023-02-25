@@ -7,6 +7,7 @@ let theme_song = new Audio('audio/themeSong.mp3');
 function init() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
+    theme_song.play();
 }
 
 

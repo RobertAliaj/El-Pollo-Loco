@@ -15,8 +15,8 @@ class World {
     endBossIcon = new EndBossStatusBarIcon();
     endBossStatusBar = new EndBossStatusBar();
 
-    collectedBottles = 0;
     bottleAmount = 0;
+    collectedBottles = 0;
     collectedCoins = 0;
     lastThrowTime = 0;
 
@@ -52,7 +52,7 @@ class World {
         setInterval(() => {
             this.charhitChicken();
             this.charhitSmallChicken();
-        }, 1000 / 60);
+        }, 25);
     }
 
 
@@ -61,6 +61,7 @@ class World {
             if (this.character.isColliding(enemy) && this.character.characterIsFalling()) {
                 this.character.smallJump();
                 enemy.energy = 0;
+                enemy.speed = 0;
                 this.chickens.splice(chickenIndex, 1);
                 this.removeChicken(enemy, this.allEnemies, chickenIndex);
             }
@@ -71,9 +72,12 @@ class World {
     charhitSmallChicken() {
         this.smallChicken.forEach((enemy, chickenIndex) => {
             if (this.character.isColliding(enemy) && this.character.charBottomCollideObjTop(enemy) && this.character.characterIsFalling()) {
-                !enemy.isAboveGround() ? this.character.smallJump() : this.character.jump();
+                // !enemy.isAboveGround() ? this.character.smallJump() : this.character.jump();
+                this.character.smallJump();
                 enemy.energy = 0;
-                this.removeChicken(enemy, this.level.smallChicken, chickenIndex);
+                enemy.speed = 0;
+                // this.level.smallChicken.splice(chickenIndex, 1);
+                this.removeChicken(enemy, this.smallChicken, chickenIndex);
             }
         });
     }
@@ -82,7 +86,7 @@ class World {
     enemyHitChar() {
         const myEnemies = this.chickens.concat(this.smallChicken, this.endBoss);
         myEnemies.forEach((enemy) => {
-            if (this.character.charRightCollideObjLeft(enemy) && this.character.charLeftCollideObjRight(enemy) && !this.character.isAboveGround()) {
+            if (this.character.charRightCollideObjLeft(enemy) && this.character.charLeftCollideObjRight(enemy) && !this.character.isAboveGround() && !enemy.isDead()) {
                 this.character.hit();
                 this.statusBar.setPercentage(this.character.energy);
             }
@@ -214,6 +218,7 @@ class World {
     draw() {
         this.clearCanvas();
         this.ctx.translate(this.camera_x, 0);
+
         this.drawMap(this.level.backgroundObjects);
         this.drawMap(this.level.clouds);
 
@@ -226,6 +231,7 @@ class World {
         this.drawObjects(this.throwableObjects);
         this.drawObjects(this.level.bottle);
         this.drawObjects(this.level.coins);
+        
         this.ctx.translate(-this.camera_x, 0);
 
         requestAnimationFrame(() => {

@@ -41,7 +41,7 @@ class SmallChicken extends MovableObject {
 
         setInterval(() => {
             if (this.isAboveGround && this.x < currentPosition - 300 && this.x > currentPosition - 320) {
-                this.jump();
+                this.smallChickenJump();
                 currentPosition = this.x;
             }
         }, 25);
@@ -49,8 +49,7 @@ class SmallChicken extends MovableObject {
         setInterval(() => {
             if (this.isDead()) {
                 this.playAnimations(this.IMAGES_DEAD);
-            }
-            else {
+            } else {
                 this.playAnimations(this.IMAGES_WALKING);
             }
         }, 100);

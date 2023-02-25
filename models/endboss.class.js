@@ -108,8 +108,10 @@ class Endboss extends MovableObject {
 
 
     moveRight() {
-        super.moveRight();
-        this.otherDirection = true;
+        if (!this.isDead() && !world.character.isDead()) {
+            super.moveRight();
+            this.otherDirection = true;
+        }
     }
 
 
@@ -119,8 +121,10 @@ class Endboss extends MovableObject {
 
 
     moveLeft() {
-        super.moveLeft();
-        this.otherDirection = false;
+        if (!this.isDead() && !world.character.isDead()) {
+            super.moveLeft();
+            this.otherDirection = false;
+        }
     }
 
 
@@ -135,11 +139,11 @@ class Endboss extends MovableObject {
                 this.playDeadAnimations(intervalId);
             } else if (this.isHurt()) {
                 this.playHurtAnimations();
-            } else if (this.canAttack()) {
+            } else if (this.canAttack() && !world.character.isDead()) {
                 this.playAnimations(this.IMAGES_ATTACK);
-            } else if (this.canAlert()) {
+            } else if (this.canAlert() || world.character.isDead()) {
                 this.playAlertAnimations();
-            } else if (this.canWalk()) {
+            } else if (this.canWalk() && !world.character.isDead()) {
                 this.playWalkAnimations();
             }
         }, 200);

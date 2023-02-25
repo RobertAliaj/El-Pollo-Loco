@@ -46,12 +46,12 @@ class DrawableObject {
         //     ctx.stroke();
         // }
 
-        if (this instanceof Character || this instanceof Chicken || this instanceof ThrowableObject || this instanceof Endboss || this instanceof Coin || this instanceof Bottle || this instanceof SmallChicken) {
-            ctx.beginPath();
-            ctx.lineWidth = '2';
-            ctx.strokeStyle = 'red';
-            ctx.rect(this.x + this.offset.left, this.y + this.offset.top, (this.width - this.offset.left) - this.offset.right, (this.height - this.offset.top) - this.offset.bottom);
-            ctx.stroke();
-        }
+        // if (this instanceof Character || this instanceof Chicken || this instanceof ThrowableObject || this instanceof Endboss || this instanceof Coin || this instanceof Bottle || this instanceof SmallChicken) {
+        //     ctx.beginPath();
+        //     ctx.lineWidth = '2';
+        //     ctx.strokeStyle = 'red';
+        //     ctx.rect(this.x + this.offset.left, this.y + this.offset.top, (this.width - this.offset.left) - this.offset.right, (this.height - this.offset.top) - this.offset.bottom);
+        //     ctx.stroke();
+        // }
     }
 }
