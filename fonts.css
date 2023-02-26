@@ -1,0 +1,22 @@
+/* @font-face {
+    font-family: 'Zabras';
+    src: url('fonts/Zabars.ttf') format('truetype'),
+} */
+
+@font-face {
+    font-family: 'Westpasma';
+    src: url('fonts/WESTPASMA\ PERSONAL\ USE.ttf') format('truetype'),
+        url('fonts/WESTPASMA\ PERSONAL\ USE.woff') format('woff'),
+        url('fonts/WESTPASMA\ PERSONAL\ USE.ttf') format('woff2');
+    font-style: normal;
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: 'Mexican';
+    src: url('fonts/mexican_knappett.ttf') format('truetype'),
+        url('fonts/mexican_knappett.woff') format('woff'),
+        url('fonts/mexican_knappett.ttf') format('woff2');
+    font-style: normal;
+    font-weight: normal;
+}

@@ -83,6 +83,7 @@ class Character extends MovableObject {
 
     walking_sound = new Audio('audio/walking.mp3');
     jump_sound = new Audio('audio/jump.mp3');
+    hit_sound = new Audio('audio/pepe-get-git.wav');
 
     constructor() {
         super().loadImage('img/2_character_pepe/1_idle/idle/I-1.png');
@@ -105,6 +106,7 @@ class Character extends MovableObject {
             this.checkIfIsMovingLeft();
             this.checkIfJumping();
             this.lastPressedKey();
+            this.pauseWalkAudio();
         }, 1000 / 60);
 
 
@@ -146,13 +148,14 @@ class Character extends MovableObject {
 
     checkIfJumping() {
         if (this.canJump()) {
+            this.jump_sound.play();
             this.jump();
         }
     }
 
 
     canMoveRight() {
-        return world.keyboard.RIGHT && this.x < 719 * 3 + 120;
+        return world.keyboard.RIGHT && this.x < 719 * 3 + 120 && !this.isDead();
     }
 
 
@@ -160,11 +163,12 @@ class Character extends MovableObject {
         super.moveRight();
         this.otherDirection = false;
         world.camera_x = -this.x + 120;
+        this.walking_sound.play();
     }
 
 
     canMoveRightScreenEnd() {
-        return world.keyboard.RIGHT && this.x < level1.level_end_x && this.x > 719 * 3 + 120;
+        return world.keyboard.RIGHT && this.x < level1.level_end_x && this.x > 719 * 3 + 120 && !this.isDead();
     }
 
 
@@ -176,7 +180,7 @@ class Character extends MovableObject {
 
 
     canMoveLeft() {
-        return world.keyboard.LEFT && this.x > 0 && this.x < 719 * 3 + 120;
+        return world.keyboard.LEFT && this.x > 0 && this.x < 719 * 3 + 120 && !this.isDead();
     }
 
 
@@ -184,11 +188,12 @@ class Character extends MovableObject {
         super.moveLeft();
         this.otherDirection = true;
         world.camera_x = -this.x + 120;
+        this.walking_sound.play();
     }
 
 
     canMoveLeftScreenEnd() {
-        return world.keyboard.LEFT && this.x < level1.level_end_x + 10 && this.x > 719 * 3 + 120;
+        return world.keyboard.LEFT && this.x < level1.level_end_x + 10 && this.x > 719 * 3 + 120 && !this.isDead();
     }
 
 
@@ -244,6 +249,13 @@ class Character extends MovableObject {
         if (!this.keyIsPressed()) {
             setTimeout(() => this.startGameShortIdle = true, 4000);
             setTimeout(() => this.startGameLongIdle = true, 8000);
+        }
+    }
+
+
+    pauseWalkAudio() {
+        if (!world.keyboard.LEFT && !world.keyboard.RIGHT || this.isDead() || world.endBoss.isDead()) {
+            this.walking_sound.pause();
         }
     }
 }

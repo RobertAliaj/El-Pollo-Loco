@@ -27,10 +27,9 @@ class SmallChicken extends MovableObject {
 
         this.x = x;
         this.y = 300;
-        this.speed = 0.5;
+        this.speed = 0.3;
         this.animate();
     }
-
 
 
     animate() {
@@ -40,18 +39,18 @@ class SmallChicken extends MovableObject {
         setInterval(() => this.moveLeft(), 1000 / 200);
 
         setInterval(() => {
-            if (this.isAboveGround && this.x < currentPosition - 300 && this.x > currentPosition - 320) {
+            if (this.canJump(currentPosition)) {
                 this.smallChickenJump();
                 currentPosition = this.x;
             }
         }, 25);
 
-        setInterval(() => {
-            if (this.isDead()) {
-                this.playAnimations(this.IMAGES_DEAD);
-            } else {
-                this.playAnimations(this.IMAGES_WALKING);
-            }
-        }, 100);
+        setInterval(() => this.isDead() ? this.playAnimations(this.IMAGES_DEAD) : this.playAnimations(this.IMAGES_WALKING), 100);
     }
+
+
+    canJump(currentPosition) {
+        return this.isAboveGround && this.x < currentPosition - 150 && this.x > currentPosition - 170;
+    }
+
 }

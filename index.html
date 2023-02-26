@@ -9,6 +9,7 @@
     <link rel="icon" type="image/gif" href="img/favicon/mariachi.png">
 
 
+    <link rel="stylesheet" href="fonts.css">
     <link rel="stylesheet" href="style.css">
     <script src="models/drawable-objects.class.js"></script>
     <script src="models/movable-object.class.js"></script>
@@ -37,27 +38,29 @@
     <script src="js/game.js"></script>
 </head>
 
-<body onload="init()">
+<body>
 
     <div class="shadow"></div>
 
-    <div class="content">
+    <div class="content" id="content">
         <h1>El Pollo Loco</h1>
 
-        <div class="intro d-none" id="startScreen">
+        <div class="intro" id="startScreen">
 
             <button onclick="startGame()">Start Game</button>
-            <img class="icons" src="img/9_intro_outro_screens/start/full-screen.png">
-            <img class="icons console" src="img/9_intro_outro_screens/start/console.png" onclick="showConsole()">
-            <img class="icons volume" id="volume" src="img/9_intro_outro_screens/start/volume-up-interface-symbol.png"
-                onclick="changeVolume()">
+
+            <div class="icon-div">
+                <img class="icons" src="img/9_intro_outro_screens/start/script.png" onclick="showHistoryScreen()">
+                <img class="icons" src="img/9_intro_outro_screens/start/info .png" onclick="showInfoScreen()">
+                <img class="icons" src="img/9_intro_outro_screens/start/console.png" onclick="showConsole()">
+            </div>
 
             <img class="start-screen" src="img/9_intro_outro_screens/start/startscreen_1.png">
         </div>
 
         <div class="intro d-none relative" id="consoleScreen">
             <img class="start-screen" src="img/5_background/first_half_background.png">
-            <img class="icons" src="img/9_intro_outro_screens/start/back.png" onclick="showStartScreen()">
+            <img class="icons back" src="img/9_intro_outro_screens/start/back.png" onclick="exitConsoleScreen()">
             <div class="description">
                 <h1> How to play :</h1>
                 <div class="key-parent">
@@ -69,8 +72,54 @@
             </div>
         </div>
 
-        <canvas id="canvas" width="720" height="480"></canvas>
+
+        <div class="intro story d-none relative" id="historyScreen">
+            <img class="start-screen" src="img/5_background/first_half_background.png">
+            <img class="icons back" src="img/9_intro_outro_screens/start/back.png" onclick="exitHistoryScreen()">
+            <div class="history-text-div">
+                <p class="history-text">
+                    Pepe Peligroso, the daring salsa-making, guitar-strumming, and gun-slinging mariachi, had a
+                    reputation
+                    for being the
+                    most interesting man in the Wild West. One day, as he was performing at a local cantina, he
+                    overheard
+                    the townsfolk
+                    talking about a strange phenomenon at a nearby farm. The chickens had grown to massive proportions
+                    and
+                    were
+                    terrorizing the locals. Pepe knew he had to act fast. He grabbed his guitar, a few bottles of his
+                    special spicy
+                    salsa, and rode to the farm. As he approached the giant chickens, he began to play his guitar,
+                    distracting the birds
+                    as he hurled the bottles of salsa, sending the chickens running in all directions. With his mission
+                    accomplished,
+                    Pepe rode off into the sunset, strumming his guitar and singing a victory song.
+                </p>
+            </div>
+        </div>
+
+        <div class="intro story d-none relative" id="infoScreen">
+            <img class="start-screen" src="img/5_background/first_half_background.png">
+            <img class="icons back" src="img/9_intro_outro_screens/start/back.png" onclick="exitInfoScreen()">
+            <div class="history-text-div">
+                <p class="history-text">
+                    To progress in the game, the chickens must be defeated. The player can either jump on them or throw
+                    bottles to kill them. The Big Chicken can only be defeated by throwing bottles at him.
+                </p>
+            </div>
+        </div>
+
+        <div class="relative d-none">
+            <canvas id="canvas" width="720" height="480"></canvas>
+            <div class="canvas-icons">
+                <img class="icons" src="img/9_intro_outro_screens/start/full-screen.png" id="fullScreen"
+                    onclick="openFullScreen()">
+                <img class="icons" src="img/9_intro_outro_screens/start/console.png" onclick="showConsole()">
+                <img class="icons" id="volume" src="img/9_intro_outro_screens/start/volume-up-interface-symbol.png" onclick="changeVolume()">
+            </div>
+        </div>
     </div>
+
 </body>
 
 </html>
