@@ -94,10 +94,12 @@ class Endboss extends MovableObject {
 
     moveEndBoss() {
         setInterval(() => {
-            if (this.canMoveRight())
-                this.moveRight();
-            if (this.canMoveLeft())
-                this.moveLeft();
+            if (!gameIsPaused) {
+                if (this.canMoveRight())
+                    this.moveRight();
+                if (this.canMoveLeft())
+                    this.moveLeft();
+            }
         }, 1000 / 200);
     }
 
@@ -135,16 +137,18 @@ class Endboss extends MovableObject {
 
     playImages() {
         let intervalId = setInterval(() => {
-            if (this.isDead()) {
-                this.playDeadAnimations(intervalId);
-            } else if (this.isHurt()) {
-                this.playHurtAnimations();
-            } else if (this.canAttack() && !world.character.isDead()) {
-                this.playAnimations(this.IMAGES_ATTACK);
-            } else if (this.canAlert() || world.character.isDead()) {
-                this.playAlertAnimations();
-            } else if (this.canWalk() && !world.character.isDead()) {
-                this.playWalkAnimations();
+            if (!gameIsPaused) {
+                if (this.isDead()) {
+                    this.playDeadAnimations(intervalId);
+                } else if (this.isHurt()) {
+                    this.playHurtAnimations();
+                } else if (this.canAttack() && !world.character.isDead()) {
+                    this.playAnimations(this.IMAGES_ATTACK);
+                } else if (this.canAlert() || world.character.isDead()) {
+                    this.playAlertAnimations();
+                } else if (this.canWalk() && !world.character.isDead()) {
+                    this.playWalkAnimations();
+                }
             }
         }, 200);
     }

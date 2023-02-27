@@ -36,16 +36,29 @@ class SmallChicken extends MovableObject {
         this.applyGravity();
         let currentPosition = this.x;
 
-        setInterval(() => this.moveLeft(), 1000 / 200);
+        setInterval(() => {
+            if (!gameIsPaused && !this.isDead() && !world.character.isDead() && !world.endBoss.isDead())
+                this.moveLeft()
+        }, 1000 / 200);
+
 
         setInterval(() => {
-            if (this.canJump(currentPosition)) {
+            if (!gameIsPaused && this.canJump(currentPosition)) {
                 this.smallChickenJump();
                 currentPosition = this.x;
             }
         }, 25);
 
-        setInterval(() => this.isDead() ? this.playAnimations(this.IMAGES_DEAD) : this.playAnimations(this.IMAGES_WALKING), 100);
+
+        setInterval(() => {
+            if (!gameIsPaused && !world.character.isDead() && !world.endBoss.isDead()) {
+                if (this.isDead()) {
+                    this.playAnimations(this.IMAGES_DEAD);
+                } else {
+                    this.playAnimations(this.IMAGES_WALKING);
+                }
+            }
+        }, 100);
     }
 
 

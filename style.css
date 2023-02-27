@@ -11,6 +11,10 @@ body {
     font-family: 'Mexican', sans-serif;
 }
 
+h1 {
+    margin-top: 0;
+}
+
 
 .content {
     display: flex;
@@ -52,7 +56,7 @@ canvas {
     border-radius: 10px;
 }
 
-button {
+.start-game-button {
     position: absolute;
     top: 15px;
     left: 20px;
@@ -66,8 +70,28 @@ button {
     cursor: pointer;
 }
 
-button:hover {
-    background-color: rgb(233, 152, 66);
+
+.start-game-button:hover {
+    background-color: rgb(199, 115, 24);
+    scale: 1.02;
+}
+
+
+.resume-button {
+    background-color: rgb(0 0 0);
+    padding: 8px;
+    color: white;
+    font-weight: revert;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: cursive;
+    margin-top: 10px;
+}
+
+
+.resume-button:hover {
+    background-color: rgb(32, 31, 31);
     scale: 1.02;
 }
 
@@ -113,7 +137,7 @@ button:hover {
     justify-content: flex-start;
     flex-direction: column;
     gap: 5px;
-    padding: 16px;
+    padding: 24px;
     background-color: rgb(255 255 255 / 50%);
     border-radius: 10px;
 }
@@ -124,7 +148,7 @@ button:hover {
     justify-content: space-between;
     width: 100%;
     gap: 10px;
-    font-size: 24px;
+    font-size: 20px;
     font-weight: bold;
 }
 
@@ -155,10 +179,41 @@ button:hover {
     background-color: rgb(255 255 255 / 50%);
     border-radius: 10px;
     text-align: center;
+    font-size: 16px;
 }
 
-.canvas-icons{
+.pause-screen {
+    background-color: rgb(255 255 255 / 50%);
+    padding: 24px;
+    border-radius: 10px;
+    z-index: 4;
+    margin: 66px 0 0 0px;
     position: absolute;
-    top: 10px;
-    right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: column;
+}
+
+
+.pause-screen-icons {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.play-or-pause-img {
+    position: absolute;
+    top: 22px;
+    right: 340px;
+}
+
+.pause-icons-child {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
 }

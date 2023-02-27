@@ -36,6 +36,7 @@
     <script src="models/coins.class.js"></script>
     <script src="levels/level1.js"></script>
     <script src="js/game.js"></script>
+    <script src="js/start-screen.js"></script>
 </head>
 
 <body>
@@ -47,12 +48,12 @@
 
         <div class="intro" id="startScreen">
 
-            <button onclick="startGame()">Start Game</button>
+            <button onclick="startGame()" class="start-game-button">Start Game</button>
 
             <div class="icon-div">
                 <img class="icons" src="img/9_intro_outro_screens/start/script.png" onclick="showHistoryScreen()">
                 <img class="icons" src="img/9_intro_outro_screens/start/info .png" onclick="showInfoScreen()">
-                <img class="icons" src="img/9_intro_outro_screens/start/console.png" onclick="showConsole()">
+                <img class="icons" src="img/9_intro_outro_screens/start/console.png" onclick="showConsoleOnStartScreen()">
             </div>
 
             <img class="start-screen" src="img/9_intro_outro_screens/start/startscreen_1.png">
@@ -81,24 +82,33 @@
                     Pepe Peligroso, the daring salsa-making, guitar-strumming, and gun-slinging mariachi, had a
                     reputation
                     for being the
-                    most interesting man in the Wild West. One day, as he was performing at a local cantina, he
+                    most interesting man in the Wild West.
+                    <br>
+                    <br>
+                    One day, as he was performing at a local cantina, he
                     overheard
                     the townsfolk
-                    talking about a strange phenomenon at a nearby farm. The chickens had grown to massive proportions
+                    talking about a strange phenomenon at a nearby farm. The chickens had grown to massive
+                    proportions
                     and
                     were
-                    terrorizing the locals. Pepe knew he had to act fast. He grabbed his guitar, a few bottles of his
+                    terrorizing the locals.
+                    <br>
+                    <br>
+                    Pepe knew he had to act fast. He grabbed his guitar, a few bottles of his
                     special spicy
                     salsa, and rode to the farm. As he approached the giant chickens, he began to play his guitar,
                     distracting the birds
-                    as he hurled the bottles of salsa, sending the chickens running in all directions. With his mission
+                    as he hurled the bottles of salsa, sending the chickens running in all directions. With his
+                    mission
                     accomplished,
                     Pepe rode off into the sunset, strumming his guitar and singing a victory song.
                 </p>
             </div>
         </div>
 
-        <div class="intro story d-none relative" id="infoScreen">
+
+        <div class="intro story relative d-none" id="infoScreen">
             <img class="start-screen" src="img/5_background/first_half_background.png">
             <img class="icons back" src="img/9_intro_outro_screens/start/back.png" onclick="exitInfoScreen()">
             <div class="history-text-div">
@@ -109,15 +119,48 @@
             </div>
         </div>
 
-        <div class="relative d-none">
+
+        <div class="relative d-none" id="canvasDiv">
             <canvas id="canvas" width="720" height="480"></canvas>
-            <div class="canvas-icons">
-                <img class="icons" src="img/9_intro_outro_screens/start/full-screen.png" id="fullScreen"
-                    onclick="openFullScreen()">
-                <img class="icons" src="img/9_intro_outro_screens/start/console.png" onclick="showConsole()">
-                <img class="icons" id="volume" src="img/9_intro_outro_screens/start/volume-up-interface-symbol.png" onclick="changeVolume()">
+            <img class="icons play-or-pause-img" src="img/9_intro_outro_screens/start/pause.png" id="pause"
+                onclick="pauseGame()">
+        </div>
+
+
+        <div class="relative pause-screen d-none" id="pauseScreen">
+            <h1>Settings</h1>
+            <div class="pause-screen-icons">
+                <div class="pause-icons-child">
+                    Fullscreen:
+                    <img class="icons" src="img/9_intro_outro_screens/start/full-screen.png" id="fullScreen"
+                        onclick="openFullScreen()">
+                </div>
+                <div class="pause-icons-child">
+                    How to play:
+                    <img class="icons" src="img/9_intro_outro_screens/start/console.png"
+                        onclick="showConsoleOnPauseScreen()">
+                </div>
+                <div class="pause-icons-child">
+                    Mute Sound:
+                    <img class="icons" id="volume" src="img/9_intro_outro_screens/start/volume-up-interface-symbol.png"
+                        onclick="changeVolume()">
+                </div>
+            </div>
+            <button class="resume-button" onclick="resumeGame()">Resume Game</button>
+        </div>
+
+
+        <div class="description d-none" id="htpOnPause">
+            <div class="key-parent">
+                <h1> How to play</h1>
+                <div class="key-child">Left: <img src="img/keys/left-arrow.png"></div>
+                <div class="key-child">Right: <img src="img/keys/right-arrow.png"></div>
+                <div class="key-child">Jump: <img src="img/keys/space.ico"></div>
+                <div class="key-child">Throw Bottle: <img src="img/keys/key-d-of-a-keyboard.png" alt=""></div>
+                <button class="resume-button" onclick="resumeGame()">Resume Game</button>
             </div>
         </div>
+
     </div>
 
 </body>

@@ -89,7 +89,7 @@ class World {
     enemyHitChar() {
         const myEnemies = this.chickens.concat(this.smallChicken);
         myEnemies.forEach((enemy) => {
-            if (this.character.charRightCollideObjLeft(enemy) && this.character.charLeftCollideObjRight(enemy) && !this.character.isAboveGround() && !enemy.isDead()) {
+            if (this.character.charRightCollideObjLeft(enemy) && this.character.charLeftCollideObjRight(enemy) && !this.character.isAboveGround() && !enemy.isDead() && !this.character.isDead()) {
                 this.character.hit();
                 this.character.hit_sound.play();
                 this.statusBar.setPercentage(this.character.energy);
@@ -182,7 +182,7 @@ class World {
     throwBottle() {
         this.enemyIsHit = false;
         const currentTime = Date.now();
-        if (this.canThrowBottle(currentTime)) {
+        if (this.canThrowBottle(currentTime) && !gameIsPaused && !this.character.isDead()) {
             this.createNewBottle();
             this.bottleAmount--;
             this.bottleStatusBar.setBottleNumber(this.bottleAmount);

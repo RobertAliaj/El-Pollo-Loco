@@ -25,21 +25,26 @@ class Chicken extends MovableObject {
         super().loadImage('img/3_enemies_chicken/chicken_normal/1_walk/1_w.png');
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.DEAD);
-        this.x = x 
-        // + Math.random() * 0.5;
+        this.x = x;
         this.speed = 0.15 + Math.random() * 0.25
         this.animate();
     }
 
 
     animate() {
-        setInterval(() => this.moveLeft(), 1000 / 200);
+        setInterval(() => {
+            if (!gameIsPaused && !world.character.isDead() && !world.endBoss.isDead()) {
+                this.moveLeft()
+            }
+        }, 1000 / 200);
 
         setInterval(() => {
-            if (this.isDead()) {
-                this.playAnimations(this.DEAD);
-            } else {
-                this.playAnimations(this.IMAGES_WALKING);
+            if (!gameIsPaused && !world.character.isDead() && !world.endBoss.isDead()) {
+                if (this.isDead()) {
+                    this.playAnimations(this.DEAD);
+                } else {
+                    this.playAnimations(this.IMAGES_WALKING);
+                }
             }
         }, 100);
     }

@@ -110,21 +110,24 @@ class Character extends MovableObject {
         }, 1000 / 60);
 
 
-        setInterval(() => {
-            if (this.isDead()) {
-                this.playAnimations(this.IMAGES_DEAD);
-            } else if (this.isHurt()) {
-                this.playAnimations(this.IMAGES_HURT);
-            } else if (this.isAboveGround()) {
-                this.playAnimations(this.IMAGES_JUMPING);
-            } else if (this.canWalk()) {
-                this.playAnimations(this.IMAGES_WALKING);
-            } else if (this.canStartLongIdle() || this.startGameLongIdle) {
-                this.playAnimations(this.IMAGES_LONGIDLE);
-            } else if (this.canStartShortIdle() || this.startGameShortIdle) {
-                this.playAnimations(this.IMAGES_IDLE);
-            } else {
-                this.img = this.imageCache['img/2_character_pepe/1_idle/idle/I-1.png'];
+        let intervalId = setInterval(() => {
+            if (!gameIsPaused && !world.character.isDead()) {
+                if (this.isDead()) {
+                    this.playAnimations(this.IMAGES_DEAD);
+                    setTimeout(() => clearInterval(intervalId), 600);
+                } else if (this.isHurt() && !this.isDead()) {
+                    this.playAnimations(this.IMAGES_HURT);
+                } else if (this.isAboveGround()) {
+                    this.playAnimations(this.IMAGES_JUMPING);
+                } else if (this.canWalk()) {
+                    this.playAnimations(this.IMAGES_WALKING);
+                } else if (this.canStartLongIdle() || this.startGameLongIdle) {
+                    this.playAnimations(this.IMAGES_LONGIDLE);
+                } else if (this.canStartShortIdle() || this.startGameShortIdle) {
+                    this.playAnimations(this.IMAGES_IDLE);
+                } else {
+                    this.img = this.imageCache['img/2_character_pepe/1_idle/idle/I-1.png'];
+                }
             }
         }, 120);
     }
@@ -155,7 +158,7 @@ class Character extends MovableObject {
 
 
     canMoveRight() {
-        return world.keyboard.RIGHT && this.x < 719 * 3 + 120 && !this.isDead();
+        return world.keyboard.RIGHT && this.x < 719 * 3 + 120 && !this.isDead() && !gameIsPaused && !world.character.isDead() && !world.endBoss.isDead();
     }
 
 
@@ -168,7 +171,7 @@ class Character extends MovableObject {
 
 
     canMoveRightScreenEnd() {
-        return world.keyboard.RIGHT && this.x < level1.level_end_x && this.x > 719 * 3 + 120 && !this.isDead();
+        return world.keyboard.RIGHT && this.x < level1.level_end_x && this.x > 719 * 3 + 120 && !this.isDead() && !gameIsPaused && !world.character.isDead() && !world.endBoss.isDead();
     }
 
 
@@ -180,7 +183,7 @@ class Character extends MovableObject {
 
 
     canMoveLeft() {
-        return world.keyboard.LEFT && this.x > 0 && this.x < 719 * 3 + 120 && !this.isDead();
+        return world.keyboard.LEFT && this.x > 0 && this.x < 719 * 3 + 120 && !this.isDead() && !gameIsPaused && !world.character.isDead() && !world.endBoss.isDead();
     }
 
 
@@ -193,7 +196,7 @@ class Character extends MovableObject {
 
 
     canMoveLeftScreenEnd() {
-        return world.keyboard.LEFT && this.x < level1.level_end_x + 10 && this.x > 719 * 3 + 120 && !this.isDead();
+        return world.keyboard.LEFT && this.x < level1.level_end_x + 10 && this.x > 719 * 3 + 120 && !this.isDead() && !gameIsPaused && !world.character.isDead() && !world.endBoss.isDead();
     }
 
 
@@ -205,12 +208,12 @@ class Character extends MovableObject {
 
 
     canJump() {
-        return world.keyboard.SPACE && !this.isAboveGround();
+        return world.keyboard.SPACE && !this.isAboveGround() && !this.isDead() && !gameIsPaused && !world.character.isDead() && !world.endBoss.isDead();
     }
 
 
     canWalk() {
-        return world.keyboard.RIGHT || world.keyboard.LEFT;
+        return world.keyboard.RIGHT || world.keyboard.LEFT && !gameIsPaused;
     }
 
 
