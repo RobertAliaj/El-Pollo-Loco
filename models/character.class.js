@@ -79,11 +79,10 @@ class Character extends MovableObject {
 
     startGameShortIdle = false;
     startGameLongIdle = false;
-
-
+    pepeIsHit = new Audio('audio/pepe-get-git.wav');
     walking_sound = new Audio('audio/walking.mp3');
     jump_sound = new Audio('audio/jump.mp3');
-    hit_sound = new Audio('audio/pepe-get-git.wav');
+
 
     constructor() {
         super().loadImage('img/2_character_pepe/1_idle/idle/I-1.png');

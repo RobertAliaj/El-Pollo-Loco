@@ -6,7 +6,6 @@ class MovableObject extends DrawableObject {
     acceleration = 2.5;
     lastHit = 0;
     energy = 100;
-    bottle_spashing = new Audio('audio/audio_glass.mp3');
 
     characterIsFalling() {
         return this.speedY < 0;

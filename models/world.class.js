@@ -25,8 +25,6 @@ class World {
     chickens = this.level.enemies.slice(0, -1);
     endBoss = this.level.enemies[this.level.enemies.length - 1];
     smallChicken = this.level.smallChicken;
-    collect_bottle = new Audio('audio/collect_bottle.mp3');
-    kill_chicken = new Audio('audio/hit_chicken.mp3');
 
 
     constructor(canvas, keyboard) {
@@ -62,7 +60,7 @@ class World {
     charhitChicken() {
         this.chickens.forEach((enemy, chickenIndex) => {
             if (this.character.isColliding(enemy) && this.character.characterIsFalling()) {
-                this.kill_chicken.play();
+                enemy.kill_chicken.play();
                 this.character.smallJump();
                 enemy.energy = 0;
                 enemy.speed = 0;
@@ -76,7 +74,7 @@ class World {
     charhitSmallChicken() {
         this.smallChicken.forEach((enemy, chickenIndex) => {
             if (this.character.isColliding(enemy) && this.character.charBottomCollideObjTop(enemy) && this.character.characterIsFalling()) {
-                this.kill_chicken.play();
+                enemy.kill_chicken.play();
                 this.character.smallJump();
                 enemy.energy = 0;
                 enemy.speed = 0;
@@ -91,7 +89,7 @@ class World {
         myEnemies.forEach((enemy) => {
             if (this.character.charRightCollideObjLeft(enemy) && this.character.charLeftCollideObjRight(enemy) && !this.character.isAboveGround() && !enemy.isDead() && !this.character.isDead()) {
                 this.character.hit();
-                this.character.hit_sound.play();
+                this.character.pepeIsHit.play();
                 this.statusBar.setPercentage(this.character.energy);
             }
         });
@@ -101,7 +99,7 @@ class World {
     endBossHitCharacter() {
         if (this.character.isColliding(this.endBoss) && !this.endBoss.isDead() && !this.character.isDead()) {
             this.character.hit();
-            this.character.hit_sound.play();
+            this.character.pepeIsHit.play();
             this.statusBar.setPercentage(this.character.energy);
         }
     }
@@ -110,7 +108,7 @@ class World {
     bottleHitEndBoss() {
         this.throwableObjects.forEach((bottle) => {
             if (bottle.isColliding(this.endBoss) && !bottle.enemyIsHit) {
-                this.endBoss.bottle_spashing.play();
+                bottle.bottle_spashing.play();
                 bottle.enemyIsHit = true;
                 this.endBoss.hit();
                 this.endBossStatusBar.setPercentage(this.endBoss.energy);
@@ -124,7 +122,7 @@ class World {
         this.throwableObjects.forEach((bottle) => {
             this.smallChicken.forEach((enemy, chickenIndex) => {
                 if (bottle.isColliding(enemy) && !bottle.enemyIsHit) {
-                    enemy.bottle_spashing.play();
+                    bottle.bottle_spashing.play();
                     bottle.enemyIsHit = true;
                     enemy.energy = 0;
                     this.removeChicken(enemy, this.level.smallChicken, chickenIndex);
@@ -140,7 +138,7 @@ class World {
         this.throwableObjects.forEach((bottle) => {
             this.chickens.forEach((enemy, chickenIndex) => {
                 if (bottle.isColliding(enemy) && !bottle.enemyIsHit) {
-                    enemy.bottle_spashing.play();
+                    bottle.bottle_spashing.play();
                     bottle.enemyIsHit = true;
                     enemy.energy = 0;
                     this.chickens.splice(chickenIndex, 1);
@@ -182,7 +180,7 @@ class World {
     throwBottle() {
         this.enemyIsHit = false;
         const currentTime = Date.now();
-        if (this.canThrowBottle(currentTime) && !gameIsPaused && !this.character.isDead()) {
+        if (this.canThrowBottle(currentTime) && !gameIsPaused && !this.character.isDead() && !this.endBoss.isDead()) {
             this.createNewBottle();
             this.bottleAmount--;
             this.bottleStatusBar.setBottleNumber(this.bottleAmount);
@@ -217,7 +215,7 @@ class World {
     collectBottles() {
         this.level.bottle.forEach((bottle, index) => {
             if (this.character.isColliding(bottle)) {
-                this.collect_bottle.play();
+                bottle.collect_bottle.play();
                 this.level.bottle.splice(index, 1);
                 this.collectedBottles++;
                 this.bottleAmount++;

@@ -7,6 +7,7 @@ class ThrowableObject extends MovableObject {
     };
     enemyIsHit = false;
     acceleration = 1.5;
+    bottle_spashing = new Audio('audio/audio_glass.mp3');
 
     IMAGES_ROTATING = [
         'img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',

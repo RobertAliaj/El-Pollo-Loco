@@ -38,14 +38,16 @@
     <script src="js/end-screen.js"></script>
 </head>
 
+
 <body>
     <div class="shadow"></div>
 
     <div class="content" id="content">
         <h1>El Pollo Loco</h1>
 
-        <div class="intro relative" id="startScreen">
+        <div class="preloader d-none" id="preloader"></div>
 
+        <div class="intro relative" id="startScreen">
             <button onclick="startGame()" class="start-game-button">Start Game</button>
 
             <div class="icon-div">
@@ -163,13 +165,16 @@
         <div class="outro d-none relative" id="endScreenLoose">
             <div class="restart-button-div">
                 <button onclick="restartGame()" class="restart-button">Play Again</button>
+                <button class="restart-button" onclick="showHomeScreen();">Home</button>
             </div>
             <img class="start-screen" src="img/9_intro_outro_screens/game_over/game over!.png">
         </div>
 
         <div class="outro-winner d-none relative" id="endScreenWin">
+            <span>Congratulations</span>
             <div class="restart-button-div">
                 <button onclick="restartGame()" class="restart-button">Play Again</button>
+                <button class="restart-button" onclick="showHomeScreen();">Home</button>
             </div>
             <div class="shadow-end-screen">
                 <img src="img/9_intro_outro_screens/game_over/winner.png" class="winner-img">
@@ -177,6 +182,8 @@
         </div>
 
     </div>
+
+
 
 
 </body>

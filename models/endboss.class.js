@@ -78,7 +78,7 @@ class Endboss extends MovableObject {
 
 
     checkGameWin() {
-        setInterval(() => this.gameWinner(), 100);
+        setInterval(() => this.gameWinner(), 1000 / 60);
     }
 
 

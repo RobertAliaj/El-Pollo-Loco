@@ -1,18 +1,19 @@
 function checkEndScreen() {
     setInterval(() => {
         if (youLose) {
-            clearAllIntervals();
-            theme_song.pause();
             setTimeout(() => {
+                clearAllIntervals();
                 youLose = false;
-                showLoserScreen()
+                showLoserScreen();
             }, 2000);
-        } else if (youWin) {
-            setTimeout(() => {
-                youWin = false;
-                showWinnerScreen()
-            }, 2000);
-        }
+        } else
+            if (youWin) {
+                setTimeout(() => {
+                    clearAllIntervals();
+                    youWin = false;
+                    showWinnerScreen();
+                }, 2000);
+            }
     }, 100);
 }
 
@@ -20,10 +21,15 @@ function checkEndScreen() {
 function restartGame() {
     document.getElementById('canvasDiv').classList.remove('d-none')
     document.getElementById('endScreenLoose').classList.add('d-none');
+    document.getElementById('endScreenWin').classList.add('d-none');
+    document.getElementById('preloader').classList.remove('d-none');
+    clearAllAudios();
     theme_song.play();
     initLevel();
     init();
     checkEndScreen();
+    gameIsPaused = true;
+    removePreloader();
 }
 
 
@@ -41,4 +47,18 @@ function showWinnerScreen() {
 
 function clearAllIntervals() {
     for (let i = 1; i < 9999; i++) window.clearInterval(i);
+}
+
+
+function clearAllAudios() {
+    theme_song.pause();
+    theme_song.currentTime = 0;
+}
+
+
+function showHomeScreen() {
+    document.getElementById('endScreenLoose').classList.add('d-none');
+    document.getElementById('endScreenWin').classList.add('d-none');
+    document.getElementById('startScreen').classList.remove('d-none');
+    clearAllAudios();
 }

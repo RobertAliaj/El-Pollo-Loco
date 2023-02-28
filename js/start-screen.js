@@ -1,3 +1,26 @@
+function startGame() {
+    document.getElementById('canvasDiv').classList.remove('d-none')
+    document.getElementById('startScreen').classList.add('d-none')
+    document.getElementById('preloader').classList.remove('d-none');
+    theme_song.play();
+    initLevel();
+    init();
+    checkEndScreen();
+    gameIsPaused = true;
+    removePreloader();
+}
+
+
+function removePreloader() {
+    setTimeout(() => {
+        document.getElementById('preloader').classList.add('d-none');
+        gameIsPaused = false;
+    }, 5000);
+
+}
+
+
+
 function changeVolume() {
     let img = document.getElementById('volume');
     if (img.src.includes('img/9_intro_outro_screens/start/volume-up-interface-symbol.png')) {
@@ -7,17 +30,6 @@ function changeVolume() {
         img.src = 'img/9_intro_outro_screens/start/volume-up-interface-symbol.png';
         unmuteSound();
     }
-}
-
-
-function startGame() {
-    document.getElementById('canvasDiv').classList.remove('d-none')
-    document.getElementById('startScreen').classList.add('d-none')
-    theme_song.volume -= 0.90;
-    theme_song.play();
-    initLevel();
-    init();
-    checkEndScreen();
 }
 
 
@@ -119,12 +131,14 @@ function pause() {
     gameIsPaused = true;
 }
 
+
 function resumeGame() {
     document.getElementById('pause').classList.remove('d-none');
     document.getElementById('pauseScreen').classList.add('d-none');
     document.getElementById('htpOnPause').classList.add('d-none');
     gameIsPaused = false;
 }
+
 
 function openPauseScreen() {
     document.getElementById('pauseScreen').classList.remove('d-none');

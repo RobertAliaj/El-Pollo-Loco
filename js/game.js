@@ -1,7 +1,7 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
-let theme_song = new Audio('audio/themeSong.mp3');
+let theme_song = new Audio('audio/theme-song.mp3');
 let gameIsPaused = false;
 let youLose = false;
 let youWin = false;
