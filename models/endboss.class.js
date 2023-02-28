@@ -73,6 +73,12 @@ class Endboss extends MovableObject {
         this.x = 2400;
         this.checkTurnAround();
         this.animate();
+        this.checkGameWin();
+    }
+
+
+    checkGameWin() {
+        setInterval(() => this.gameWinner(), 100);
     }
 
 
@@ -226,6 +232,13 @@ class Endboss extends MovableObject {
 
     charMeetEndBoss() {
         return (this.x - 10) > world.character.x + world.character.width && (world.character.x + world.character.width) > this.x - 200;
+    }
+
+
+    gameWinner() {
+        if (this.isDead()) {
+            youWin = true;
+        }
     }
 
     // der SetTimeOut um den animationenInterval wurde gemacht weil er ansosnten die ersten 5 Sekunden ein Fehler gibt weil charakter nicht gefunden werden kann

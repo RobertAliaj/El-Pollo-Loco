@@ -16,10 +16,8 @@
     <script src="models/status-bar.class.js"></script>
     <script src="models/bottle-bar-class.js"></script>
     <script src="models/bottle-bar-icon.class.js"></script>
-
     <script src="models/coin-bar.class.js"></script>
     <script src="models/coin-bar-icon.class.js"></script>
-
     <script src="models/end-boss-status-bar.class.js"></script>
     <script src="models/end-boss-bar-icon.class.js"></script>
     <script src="models/character.class.js"></script>
@@ -37,23 +35,24 @@
     <script src="levels/level1.js"></script>
     <script src="js/game.js"></script>
     <script src="js/start-screen.js"></script>
+    <script src="js/end-screen.js"></script>
 </head>
 
 <body>
-
     <div class="shadow"></div>
 
     <div class="content" id="content">
         <h1>El Pollo Loco</h1>
 
-        <div class="intro" id="startScreen">
+        <div class="intro relative" id="startScreen">
 
             <button onclick="startGame()" class="start-game-button">Start Game</button>
 
             <div class="icon-div">
                 <img class="icons" src="img/9_intro_outro_screens/start/script.png" onclick="showHistoryScreen()">
                 <img class="icons" src="img/9_intro_outro_screens/start/info .png" onclick="showInfoScreen()">
-                <img class="icons" src="img/9_intro_outro_screens/start/console.png" onclick="showConsoleOnStartScreen()">
+                <img class="icons" src="img/9_intro_outro_screens/start/console.png"
+                    onclick="showConsoleOnStartScreen()">
             </div>
 
             <img class="start-screen" src="img/9_intro_outro_screens/start/startscreen_1.png">
@@ -161,7 +160,24 @@
             </div>
         </div>
 
+        <div class="outro d-none relative" id="endScreenLoose">
+            <div class="restart-button-div">
+                <button onclick="restartGame()" class="restart-button">Play Again</button>
+            </div>
+            <img class="start-screen" src="img/9_intro_outro_screens/game_over/game over!.png">
+        </div>
+
+        <div class="outro-winner d-none relative" id="endScreenWin">
+            <div class="restart-button-div">
+                <button onclick="restartGame()" class="restart-button">Play Again</button>
+            </div>
+            <div class="shadow-end-screen">
+                <img src="img/9_intro_outro_screens/game_over/winner.png" class="winner-img">
+            </div>
+        </div>
+
     </div>
+
 
 </body>
 

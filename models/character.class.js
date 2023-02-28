@@ -107,6 +107,7 @@ class Character extends MovableObject {
             this.checkIfJumping();
             this.lastPressedKey();
             this.pauseWalkAudio();
+            this.gameOver();
         }, 1000 / 60);
 
 
@@ -158,7 +159,7 @@ class Character extends MovableObject {
 
 
     canMoveRight() {
-        return world.keyboard.RIGHT && this.x < 719 * 3 + 120 && !this.isDead() && !gameIsPaused && !world.character.isDead() && !world.endBoss.isDead();
+        return world.keyboard.RIGHT && this.x < 719 * 3 + 120 && !this.isDead() && !gameIsPaused;
     }
 
 
@@ -171,7 +172,7 @@ class Character extends MovableObject {
 
 
     canMoveRightScreenEnd() {
-        return world.keyboard.RIGHT && this.x < level1.level_end_x && this.x > 719 * 3 + 120 && !this.isDead() && !gameIsPaused && !world.character.isDead() && !world.endBoss.isDead();
+        return world.keyboard.RIGHT && this.x < level1.level_end_x && this.x > 719 * 3 + 120 && !this.isDead() && !gameIsPaused;
     }
 
 
@@ -183,7 +184,7 @@ class Character extends MovableObject {
 
 
     canMoveLeft() {
-        return world.keyboard.LEFT && this.x > 0 && this.x < 719 * 3 + 120 && !this.isDead() && !gameIsPaused && !world.character.isDead() && !world.endBoss.isDead();
+        return world.keyboard.LEFT && this.x > 0 && this.x < 719 * 3 + 120 && !this.isDead() && !gameIsPaused;
     }
 
 
@@ -196,7 +197,7 @@ class Character extends MovableObject {
 
 
     canMoveLeftScreenEnd() {
-        return world.keyboard.LEFT && this.x < level1.level_end_x + 10 && this.x > 719 * 3 + 120 && !this.isDead() && !gameIsPaused && !world.character.isDead() && !world.endBoss.isDead();
+        return world.keyboard.LEFT && this.x < level1.level_end_x + 10 && this.x > 719 * 3 + 120 && !this.isDead() && !gameIsPaused;
     }
 
 
@@ -208,7 +209,7 @@ class Character extends MovableObject {
 
 
     canJump() {
-        return world.keyboard.SPACE && !this.isAboveGround() && !this.isDead() && !gameIsPaused && !world.character.isDead() && !world.endBoss.isDead();
+        return world.keyboard.SPACE && !this.isAboveGround() && !this.isDead() && !gameIsPaused;
     }
 
 
@@ -259,6 +260,13 @@ class Character extends MovableObject {
     pauseWalkAudio() {
         if (!world.keyboard.LEFT && !world.keyboard.RIGHT || this.isDead() || world.endBoss.isDead()) {
             this.walking_sound.pause();
+        }
+    }
+
+
+    gameOver() {
+        if (this.isDead()) {
+            youLose = true;
         }
     }
 }

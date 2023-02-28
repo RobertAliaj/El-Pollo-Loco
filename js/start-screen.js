@@ -17,6 +17,7 @@ function startGame() {
     theme_song.play();
     initLevel();
     init();
+    checkEndScreen();
 }
 
 
