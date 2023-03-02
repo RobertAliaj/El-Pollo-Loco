@@ -13,22 +13,13 @@ function init() {
     world = new World(canvas, keyboard);
 }
 
-function proofIfKeysTouchedResp() {
-    document.getElementById('leftBtn').addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        console.log('clicked');
-        // keyboard.LEFT = true;
-    }, { passive: true });
-}
-
-
-window.addEventListener('touchstart', (e) => {
-    if (e.target.id == 'leftBtn') {
-        e.preventDefault();
-        console.log('clicked');
-        keyboard.LEFT = true;
-    }
-}, { passive: true });
+// function proofIfKeysTouchedResp() {
+//     document.getElementById('leftBtn').addEventListener('touchstart', (e) => {
+//         e.preventDefault();
+//         console.log('clicked');
+//         // keyboard.LEFT = true;
+//     }, { passive: true });
+// }
 
 
 window.addEventListener('keydown', (e) => {

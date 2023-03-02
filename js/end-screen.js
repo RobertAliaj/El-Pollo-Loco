@@ -29,7 +29,7 @@ function restartGame() {
     init();
     checkEndScreen();
     gameIsPaused = true;
-    removePreloader(30000);
+    removePreloader(2000);
 }
 
 
