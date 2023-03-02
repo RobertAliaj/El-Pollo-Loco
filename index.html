@@ -43,32 +43,65 @@
 <body>
     <!-- <div class="shadow"></div> -->
     <div class="main-div">
+        <h1 class="title">El Pollo Loco</h1>
 
-        <div class="relative d-none" id="canvasDiv" class="canvas-div">
+
+        <!-- This Section is while you're IN-game (Playing), Canvas and the In-Game-Pause screen -->
+        <div class="relative d-none canvas-div" id="canvasDiv">
             <canvas id="canvas" width="720" height="480" class="canvas"></canvas>
             <div class="pause-img-div">
                 <img class="icons" src="img/9_intro_outro_screens/start/pause.png" id="pause" onclick="pauseGame()">
             </div>
+
+            <div class="relative pause-screen d-none" id="pauseScreen">
+                <h1>Settings</h1>
+                <div class="pause-screen-icons">
+                    <div class="pause-icons-child">
+                        Fullscreen:
+                        <img class="icons" src="img/9_intro_outro_screens/start/full-screen.png" id="fullScreen"
+                            onclick="openFullScreen()">
+                    </div>
+                    <div class="pause-icons-child">
+                        How to play:
+                        <img class="icons" src="img/9_intro_outro_screens/start/console.png"
+                            onclick="showConsoleOnPauseScreen()">
+                    </div>
+                    <div class="pause-icons-child">
+                        Mute Sound:
+                        <img class="icons" id="volume"
+                            src="img/9_intro_outro_screens/start/volume-up-interface-symbol.png"
+                            onclick="changeVolume()">
+                    </div>
+                </div>
+                <button class="resume-button" onclick="resumeGame()">Resume Game</button>
+            </div>
+
+
+            <div class="description d-none" id="htpOnPause">
+                <div class="key-parent">
+                    <h1> How to play</h1>
+                    <div class="key-child">Left: <img src="img/keys/left-arrow.png"></div>
+                    <div class="key-child">Right: <img src="img/keys/right-arrow.png"></div>
+                    <div class="key-child">Jump: <img src="img/keys/space.ico"></div>
+                    <div class="key-child">Throw Bottle: <img src="img/keys/key-d-of-a-keyboard.png" alt=""></div>
+                    <button class="resume-button" onclick="resumeGame()">Resume Game</button>
+                </div>
+            </div>
         </div>
 
 
-        
-        
+        <!-- This section is while you're NOT in-game, Startscreen, Endscreen etc.. -->
         <div class="content" id="content">
-            <!-- <h1>El Pollo Loco</h1> -->
-            
             <div class="preloader d-none" id="preloader"></div>
 
             <div class="intro relative" id="startScreen">
                 <button onclick="startGame()" class="orange-button button-absolute">Start Game</button>
-
                 <div class="icon-div">
                     <img class="icons" src="img/9_intro_outro_screens/start/script.png" onclick="showHistoryScreen()">
                     <img class="icons" src="img/9_intro_outro_screens/start/info .png" onclick="showInfoScreen()">
                     <img class="icons" src="img/9_intro_outro_screens/start/console.png"
                         onclick="showConsoleOnStartScreen()">
                 </div>
-
                 <img class="start-screen" src="img/9_intro_outro_screens/start/startscreen_1.png">
             </div>
 
@@ -76,18 +109,22 @@
             <div class="intro d-none relative" id="consoleScreen">
                 <img class="start-screen" src="img/5_background/first_half_background.png">
                 <img class="icons back" src="img/9_intro_outro_screens/start/back.png" onclick="exitConsoleScreen()">
-                <div class="description">
-                    <h1> How to play :</h1>
-                    <div class="key-parent">
-                        <div class="key-child">Left: <img src="img/keys/left-arrow.png"></div>
-                        <div class="key-child">Right: <img src="img/keys/right-arrow.png"></div>
-                        <div class="key-child">Jump: <img src="img/keys/space.ico"></div>
-                        <div class="key-child">Throw Bottle: <img src="img/keys/key-d-of-a-keyboard.png" alt=""></div>
+
+                <div class="description-parent">
+                    <div class="description">
+                        <h1> How to play :</h1>
+                        <div class="key-parent">
+                            <div class="key-child">Left: <img src="img/keys/left-arrow.png"></div>
+                            <div class="key-child">Right: <img src="img/keys/right-arrow.png"></div>
+                            <div class="key-child">Jump: <img src="img/keys/space.ico"></div>
+                            <div class="key-child">Throw Bottle: <img src="img/keys/key-d-of-a-keyboard.png" alt="">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            
+
             <div class="intro story d-none relative" id="historyScreen">
                 <img class="start-screen" src="img/5_background/first_half_background.png">
                 <img class="icons back" src="img/9_intro_outro_screens/start/back.png" onclick="exitHistoryScreen()">
@@ -120,7 +157,7 @@
                     </p>
                 </div>
             </div>
-            
+
             <div class="intro story relative d-none" id="infoScreen">
                 <img class="start-screen" src="img/5_background/first_half_background.png">
                 <img class="icons back" src="img/9_intro_outro_screens/start/back.png" onclick="exitInfoScreen()">
@@ -130,42 +167,6 @@
                         throw
                         bottles to kill them. The Big Chicken can only be defeated by throwing bottles at him.
                     </p>
-                </div>
-            </div>
-
-            <!-- <div class="relative pause-screen d-none" id="pauseScreen">
-                <h1>Settings</h1>
-                <div class="pause-screen-icons">
-                    <div class="pause-icons-child">
-                        Fullscreen:
-                        <img class="icons" src="img/9_intro_outro_screens/start/full-screen.png" id="fullScreen"
-                            onclick="openFullScreen()">
-                    </div>
-                    <div class="pause-icons-child">
-                        How to play:
-                        <img class="icons" src="img/9_intro_outro_screens/start/console.png"
-                            onclick="showConsoleOnPauseScreen()">
-                    </div>
-                    <div class="pause-icons-child">
-                        Mute Sound:
-                        <img class="icons" id="volume"
-                            src="img/9_intro_outro_screens/start/volume-up-interface-symbol.png"
-                            onclick="changeVolume()">
-                    </div>
-                </div>
-                <button class="resume-button" onclick="resumeGame()">Resume Game</button>
-            </div> -->
-
-
-            
-            <div class="description d-none" id="htpOnPause">
-                <div class="key-parent">
-                    <h1> How to play</h1>
-                    <div class="key-child">Left: <img src="img/keys/left-arrow.png"></div>
-                    <div class="key-child">Right: <img src="img/keys/right-arrow.png"></div>
-                    <div class="key-child">Jump: <img src="img/keys/space.ico"></div>
-                    <div class="key-child">Throw Bottle: <img src="img/keys/key-d-of-a-keyboard.png" alt=""></div>
-                    <button class="resume-button" onclick="resumeGame()">Resume Game</button>
                 </div>
             </div>
 
@@ -193,160 +194,3 @@
 </body>
 
 </html>
-
-
-
-
-
-
-
-
-
-
-<!-- <body>
-    <div class="shadow"></div>
-
-    <div class="content" id="content">
-     <h1>El Pollo Loco</h1>
-
-        <div class="preloader d-none" id="preloader"></div>
-
-        <div class="intro relative" id="startScreen">
-            <button onclick="startGame()" class="start-game-button">Start Game</button>
-
-            <div class="icon-div">
-                <img class="icons" src="img/9_intro_outro_screens/start/script.png" onclick="showHistoryScreen()">
-                <img class="icons" src="img/9_intro_outro_screens/start/info .png" onclick="showInfoScreen()">
-                <img class="icons" src="img/9_intro_outro_screens/start/console.png"
-                    onclick="showConsoleOnStartScreen()">
-            </div>
-
-            <img class="start-screen" src="img/9_intro_outro_screens/start/startscreen_1.png">
-        </div>
-
-        <div class="intro d-none relative" id="consoleScreen">
-            <img class="start-screen" src="img/5_background/first_half_background.png">
-            <img class="icons back" src="img/9_intro_outro_screens/start/back.png" onclick="exitConsoleScreen()">
-            <div class="description">
-                <h1> How to play :</h1>
-                <div class="key-parent">
-                    <div class="key-child">Left: <img src="img/keys/left-arrow.png"></div>
-                    <div class="key-child">Right: <img src="img/keys/right-arrow.png"></div>
-                    <div class="key-child">Jump: <img src="img/keys/space.ico"></div>
-                    <div class="key-child">Throw Bottle: <img src="img/keys/key-d-of-a-keyboard.png" alt=""></div>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="intro story d-none relative" id="historyScreen">
-            <img class="start-screen" src="img/5_background/first_half_background.png">
-            <img class="icons back" src="img/9_intro_outro_screens/start/back.png" onclick="exitHistoryScreen()">
-            <div class="history-text-div">
-                <p class="history-text">
-                    Pepe Peligroso, the daring salsa-making, guitar-strumming, and gun-slinging mariachi, had a
-                    reputation
-                    for being the
-                    most interesting man in the Wild West.
-                    <br>
-                    <br>
-                    One day, as he was performing at a local cantina, he
-                    overheard
-                    the townsfolk
-                    talking about a strange phenomenon at a nearby farm. The chickens had grown to massive
-                    proportions
-                    and
-                    were
-                    terrorizing the locals.
-                    <br>
-                    <br>
-                    Pepe knew he had to act fast. He grabbed his guitar, a few bottles of his
-                    special spicy
-                    salsa, and rode to the farm. As he approached the giant chickens, he began to play his guitar,
-                    distracting the birds
-                    as he hurled the bottles of salsa, sending the chickens running in all directions. With his
-                    mission
-                    accomplished,
-                    Pepe rode off into the sunset, strumming his guitar and singing a victory song.
-                </p>
-            </div>
-        </div>
-
-
-        <div class="intro story relative d-none" id="infoScreen">
-            <img class="start-screen" src="img/5_background/first_half_background.png">
-            <img class="icons back" src="img/9_intro_outro_screens/start/back.png" onclick="exitInfoScreen()">
-            <div class="history-text-div">
-                <p class="history-text">
-                    To progress in the game, the chickens must be defeated. The player can either jump on them or throw
-                    bottles to kill them. The Big Chicken can only be defeated by throwing bottles at him.
-                </p>
-            </div>
-        </div>
-
-
-        <div class="relative d-none" id="canvasDiv">
-            <canvas id="canvas" width="720" height="480"></canvas>
-            <img class="icons play-or-pause-img" src="img/9_intro_outro_screens/start/pause.png" id="pause"
-                onclick="pauseGame()">
-        </div>
-
-
-        <div class="relative pause-screen d-none" id="pauseScreen">
-            <h1>Settings</h1>
-            <div class="pause-screen-icons">
-                <div class="pause-icons-child">
-                    Fullscreen:
-                    <img class="icons" src="img/9_intro_outro_screens/start/full-screen.png" id="fullScreen"
-                        onclick="openFullScreen()">
-                </div>
-                <div class="pause-icons-child">
-                    How to play:
-                    <img class="icons" src="img/9_intro_outro_screens/start/console.png"
-                        onclick="showConsoleOnPauseScreen()">
-                </div>
-                <div class="pause-icons-child">
-                    Mute Sound:
-                    <img class="icons" id="volume" src="img/9_intro_outro_screens/start/volume-up-interface-symbol.png"
-                        onclick="changeVolume()">
-                </div>
-            </div>
-            <button class="resume-button" onclick="resumeGame()">Resume Game</button>
-        </div>
-
-
-        <div class="description d-none" id="htpOnPause">
-            <div class="key-parent">
-                <h1> How to play</h1>
-                <div class="key-child">Left: <img src="img/keys/left-arrow.png"></div>
-                <div class="key-child">Right: <img src="img/keys/right-arrow.png"></div>
-                <div class="key-child">Jump: <img src="img/keys/space.ico"></div>
-                <div class="key-child">Throw Bottle: <img src="img/keys/key-d-of-a-keyboard.png" alt=""></div>
-                <button class="resume-button" onclick="resumeGame()">Resume Game</button>
-            </div>
-        </div>
-
-        <div class="outro d-none relative" id="endScreenLoose">
-            <div class="restart-button-div">
-                <button onclick="restartGame()" class="restart-button">Play Again</button>
-                <button class="restart-button" onclick="showHomeScreen();">Home</button>
-            </div>
-            <img class="start-screen" src="img/9_intro_outro_screens/game_over/game over!.png">
-        </div>
-
-        <div class="outro-winner d-none relative" id="endScreenWin">
-            <span>Congratulations</span>
-            <div class="restart-button-div">
-                <button onclick="restartGame()" class="restart-button">Play Again</button>
-                <button class="restart-button" onclick="showHomeScreen();">Home</button>
-            </div>
-            <div class="shadow-end-screen">
-                <img src="img/9_intro_outro_screens/game_over/winner.png" class="winner-img">
-            </div>
-        </div>
-    </div>
-
-
-
-
-</body> -->

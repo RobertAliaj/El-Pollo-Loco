@@ -6,7 +6,7 @@ function startGame() {
     init();
     checkEndScreen();
     gameIsPaused = true;
-    removePreloader(10000);
+    removePreloader(200);
 }
 
 

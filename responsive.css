@@ -2,10 +2,15 @@
       .content {
           width: auto;
       }
+
+      .title {
+          display: none;
+      }
   }
 
 
   @media (max-width: 720px) {
+
       .canvas,
       .outro,
       .outro-winner,
@@ -21,42 +26,7 @@
           width: 100%;
           height: auto;
       }
-
-      /* .intro {
-          height: 100%;
-      }
-
-      .preloader{
-        height: 100%;
-      } */
   }
-
-
-  /* Das ist nur für gedrehtes Handy */
-  @media (max-height: 480px) {
-      .content {
-          height: 100%;
-      }
-  }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
   @media only screen and (max-width: 720px) {
@@ -78,6 +48,33 @@
           width: 30px;
           height: 30px;
       }
+
+      .orange-button {
+          font-size: 12px;
+          width: fit-content;
+          padding: 6px;
+      }
+
+      .outro-winner span {
+          font-size: 14px;
+      }
+
+      .history-text-div{
+        padding: 12px;
+      }
+
+      .history-text{
+        padding: 8px;
+        font-size: 12px;
+      }
+  }
+
+
+  /* Das ist nur für gedrehtes Handy */
+  @media (max-height: 480px) {
+      .content {
+          height: 100%;
+      }
   }
 
 
@@ -86,4 +83,9 @@
           width: 20px;
           height: 20px;
       }
+
+      .history-text{
+        font-size: 8px;
+      }
+
   }
