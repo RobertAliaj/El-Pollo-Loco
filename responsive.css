@@ -1,0 +1,89 @@
+  @media (max-width: 900px) {
+      .content {
+          width: auto;
+      }
+  }
+
+
+  @media (max-width: 720px) {
+      .canvas,
+      .outro,
+      .outro-winner,
+      .start-screen,
+      .winner-img,
+      .shadow-end-screen,
+      .preloader,
+      .content {
+          border-radius: 0px;
+      }
+
+      .content {
+          width: 100%;
+          height: auto;
+      }
+
+      /* .intro {
+          height: 100%;
+      }
+
+      .preloader{
+        height: 100%;
+      } */
+  }
+
+
+  /* Das ist nur für gedrehtes Handy */
+  @media (max-height: 480px) {
+      .content {
+          height: 100%;
+      }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  @media only screen and (max-width: 720px) {
+      canvas {
+          width: 100% !important;
+      }
+  }
+
+
+  @media only screen and (max-height: 480px) {
+      canvas {
+          height: 100vh !important;
+      }
+  }
+
+
+  @media (max-width: 560px) {
+      .icons {
+          width: 30px;
+          height: 30px;
+      }
+  }
+
+
+  @media (max-width: 320px) {
+      .icons {
+          width: 20px;
+          height: 20px;
+      }
+  }

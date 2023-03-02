@@ -19,7 +19,7 @@ function checkEndScreen() {
 
 
 function restartGame() {
-    document.getElementById('canvasDiv').classList.remove('d-none')
+    document.getElementById('canvasDiv').classList.add('d-none')
     document.getElementById('endScreenLoose').classList.add('d-none');
     document.getElementById('endScreenWin').classList.add('d-none');
     document.getElementById('preloader').classList.remove('d-none');
@@ -29,17 +29,19 @@ function restartGame() {
     init();
     checkEndScreen();
     gameIsPaused = true;
-    removePreloader();
+    removePreloader(30000);
 }
 
 
 function showLoserScreen() {
+    document.getElementById('content').classList.remove('d-none');
     document.getElementById('canvasDiv').classList.add('d-none')
     document.getElementById('endScreenLoose').classList.remove('d-none');
 }
 
 
 function showWinnerScreen() {
+    document.getElementById('content').classList.remove('d-none');
     document.getElementById('canvasDiv').classList.add('d-none')
     document.getElementById('endScreenWin').classList.remove('d-none');
 }
@@ -57,6 +59,7 @@ function clearAllAudios() {
 
 
 function showHomeScreen() {
+    document.getElementById('content').classList.remove('d-none');
     document.getElementById('endScreenLoose').classList.add('d-none');
     document.getElementById('endScreenWin').classList.add('d-none');
     document.getElementById('startScreen').classList.remove('d-none');

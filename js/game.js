@@ -7,6 +7,7 @@ let youLose = false;
 let youWin = false;
 let intervalsIds = [];
 
+
 function init() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);

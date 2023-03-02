@@ -1,5 +1,4 @@
 function startGame() {
-    document.getElementById('canvasDiv').classList.remove('d-none')
     document.getElementById('startScreen').classList.add('d-none')
     document.getElementById('preloader').classList.remove('d-none');
     theme_song.play();
@@ -7,18 +6,19 @@ function startGame() {
     init();
     checkEndScreen();
     gameIsPaused = true;
-    removePreloader();
+    removePreloader(10000);
 }
 
 
-function removePreloader() {
+function removePreloader(time) {
     setTimeout(() => {
+        document.getElementById('content').classList.add('d-none');
         document.getElementById('preloader').classList.add('d-none');
+        document.getElementById('canvasDiv').classList.remove('d-none')
         gameIsPaused = false;
-    }, 5000);
+    }, time);
 
 }
-
 
 
 function changeVolume() {
