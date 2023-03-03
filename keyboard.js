@@ -4,49 +4,49 @@ window.addEventListener('touchstart', (e) => {
     if (idsToCheck.includes(e.target.id)) {
         switch (e.target.id) {
             case 'leftBtn':
-                e.preventDefault(); // verhindert das Standardverhalten des touchstart-Ereignisses
                 keyboard.LEFT = true;
+                console.log('leftBtn touch');
                 break;
             case 'rightBtn':
-                e.preventDefault();
                 keyboard.RIGHT = true;
+                console.log('rightBtn touch');
                 break;
             case 'jumpBtn':
-                e.preventDefault();
                 keyboard.SPACE = true;
+                console.log('jump touch');
                 break;
             case 'throwBtn':
-                e.preventDefault();
                 keyboard.D = true;
+                console.log('throw touch');
                 break;
             default:
                 break;
         }
     }
-}, { passive: false });
+});
 
 
 window.addEventListener('touchend', (e) => {
     if (idsToCheck.includes(e.target.id)) {
         switch (e.target.id) {
             case 'leftBtn':
-                e.preventDefault();
                 keyboard.LEFT = false;
+                console.log('leftBtn los');
                 break;
             case 'rightBtn':
-                e.preventDefault();
                 keyboard.RIGHT = false;
+                console.log('rightBtn los');
                 break;
             case 'jumpBtn':
-                e.preventDefault();
                 keyboard.SPACE = false;
+                console.log('jump los');
                 break;
             case 'throwBtn':
-                e.preventDefault();
                 keyboard.D = false;
+                console.log('throw los');
                 break;
             default:
                 break;
         }
     }
-}, { passive: false });
+});

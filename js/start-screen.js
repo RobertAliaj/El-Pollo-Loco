@@ -1,7 +1,6 @@
 function startGame() {
     document.getElementById('startScreen').classList.add('d-none')
     document.getElementById('preloader').classList.remove('d-none');
-    // proofIfKeysTouchedResp();
     // theme_song.play();
     initLevel();
     init();
