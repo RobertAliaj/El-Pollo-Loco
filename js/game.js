@@ -6,6 +6,7 @@ let gameIsPaused = false;
 let youLose = false;
 let youWin = false;
 let intervalsIds = [];
+let gamesstarted = false;
 
 
 function init() {
@@ -14,64 +15,37 @@ function init() {
 }
 
 
-window.addEventListener("orientationchange", function () {
-    if (window.orientation === 90 || window.orientation === -90) {
-        document.getElementById("rotate-device").style.display = "none";
-    } else {
-        document.getElementById("rotate-device").style.display = "block";
+function proofOrientation() {
+    if (window.orientation !== undefined && window.orientation === 0) {             // wenn das Gerät eine Drehmöglichkeit hat UND gerade steht
+        document.getElementById('rotate-device').classList.remove('d-none');        // zeige das Hinweis 
+        document.getElementById('content').classList.add('d-none');                 // verstecke das Content
+        checkOrientation();                                                         // Führe die Funktion aus
     }
-});
+    if (window.orientation !== undefined && window.orientation === 90 || window.orientation !== undefined && window.orientation === -90) { // wenn das Gerät eine Drehmöglichkeit hat UND das Gerät im sich im Landscapemodus befindet
+        document.getElementById('rotate-device').classList.add('d-none');       // verstecke das hinweis 
+        document.getElementById('content').classList.remove('d-none');          // zeige das Content
+        checkOrientation();
+    }
+}
 
 
+function checkOrientation() {
+    window.addEventListener("orientationchange", function () {
 
+        if (window.orientation === 0 || window.orientation === 0) {                // wenn das Gerät grade steht 
+            document.getElementById("rotate-device").classList.remove('d-none');   // zeige hinweis 
+            document.getElementById('content').classList.add('d-none');            // verstecke content 
+            document.getElementById('canvasDiv').classList.add('d-none');          // verstecke canvas
+        }
 
+        if (window.orientation === 90 && gamesstarted || window.orientation === -90 && gamesstarted) { // wenn das Gerät gedreht und das spiel Gestartet
+            document.getElementById("rotate-device").classList.add('d-none');                          // verstecke hinweis
+            document.getElementById('canvasDiv').classList.remove('d-none');                           // zeige canvas
+        }
 
-
-
-
-
-// function proofIfKeysTouchedResp() {
-//     document.getElementById('leftBtn').addEventListener('touchstart', (e) => {
-//         e.preventDefault();
-//         console.log('clicked');
-//         // keyboard.LEFT = true;
-//     }, { passive: true });
-// }
-
-
-// window.addEventListener('keydown', (e) => {
-//     if (e.keyCode == 37) {
-//         keyboard.LEFT = true;
-//     }
-
-//     if (e.keyCode == 39) {
-//         keyboard.RIGHT = true;
-//     }
-
-//     if (e.keyCode == 32) {
-//         keyboard.SPACE = true;
-//     }
-
-//     if (e.keyCode == 68) {
-//         keyboard.D = true;
-//     }
-// });
-
-
-// window.addEventListener('keyup', (e) => {
-//     if (e.keyCode == 37) {
-//         keyboard.LEFT = false;
-//     }
-
-//     if (e.keyCode == 39) {
-//         keyboard.RIGHT = false;
-//     }
-
-//     if (e.keyCode == 32) {
-//         keyboard.SPACE = false;
-//     }
-
-//     if (e.keyCode == 68) {
-//         keyboard.D = false;
-//     }
-// });
+        if (window.orientation === 90 && !gamesstarted || window.orientation === -90 && !gamesstarted) { // wenn das Gerät gedreht und das Spiel nicht gestartet 
+            document.getElementById("rotate-device").classList.add('d-none');                            // verstecke Hinweis 
+            document.getElementById('content').classList.remove('d-none');                               // zeige content 
+        }
+    });
+}

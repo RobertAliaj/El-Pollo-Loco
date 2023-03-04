@@ -64,4 +64,5 @@ function showHomeScreen() {
     document.getElementById('endScreenWin').classList.add('d-none');
     document.getElementById('startScreen').classList.remove('d-none');
     clearAllAudios();
+    gamesstarted = false;
 }
