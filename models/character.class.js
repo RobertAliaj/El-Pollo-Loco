@@ -266,6 +266,7 @@ class Character extends MovableObject {
     gameOver() {
         if (this.isDead()) {
             youLose = true;
+            gamesstarted = false;
         }
     }
 }

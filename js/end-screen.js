@@ -23,6 +23,8 @@ function restartGame() {
     document.getElementById('endScreenLoose').classList.add('d-none');
     document.getElementById('endScreenWin').classList.add('d-none');
     document.getElementById('preloader').classList.remove('d-none');
+    document.getElementById('pause').classList.remove('d-none');
+    showMobileControls();
     clearAllAudios();
     theme_song.play();
     initLevel();
@@ -63,6 +65,9 @@ function showHomeScreen() {
     document.getElementById('endScreenLoose').classList.add('d-none');
     document.getElementById('endScreenWin').classList.add('d-none');
     document.getElementById('startScreen').classList.remove('d-none');
+    document.getElementById('canvasDiv').classList.add('d-none');
+    document.getElementById('pauseScreen').classList.add('d-none');
+    document.getElementById('pause').classList.remove('d-none');
     clearAllAudios();
     gamesstarted = false;
 }

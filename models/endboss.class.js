@@ -238,6 +238,7 @@ class Endboss extends MovableObject {
     gameWinner() {
         if (this.isDead()) {
             youWin = true;
+            gamesstarted = false;
         }
     }
 
