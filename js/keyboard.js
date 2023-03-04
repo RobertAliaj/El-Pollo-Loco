@@ -1,11 +1,10 @@
-const idsToCheck = ['leftBtn', 'rightBtn', 'jumpBtn', 'throwBtn'];
-
 const elements = {
     'leftBtn': 'LEFT',
     'rightBtn': 'RIGHT',
     'jumpBtn': 'SPACE',
     'throwBtn': 'D'
 };
+
 
 const keys = {
     37: 'LEFT',
@@ -25,12 +24,10 @@ function setupControls() {
 
 function handleTouchStart() {
     window.addEventListener('touchstart', (e) => {
-        if (idsToCheck.includes(e.target.id)) {
-            const keyName = elements[e.target.id];
-            if (keyName) {
-                e.preventDefault(); // verhindert das Standardverhalten des touchstart-Ereignisses
-                keyboard[keyName] = true;
-            }
+        const keyName = elements[e.target.id];
+        if (keyName) {
+            e.preventDefault();
+            keyboard[keyName] = true;
         }
     }, { passive: false });
 }
@@ -38,22 +35,20 @@ function handleTouchStart() {
 
 function handleTouchEnd() {
     window.addEventListener('touchend', (e) => {
-        if (idsToCheck.includes(e.target.id)) {
-            const keyName = elements[e.target.id];
-            if (keyName) {
-                e.preventDefault(); // verhindert das Standardverhalten des touchstart-Ereignisses
-                keyboard[keyName] = false;
-            }
+        const keyName = elements[e.target.id];
+        if (keyName) {
+            e.preventDefault(); // verhindert das Standardverhalten des touchstart-Ereignisses
+            keyboard[keyName] = false;
         }
     }, { passive: false });
 }
 
 
 function handleKeyDown() {
-    window.addEventListener('keydown', (e) => {
-        const keyName = keys[e.keyCode];
-        if (keyName) {
-            keyboard[keyName] = true;
+    window.addEventListener('keydown', (e) => {         // eine Taste wird gedrückt
+        const keyName = keys[e.keyCode];                // keyName = keys an der Stelle von der Nummer die gedrückt wurde, z.B keys[37] 
+        if (keyName) {                                  // wenn keys[37] true ist, also wenns existiert
+            keyboard[keyName] = true;                   // dann ändere den Wert von keys[37] zu true . Also 37 ist der Key in einem Objekt und LEFT ist der Wert (true oder false)
         }
     });
 }
@@ -68,93 +63,3 @@ function handleKeyUp() {
     });
 }
 
-
-
-// window.addEventListener('touchend', (e) => {
-//     if (idsToCheck.includes(e.target.id)) {
-//         switch (e.target.id) {
-//             case 'leftBtn':
-//                 e.preventDefault();
-//                 keyboard.LEFT = false;
-//                 break;
-//             case 'rightBtn':
-//                 e.preventDefault();
-//                 keyboard.RIGHT = false;
-//                 break;
-//             case 'jumpBtn':
-//                 e.preventDefault();
-//                 keyboard.SPACE = false;
-//                 break;
-//             case 'throwBtn':
-//                 e.preventDefault();
-//                 keyboard.D = false;
-//                 break;
-//             default:
-//                 break;
-//         }
-//     }
-// }, { passive: false });
-
-
-// window.addEventListener('touchstart', (e) => {
-//     if (idsToCheck.includes(e.target.id)) {
-//         switch (e.target.id) {
-//             case 'leftBtn':
-//                 e.preventDefault(); // verhindert das Standardverhalten des touchstart-Ereignisses
-//                 keyboard.LEFT = true;
-//                 break;
-//             case 'rightBtn':
-//                 e.preventDefault();
-//                 keyboard.RIGHT = true;
-//                 break;
-//             case 'jumpBtn':
-//                 e.preventDefault();
-//                 keyboard.SPACE = true;
-//                 break;
-//             case 'throwBtn':
-//                 e.preventDefault();
-//                 keyboard.D = true;
-//                 break;
-//             default:
-//                 break;
-//         }
-//     }
-// }, { passive: false });
-
-
-// window.addEventListener('keydown', (e) => {
-//     if (e.keyCode == 37) {
-//         keyboard.LEFT = true;
-//     }
-
-//     if (e.keyCode == 39) {
-//         keyboard.RIGHT = true;
-//     }
-
-//     if (e.keyCode == 32) {
-//         keyboard.SPACE = true;
-//     }
-
-//     if (e.keyCode == 68) {
-//         keyboard.D = true;
-//     }
-// });
-
-
-// window.addEventListener('keyup', (e) => {
-//     if (e.keyCode == 37) {
-//         keyboard.LEFT = false;
-//     }
-
-//     if (e.keyCode == 39) {
-//         keyboard.RIGHT = false;
-//     }
-
-//     if (e.keyCode == 32) {
-//         keyboard.SPACE = false;
-//     }
-
-//     if (e.keyCode == 68) {
-//         keyboard.D = false;
-//     }
-// });
