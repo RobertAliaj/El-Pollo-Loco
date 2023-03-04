@@ -7,7 +7,7 @@ function startGame() {
     checkEndScreen();
     gameIsPaused = true;
     gamesstarted = true;
-    removePreloader(200);
+    removePreloader(2000);
 }
 
 

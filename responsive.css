@@ -1,103 +1,102 @@
-  @media (max-width: 900px) {
-      .content {
-          width: auto;
-      }
+@media (max-width: 900px) {
+    .content {
+        width: auto;
+    }
 
-      .title {
-          display: none;
-      }
-  }
+    .title {
+        display: none;
+    }
+}
 
-  @media (max-width: 720px) {
+@media (max-width: 720px) {
 
-      .canvas,
-      .outro,
-      .outro-winner,
-      .start-screen,
-      .winner-img,
-      .shadow-end-screen,
-      .preloader,
-      .content {
-          border-radius: 0px;
-      }
+    .canvas,
+    .outro,
+    .outro-winner,
+    .start-screen,
+    .winner-img,
+    .shadow-end-screen,
+    .preloader,
+    .content {
+        border-radius: 0px;
+    }
 
-      .content {
-          width: 100%;
-          height: auto;
-      }
+    .content {
+        width: 100%;
+        height: auto;
+    }
 
-      .history-text-div {
-          padding: 12px;
-      }
+    .history-text-div {
+        padding: 12px;
+    }
 
-      .history-text {
-          font-size: 8px;
-      }
+    .history-text {
+        font-size: 8px;
+    }
 
-
-      .pause-screen {
-          margin: 0;
-      }
-  }
-
-
-  @media only screen and (max-width: 720px) {
-      canvas {
-          width: 100% !important;
-      }
-  }
+    .pause-screen {
+        margin: 0;
+    }
+}
 
 
-  @media only screen and (max-height: 480px) {
-      canvas {
-          height: 100vh !important;
-      }
-  }
+@media only screen and (max-width: 720px) {
+    canvas {
+        width: 100% !important;
+    }
+}
 
 
-  @media (max-width: 560px) {
-      .icons {
-          width: 30px;
-          height: 30px;
-      }
-
-      .orange-button {
-          font-size: 12px;
-          width: fit-content;
-          padding: 6px;
-      }
-
-      .outro-winner span {
-          font-size: 14px;
-      }
-
-      .history-text-div {
-          padding: 12px;
-      }
-
-      .history-text {
-          padding: 8px;
-          font-size: 12px;
-      }
-  }
+@media only screen and (max-height: 480px) {
+    canvas {
+        height: 100vh !important;
+    }
+}
 
 
-  /* Das ist nur für gedrehtes Handy */
-  @media (max-height: 480px) {
-      .content {
-          height: 100%;
-      }
-  }
+@media (max-width: 560px) {
+    .icons {
+        width: 30px;
+        height: 30px;
+    }
+
+    .orange-button {
+        font-size: 12px;
+        width: fit-content;
+        padding: 6px;
+    }
+
+    .outro-winner span {
+        font-size: 14px;
+    }
+
+    .history-text-div {
+        padding: 12px;
+    }
+
+    .history-text {
+        padding: 8px;
+        font-size: 12px;
+    }
+}
 
 
-  @media (max-width: 320px) {
-      .icons {
-          width: 20px;
-          height: 20px;
-      }
+/* Das ist nur für gedrehtes Handy */
+@media (max-height: 480px) {
+    .content {
+        height: 100%;
+    }
+}
 
-      .history-text {
-          font-size: 8px;
-      }
 
-  }
+@media (max-width: 320px) {
+    .icons {
+        width: 20px;
+        height: 20px;
+    }
+
+    .history-text {
+        font-size: 8px;
+    }
+
+}
