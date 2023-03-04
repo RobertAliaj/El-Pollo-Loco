@@ -14,6 +14,9 @@ const keys = {
 };
 
 
+/**
+ * This function is used to initialize the ControlPanel
+ */
 function setupControls() {
     handleTouchStart();
     handleTouchEnd();
@@ -22,6 +25,9 @@ function setupControls() {
 }
 
 
+/**
+ * This function is used to handle the Touchstart
+ */
 function handleTouchStart() {
     window.addEventListener('touchstart', (e) => {
         const keyName = elements[e.target.id];
@@ -33,6 +39,9 @@ function handleTouchStart() {
 }
 
 
+/**
+ * This function is used to handle the Touchend
+ */
 function handleTouchEnd() {
     window.addEventListener('touchend', (e) => {
         const keyName = elements[e.target.id];
@@ -44,6 +53,9 @@ function handleTouchEnd() {
 }
 
 
+/**
+ * This function is used to handle the pressed Keys 
+ */
 function handleKeyDown() {
     window.addEventListener('keydown', (e) => {
         const keyName = keys[e.keyCode];
@@ -54,6 +66,9 @@ function handleKeyDown() {
 }
 
 
+/**
+ * This function is used to handle the released keys
+ */
 function handleKeyUp() {
     window.addEventListener('keyup', (e) => {
         const keyName = keys[e.keyCode];

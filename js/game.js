@@ -8,8 +8,10 @@ let youWin = false;
 let gamesstarted = false;
 
 
+/**
+ * This function is used to initialize the Worldclass
+ */
 function init() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
-    setupControls();
 }

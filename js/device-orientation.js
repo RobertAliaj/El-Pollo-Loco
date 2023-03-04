@@ -1,3 +1,6 @@
+/**
+ * This Function is used to check the Device Orientation when initializing the Website
+ */
 function handleOrientation() {
     handleOrientationPortrait();
     handleOrientationLandscape();
@@ -5,6 +8,9 @@ function handleOrientation() {
 }
 
 
+/**
+ * This Function is used to handle the Portrait Orientation when initializing the Website
+ */
 function handleOrientationPortrait() {
     if (window.orientation !== undefined && window.orientation === 0) {
         document.getElementById('rotateDevice').classList.remove('d-none');
@@ -14,6 +20,9 @@ function handleOrientationPortrait() {
 }
 
 
+/**
+ * This Function is used to handle the Landscape Orientation when initializing the Website
+ */
 function handleOrientationLandscape() {
     if (window.orientation !== undefined && window.orientation === 90 || window.orientation !== undefined && window.orientation === -90) {
         document.getElementById('rotateDevice').classList.add('d-none');
@@ -22,7 +31,9 @@ function handleOrientationLandscape() {
     }
 }
 
-
+/**
+ * This function is used to handle the Device Orientation when you change it
+ */
 function checkOrientation() {
     window.addEventListener("orientationchange", function () {
         if (window.orientation === 0) {

@@ -1,14 +1,18 @@
+/**
+ * This function is used to start the Game and initialize all of the function needed to play
+ */
 function startGame() {
     document.getElementById('startScreen').classList.add('d-none')
     document.getElementById('preloader').classList.remove('d-none');
-    // theme_song.play();
     initLevel();
     init();
-    checkEndScreen();
+    setupControls();
     showMobileControls();
-    gameIsPaused = true;
-    gamesstarted = true;
+    checkEndScreen();
     removePreloader(2000);
+    gamesstarted = true;
+    // theme_song.play();
+    // pause();
 }
 
 
@@ -58,7 +62,9 @@ function exitInfoScreen() {
     document.getElementById('startScreen').classList.remove('d-none');
 }
 
-
+/**
+ * This function is used to show the Mobile Control Panel only if you're not on Pc
+ */
 function showMobileControls(){
     if (window.orientation !== undefined) {
         document.getElementById('responsiveButtons').classList.remove('d-none');
