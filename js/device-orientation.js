@@ -13,9 +13,9 @@ function handleOrientation() {
  */
 function handleOrientationPortrait() {
     if (window.orientation !== undefined && window.orientation === 0) {
-        document.getElementById('rotateDevice').classList.remove('d-none');
-        document.getElementById('content').classList.add('d-none');
-        document.getElementById('responsiveButtons').classList.remove('d-none');
+        addClassList('content', 'd-none');
+        removeClassList('rotateDevice', 'd-none');
+        removeClassList('responsiveButtons', 'd-none');
     }
 }
 
@@ -25,9 +25,9 @@ function handleOrientationPortrait() {
  */
 function handleOrientationLandscape() {
     if (window.orientation !== undefined && window.orientation === 90 || window.orientation !== undefined && window.orientation === -90) {
-        document.getElementById('rotateDevice').classList.add('d-none');
-        document.getElementById('content').classList.remove('d-none');
-        document.getElementById('responsiveButtons').classList.remove('d-none');
+        addClassList('rotateDevice', 'd-none');
+        removeClassList('content', 'd-none');
+        removeClassList('responsiveButtons', 'd-none');
     }
 }
 
@@ -53,19 +53,19 @@ function checkOrientation() {
 
 
 function showOrientationHint() {
-    document.getElementById("rotateDevice").classList.remove('d-none');
-    document.getElementById('content').classList.add('d-none');
-    document.getElementById('canvasDiv').classList.add('d-none');
+    addClassList('content', 'd-none');
+    addClassList('canvasDiv', 'd-none');
+    removeClassList('rotateDevice', 'd-none');
 }
 
 
 function showGameCanvas() {
-    document.getElementById("rotateDevice").classList.add('d-none');
-    document.getElementById('canvasDiv').classList.remove('d-none');
+    addClassList('rotateDevice', 'd-none');
+    removeClassList('canvasDiv', 'd-none');
 }
 
 
 function showGameContent() {
-    document.getElementById("rotateDevice").classList.add('d-none');
-    document.getElementById('content').classList.remove('d-none');
+    addClassList('rotateDevice', 'd-none');
+    removeClassList('content', 'd-none');
 }

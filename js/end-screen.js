@@ -38,16 +38,16 @@ function showWinnerScreenAfterDelay() {
 
 
 function showLoserScreen() {
-    document.getElementById('content').classList.remove('d-none');
-    document.getElementById('canvasDiv').classList.add('d-none')
-    document.getElementById('endScreenLoose').classList.remove('d-none');
+    addClassList('canvasDiv', 'd-none');
+    removeClassList('content', 'd-none');
+    removeClassList('endScreenLoose', 'd-none');
 }
 
 
 function showWinnerScreen() {
-    document.getElementById('content').classList.remove('d-none');
-    document.getElementById('canvasDiv').classList.add('d-none')
-    document.getElementById('endScreenWin').classList.remove('d-none');
+    addClassList('canvasDiv', 'd-none');
+    removeClassList('content', 'd-none');
+    removeClassList('endScreenWin', 'd-none');
 }
 
 
@@ -65,20 +65,20 @@ function restartGame() {
     checkEndScreen();
     pause();
     theme_song.play();
-    removePreloader(2000);
+    removePreloader(5000);
 }
 
 
 function hideGameElements() {
-    document.getElementById('canvasDiv').classList.add('d-none');
-    document.getElementById('endScreenLoose').classList.add('d-none');
-    document.getElementById('endScreenWin').classList.add('d-none');
+    addClassList('canvasDiv', 'd-none');
+    addClassList('endScreenLoose', 'd-none');
+    addClassList('endScreenWin', 'd-none');
 }
 
 
 function showLoadingElements() {
-    document.getElementById('preloader').classList.remove('d-none');
-    document.getElementById('pause').classList.remove('d-none');
+    removeClassList('preloader', 'd-none');
+    removeClassList('pause', 'd-none');
 }
 
 
@@ -103,13 +103,15 @@ function clearAllAudios() {
  * This function is used to get you to the homescreen
  */
 function showHomeScreen() {
-    document.getElementById('content').classList.remove('d-none');
-    document.getElementById('endScreenLoose').classList.add('d-none');
-    document.getElementById('endScreenWin').classList.add('d-none');
-    document.getElementById('startScreen').classList.remove('d-none');
-    document.getElementById('canvasDiv').classList.add('d-none');
-    document.getElementById('pauseScreen').classList.add('d-none');
-    document.getElementById('pause').classList.remove('d-none');
+    addClassList('endScreenLoose', 'd-none');
+    addClassList('endScreenWin', 'd-none');
+    addClassList('canvasDiv', 'd-none');
+    addClassList('pauseScreen', 'd-none');
+
+    removeClassList('content', 'd-none');
+    removeClassList('startScreen', 'd-none');
+    removeClassList('pause', 'd-none');
+
     clearAllAudios();
     gamesstarted = false;
 }

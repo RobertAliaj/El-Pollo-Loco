@@ -9,64 +9,73 @@ function startGame() {
     setupControls();
     showMobileControls();
     checkEndScreen();
-    removePreloader(2000);
+    removePreloader(10000);
     gamesstarted = true;
-    // theme_song.play();
-    // pause();
+    theme_song.play();
+    pause();
 }
 
 
 function removePreloader(time) {
     setTimeout(() => {
-        document.getElementById('content').classList.add('d-none');
-        document.getElementById('preloader').classList.add('d-none');
-        document.getElementById('canvasDiv').classList.remove('d-none')
+        addClassList('content', 'd-none');
+        addClassList('preloader', 'd-none');
+        removeClassList('canvasDiv', 'd-none');
         gameIsPaused = false;
     }, time);
-
 }
 
 
 function showConsoleOnStartScreen() {
-    document.getElementById('consoleScreen').classList.remove('d-none');
-    document.getElementById('startScreen').classList.add('d-none');
+    addClassList('startScreen', 'd-none');
+    removeClassList('consoleScreen', 'd-none');
 }
 
 
 function exitConsoleScreen() {
-    document.getElementById('consoleScreen').classList.add('d-none');
-    document.getElementById('startScreen').classList.remove('d-none');
+    addClassList('consoleScreen', 'd-none');
+    removeClassList('startScreen', 'd-none');
 }
 
 
 function showHistoryScreen() {
-    document.getElementById('historyScreen').classList.remove('d-none');
-    document.getElementById('startScreen').classList.add('d-none');
+    addClassList('startScreen', 'd-none');
+    removeClassList('historyScreen', 'd-none');
 }
 
 
 function exitHistoryScreen() {
-    document.getElementById('historyScreen').classList.add('d-none');
-    document.getElementById('startScreen').classList.remove('d-none');
+    addClassList('historyScreen', 'd-none');
+    removeClassList('startScreen', 'd-none');
 }
 
 
 function showInfoScreen() {
-    document.getElementById('infoScreen').classList.remove('d-none');
-    document.getElementById('startScreen').classList.add('d-none');
+    addClassList('startScreen', 'd-none');
+    removeClassList('infoScreen', 'd-none');
 }
 
 
 function exitInfoScreen() {
-    document.getElementById('infoScreen').classList.add('d-none');
-    document.getElementById('startScreen').classList.remove('d-none');
+    addClassList('infoScreen', 'd-none');
+    removeClassList('startScreen', 'd-none');
 }
 
 /**
  * This function is used to show the Mobile Control Panel only if you're not on Pc
  */
-function showMobileControls(){
+function showMobileControls() {
     if (window.orientation !== undefined) {
-        document.getElementById('responsiveButtons').classList.remove('d-none');
+        removeClassList('responsiveButtons', 'd-none');
     }
+}
+
+
+function addClassList(id, style) {
+    document.getElementById(id).classList.add(style);
+}
+
+
+function removeClassList(id, style) {
+    document.getElementById(id).classList.remove(style);
 }

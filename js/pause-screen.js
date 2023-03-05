@@ -24,8 +24,8 @@ function unmuteSound() {
 
 
 function openFullScreen() {
-    document.getElementById('pauseScreen').classList.add('d-none');
-    document.getElementById('pause').classList.remove('d-none');
+    addClassList('pauseScreen', 'd-none');
+    removeClassList('pause', 'd-none');
     let canvas = document.getElementById('canvas');
     resumeGame();
     enterFullscreen(canvas);
@@ -53,9 +53,9 @@ function exitFullscreen() {
 
 
 function pauseGame() {
-    document.getElementById('pause').classList.add('d-none');
-    document.getElementById('pauseScreen').classList.remove('d-none');
-    document.getElementById('responsiveButtons').classList.add('d-none');
+    addClassList('pause', 'd-none');
+    addClassList('responsiveButtons', 'd-none');
+    removeClassList('pauseScreen', 'd-none');
     pause();
 }
 
@@ -73,23 +73,23 @@ function resumeGame() {
 
 
 function restoreVisibility() {
-    document.getElementById('pause').classList.remove('d-none');
-    document.getElementById('pauseScreen').classList.add('d-none');
-    document.getElementById('htpOnPause').classList.add('d-none');
+    addClassList('pauseScreen', 'd-none');
+    addClassList('htpOnPause', 'd-none');
+    removeClassList('pause', 'd-none');
 }
 
 
 function openPauseScreen() {
-    document.getElementById('pauseScreen').classList.remove('d-none');
+    removeClassList('pauseScreen', 'd-none');
 }
 
 function showConsoleOnPauseScreen() {
-    document.getElementById('htpOnPause').classList.remove('d-none');
-    document.getElementById('pauseScreen').classList.add('d-none');
+    addClassList('pauseScreen', 'd-none');
+    removeClassList('htpOnPause', 'd-none');
 }
 
 
 function exitConsoleOnPauseScreen() {
-    document.getElementById('consoleScreen').classList.add('d-none');
-    document.getElementById('pauseScreen').classList.remove('d-none');
+    addClassList('consoleScreen', 'd-none');
+    removeClassList('pauseScreen', 'd-none');
 }
