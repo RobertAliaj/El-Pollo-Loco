@@ -38,13 +38,13 @@ class SmallChicken extends MovableObject {
         let currentPosition = this.x;
 
         setInterval(() => {
-            if (!gameIsPaused && !this.isDead() && !world.character.isDead() && !world.endBoss.isDead())
+            if (this.canMoveLeft())
                 this.moveLeft()
         }, 1000 / 200);
 
 
         setInterval(() => {
-            if (!gameIsPaused && this.canJump(currentPosition)) {
+            if ( this.canJump(currentPosition)) {
                 this.smallChickenJump();
                 currentPosition = this.x;
             }
@@ -64,7 +64,11 @@ class SmallChicken extends MovableObject {
 
 
     canJump(currentPosition) {
-        return this.isAboveGround && this.x < currentPosition - 150 && this.x > currentPosition - 170;
+        return !gameIsPaused && this.isAboveGround && this.x < currentPosition - 150 && this.x > currentPosition - 170;
+    }
+
+    canMoveLeft() {
+        return !gameIsPaused && !this.isDead() && !world.character.isDead() && !world.endBoss.isDead();
     }
 
 }

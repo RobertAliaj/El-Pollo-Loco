@@ -250,8 +250,8 @@ class Character extends MovableObject {
 
     startGameIdle() {
         if (!this.keyIsPressed()) {
-            setTimeout(() => this.startGameShortIdle = true, 4000);
-            setTimeout(() => this.startGameLongIdle = true, 8000);
+            setTimeout(() => this.startGameShortIdle = true, 14000);
+            setTimeout(() => this.startGameLongIdle = true, 18000);
         }
     }
 

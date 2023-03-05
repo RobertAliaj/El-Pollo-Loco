@@ -59,7 +59,7 @@ function restartGame() {
     hideGameElements();
     showLoadingElements();
     showMobileControls();
-    clearAllAudios();
+    clearAudios();
     initLevel();
     init();
     checkEndScreen();
@@ -93,7 +93,7 @@ function clearAllIntervals() {
 /**
  * This function is used to clear all Audios
  */
-function clearAllAudios() {
+function clearAudios() {
     theme_song.pause();
     theme_song.currentTime = 0;
 }
@@ -112,6 +112,6 @@ function showHomeScreen() {
     removeClassList('startScreen', 'd-none');
     removeClassList('pause', 'd-none');
 
-    clearAllAudios();
+    clearAudios();
     gamesstarted = false;
 }

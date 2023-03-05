@@ -7,17 +7,27 @@ class MovableObject extends DrawableObject {
     lastHit = 0;
     energy = 100;
 
+    /**
+     * This function is used to check if the Character is falling
+     */
     characterIsFalling() {
         return this.speedY < 0;
     };
 
 
+    /**
+     * This function is used to subtract energy from the Character and Endboss
+     * and to register the time when the lastHit happened
+     */
     hit() {
         this.energy -= this instanceof Endboss ? 10 : 2;
         this.energy < 0 ? this.energy = 0 : this.lastHit = new Date().getTime();
     }
 
 
+    /**
+     * Determines whether the character is in a hurt state, based on the time elapsed since the character was last hit.
+     */
     isHurt() {
         let timePassed = new Date().getTime() - this.lastHit;
         timePassed = timePassed / 1000;
@@ -25,11 +35,17 @@ class MovableObject extends DrawableObject {
     }
 
 
+    /**
+     * This function is used to 
+     */
     isDead() {
         return this.energy <= 0;
     }
 
 
+    /**
+     * Plays an animation by cycling through the given images.
+     */
     playAnimations(images) {
         let i = this.currentImage % images.length;
         let path = images[i];
@@ -38,27 +54,40 @@ class MovableObject extends DrawableObject {
     }
 
 
+    /**
+     * This function is used to apply gravity on different objects
+     */
     applyGravity() {
         setInterval(() => this.gravity(), 1000 / 25);
     }
 
-
+    /**
+     * This function is used to apply gravity to the Movable Object by updating its vertical position if it is in the air, or landing it on the ground if it is not.
+     */
     gravity() {
         this.isInAir() ? this.updateVerticalPosition() : this.landOnGround();
     }
 
 
+    /**
+     * Determines whether the Movableobject is currently in the air, based on its position and velocity.
+     */
     isInAir() {
         return this.isAboveGround() || this.speedY > 0;
     }
 
-
+    /**
+     *This function is used to Update the character's vertical position based on its current speed and acceleration.
+     */
     updateVerticalPosition() {
         this.y -= this.speedY;
         this.speedY -= this.acceleration;
     }
 
 
+    /**
+     * This function is used to set the Character Back to the ground
+     */
     landOnGround() {
         if (this instanceof Character) {
             this.speedY = 0;
@@ -67,6 +96,9 @@ class MovableObject extends DrawableObject {
     }
 
 
+    /**
+     * This function is used to check if the Movable Object is above ground
+     */
     isAboveGround() {
         if (this instanceof ThrowableObject) {
             return true;
@@ -103,6 +135,9 @@ class MovableObject extends DrawableObject {
     }
 
 
+    /**
+     * This function is used to check the Collision of an object with another object
+     */
     isColliding(obj) {
         return this.charRightCollideObjLeft(obj) &&
             this.charBottomCollideObjTop(obj) &&

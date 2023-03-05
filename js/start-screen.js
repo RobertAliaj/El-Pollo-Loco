@@ -2,20 +2,23 @@
  * This function is used to start the Game and initialize all of the function needed to play
  */
 function startGame() {
-    document.getElementById('startScreen').classList.add('d-none')
-    document.getElementById('preloader').classList.remove('d-none');
+    addClassList('startScreen', 'd-none');
+    removeClassList('preloader', 'd-none');
     initLevel();
     init();
     setupControls();
     showMobileControls();
     checkEndScreen();
+    pause();
     removePreloader(10000);
     gamesstarted = true;
     theme_song.play();
-    pause();
 }
 
 
+/**
+ * This function is used to remove the Loading screen after the given Time
+ */
 function removePreloader(time) {
     setTimeout(() => {
         addClassList('content', 'd-none');

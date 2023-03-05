@@ -135,7 +135,7 @@ class Endboss extends MovableObject {
         }
     }
 
-
+    // der SetTimeOut um den animationenInterval wurde gemacht weil er ansosnten die ersten 5 Sekunden ein Fehler gibt weil charakter nicht gefunden werden kann
     animateImages() {
         setTimeout(() => this.playImages(), 5000);
     }
@@ -203,10 +203,10 @@ class Endboss extends MovableObject {
 
 
     endBossTurnAround() {
-        if (this.canTurnRight())        // Pepe Weiter rechts is als endBoss
-            this.turnRight = true;      // turn true
-        if (this.canTurnLeft())         // true und EndBoss weiter Rechts ist als Pepe
-            this.turnRight = false;     // False
+        if (this.canTurnRight())
+            this.turnRight = true;
+        if (this.canTurnLeft())
+            this.turnRight = false;
     }
 
 
@@ -216,7 +216,7 @@ class Endboss extends MovableObject {
 
 
     shouldTurnRight() {
-        return (this.x + this.width + 30) < world.character.x;  // Pepe ist weiter Rechts als endBoss
+        return (this.x + this.width + 30) < world.character.x;
     }
 
 
@@ -226,7 +226,7 @@ class Endboss extends MovableObject {
 
 
     shouldTurnLeft() {
-        return (this.x - 30) > world.character.x + world.character.width; // EndBoss ist weiter Rechts als Pepe
+        return (this.x - 30) > world.character.x + world.character.width;
     }
 
 
@@ -241,6 +241,4 @@ class Endboss extends MovableObject {
             gamesstarted = false;
         }
     }
-
-    // der SetTimeOut um den animationenInterval wurde gemacht weil er ansosnten die ersten 5 Sekunden ein Fehler gibt weil charakter nicht gefunden werden kann
 }

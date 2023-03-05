@@ -6,6 +6,10 @@
     .title {
         display: none;
     }
+
+    .credit-link{
+        display: none;
+    }
 }
 
 @media (max-width: 720px) {

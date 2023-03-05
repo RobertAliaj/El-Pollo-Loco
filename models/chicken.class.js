@@ -34,9 +34,8 @@ class Chicken extends MovableObject {
 
     animate() {
         setInterval(() => {
-            if (!gameIsPaused && !world.character.isDead() && !world.endBoss.isDead()) {
+            if (this.canMoveLeft())
                 this.moveLeft();
-            }
         }, 1000 / 200);
 
         setInterval(() => {
@@ -50,4 +49,7 @@ class Chicken extends MovableObject {
         }, 100);
     }
 
+    canMoveLeft() {
+        return !gameIsPaused && !world.character.isDead() && !world.endBoss.isDead();
+    }
 }

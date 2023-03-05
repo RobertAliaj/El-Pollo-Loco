@@ -135,7 +135,7 @@ function loadResources() {
     <img src="img/8_coin/coin_1.png">
     <img src="img/8_coin/coin_2.png">
 
-    <img src="img/bg-image/2.jpg">
+    <img src="img/bg-image/2.png">
 
     <img src="img/keys/key-d-of-a-keyboard.png">
     <img src="img/keys/left-arrow.png">

@@ -51,7 +51,6 @@
 
     <div id="preLoadedResources" class="d-none"></div>
 
-    <!-- <div class="shadow"></div> -->
     <div class="main-div">
 
         <div id="rotateDevice" class="rotate-device d-none">
@@ -91,7 +90,7 @@
                     <div class="pause-icons-child">
                         Quit Game:
                         <img class="icons" src="img/9_intro_outro_screens/start/logout.png"
-                            onclick="showHomeScreen(); clearAllIntervals()">
+                            onclick="showHomeScreen(); clearAllIntervals(); clearAudios()">
                     </div>
                 </div>
                 <button class="resume-button" onclick="resumeGame()">Resume Game</button>
@@ -233,6 +232,10 @@
                 </div>
                 <img class="start-screen" src="img/9_intro_outro_screens/game_over/game over!.png">
             </div>
+        </div>
+
+        <div class="credit-link">
+            <a href="credits.html" target="_blank">Credits</a> 
         </div>
     </div>
 
