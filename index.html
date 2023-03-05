@@ -43,10 +43,13 @@
     <script src="js/keyboard.js"></script>
     <script src="js/pause-screen.js"></script>
     <script src="js/device-orientation.js"></script>
+    <script src="js/preload-images.js"></script>
 </head>
 
 
-<body onload="handleOrientation()">
+<body onload="handleOrientation(); preloadResources()">
+
+    <div id="preLoadedResources" class="d-none"></div>
 
     <!-- <div class="shadow"></div> -->
     <div class="main-div">
@@ -128,7 +131,10 @@
 
         <!-- This section is while you're NOT in-game, Startscreen, Endscreen etc.. -->
         <div class="content" id="content">
+
+
             <div class="preloader d-none" id="preloader"></div>
+
 
             <div class="intro relative" id="startScreen">
                 <button onclick="startGame()" class="orange-button button-absolute">Start Game</button>
@@ -194,6 +200,7 @@
                 </div>
             </div>
 
+
             <div class="intro story relative d-none" id="infoScreen">
                 <img class="start-screen" src="img/5_background/first_half_background.png">
                 <img class="icons back" src="img/9_intro_outro_screens/start/back.png" onclick="exitInfoScreen()">
@@ -206,6 +213,7 @@
                 </div>
             </div>
 
+
             <div class="outro-winner d-none relative" id="endScreenWin">
                 <span>Congratulations</span>
                 <div class="restart-button-div">
@@ -216,6 +224,7 @@
                     <img src="img/9_intro_outro_screens/game_over/winner.png" class="winner-img">
                 </div>
             </div>
+
 
             <div class="outro d-none relative" id="endScreenLoose">
                 <div class="restart-button-div">

@@ -31,6 +31,7 @@ function handleOrientationLandscape() {
     }
 }
 
+
 /**
  * This function is used to handle the Device Orientation when you change it
  */
